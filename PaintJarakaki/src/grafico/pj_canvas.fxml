@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1243.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grafico.Quadro">
+   <top>
+      <MenuBar fx:id="menu_formas" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Formas">
+               <items>
+                  <RadioMenuItem fx:id="rmiPonto" mnemonicParsing="false" text="Ponto" />
+                  <RadioMenuItem fx:id="rmiLinha" mnemonicParsing="false" text="Linha" />
+                  <RadioMenuItem fx:id="rmiCirculo" mnemonicParsing="false" text="Circulo" />
+               </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <Canvas fx:id="cv_quadro" height="606.0" width="1243.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
