@@ -17,15 +17,15 @@ public class Circulo {
 	
 	protected ArrayList<int[]> calcularCirculo() {
 		ArrayList<int[]> alCoordenadas = new ArrayList<>();
-		int iAngulo, iCentroX, iCentroY;
-		double dSeno, dCosseno;
+		int iCentroX, iCentroY;
+		double dSeno, dCosseno, iAngulo;
 		int dX, dY;
 		
 		//Valores de X e Y do ponto central transformados em int
 		iCentroX = new Double(p1.getX()).intValue();
 		iCentroY = new Double(p1.getY()).intValue();
 		
-		for (iAngulo = 0; iAngulo <= 45; iAngulo++) {
+		for (iAngulo = 0; iAngulo <= 45; iAngulo = iAngulo + 0.125) {
 			
 			dSeno = Math.sin( Math.toRadians(iAngulo));
 			dCosseno = Math.cos( Math.toRadians(iAngulo));
