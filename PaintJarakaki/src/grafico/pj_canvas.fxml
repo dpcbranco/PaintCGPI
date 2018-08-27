@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
@@ -7,7 +8,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1243.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grafico.Quadro">
    <top>
-      <MenuBar fx:id="menu_formas" BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuOpcoes" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Formas">
                <items>
@@ -24,6 +25,15 @@
                   <RadioMenuItem fx:id="rmiAzul" mnemonicParsing="false" text="Azul" />
                   <RadioMenuItem fx:id="rmiVermelho" mnemonicParsing="false" text="Vermelho" />
               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Borda">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="  Batata">
+                     <graphic>
+                        <Slider fx:id="slBorda" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-background-color: Grey;" value="5.0" />
+                     </graphic>
+                  </MenuItem>
+               </items>
             </Menu>
         </menus>
       </MenuBar>
