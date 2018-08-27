@@ -12,10 +12,8 @@ import math.Ponto;
  * 
  */
 public class PontoGr extends Ponto {
-	Color cor; // cor do ponto
-	String nomeP; // nome do ponto
-	Color corNomeP; // cor do nome  
-	int diametro = 5; // diametro do ponto, default = 1
+	Color cor; // cor do ponto 
+	int diametro = 5; // diametro do ponto, default = 5
 
 	/**
 	 * Constroi um ponto na posicao x, y e com os atributos
@@ -27,9 +25,7 @@ public class PontoGr extends Ponto {
 	 */
 	public PontoGr(int x, int y, Color cor){
 		super((double)x, (double)y);
-		setCor(cor);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP("");	 
+		setCor(cor);	 	 	 
 	}
 
 	/**
@@ -42,43 +38,10 @@ public class PontoGr extends Ponto {
 	 */
 	public PontoGr(int x, int y, Color cor, int diametro){
 		super((double)x, (double)y);
-		setCor(cor);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP("");	 
+		setCor(cor);	 	 
 		setDiametro(diametro);
 	}
 
-	/**
-	 * Constroi um ponto na posicao x, y e com os atributos
-	 * 
-	 * @param x coordenada x
-	 * @param y coordenada y
-	 * @param cor cor do ponto a ser construido
-	 * @param nomeP nome do ponto
-	 * @param diametro diametro do ponto
-	 */
-	public PontoGr(int x, int y, Color cor, String nomeP, int diametro){
-		super((double)x, (double)y);
-		setCor(cor);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP(nomeP);
-		setDiametro(diametro);
-	}
-	/**
-	 * Constroi um ponto na posicao x, y e com os atributos
-	 * 
-	 * @param x coordenada x
-	 * @param y coordenada y
-	 * @param cor cor do ponto a ser construido
-	 * @param nomeP nome do ponto
-	 * @param diametro diametro do ponto
-	 */
-	public PontoGr(int x, int y, Color cor, String nomeP){
-		super((double)x, (double)y);
-		setCor(cor);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP(nomeP);
-	}
 	/**
 	 * Constroi um ponto baseado em outro ponto grafico
 	 * 
@@ -88,9 +51,7 @@ public class PontoGr extends Ponto {
 	 */
 	public PontoGr(PontoGr pg, Color cor, int diametro){
 		super(pg.getX(), pg.getY());	 
-		setCor(cor);	 
-		setCorNomeP(Color.BLACK); 	 
-		setNomeP("");	 
+		setCor(cor);
 		setDiametro(diametro);
 	}
 
@@ -101,9 +62,7 @@ public class PontoGr extends Ponto {
 	 */
 	public PontoGr(int x, int y){
 		super((double)x, (double)y);
-		setCor(Color.BLACK);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP("");	 
+		setCor(Color.BLACK);	 	  
 	}
 
 	/**
@@ -113,9 +72,7 @@ public class PontoGr extends Ponto {
 	 */
 	public PontoGr(int diametro){
 		super(0, 0);	 
-		setCor(Color.BLACK);	 
-		setCorNomeP(Color.BLACK);	 
-		setNomeP("");	 
+		setCor(Color.BLACK);	  
 		setDiametro(diametro);
 
 	}
@@ -135,12 +92,6 @@ public class PontoGr extends Ponto {
 
 	private void setCor(Color cor){
 		this.cor = cor;
-	}
-	private void setCorNomeP(Color corNomeP){
-		this.corNomeP = corNomeP;
-	}
-	private void setNomeP(String nomeP){
-		this.nomeP = nomeP;
 	}
 
 	/**

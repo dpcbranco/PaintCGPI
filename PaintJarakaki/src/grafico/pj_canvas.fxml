@@ -16,6 +16,15 @@
                   <RadioMenuItem fx:id="rmiCirculo" mnemonicParsing="false" text="Circulo" />
                </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Cor">
+              <items>
+                  <RadioMenuItem fx:id="rmiPreto" mnemonicParsing="false" text="Preto" />
+                  <RadioMenuItem fx:id="rmiAmarelo" mnemonicParsing="false" text="Amarelo" />
+                  <RadioMenuItem fx:id="rmiVerde" mnemonicParsing="false" text="Verde" />
+                  <RadioMenuItem fx:id="rmiAzul" mnemonicParsing="false" text="Azul" />
+                  <RadioMenuItem fx:id="rmiVermelho" mnemonicParsing="false" text="Vermelho" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
