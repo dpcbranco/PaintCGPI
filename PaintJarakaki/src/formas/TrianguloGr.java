@@ -21,7 +21,7 @@ public class TrianguloGr extends Triangulo{
 		
 		lgrReta1 = new LinhaGr(this.p1, this.p2, cCor, iBorda);
 		lgrReta2 = new LinhaGr(this.p1, this.p3, cCor, iBorda);
-		lgrReta1 = new LinhaGr(this.p2, this.p3, cCor, iBorda);
+		lgrReta3 = new LinhaGr(this.p2, this.p3, cCor, iBorda);
 		
 		lgrReta1.desenharLinha(g);
 		lgrReta2.desenharLinha(g);
