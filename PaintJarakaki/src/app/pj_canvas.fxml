@@ -15,6 +15,7 @@
                   <RadioMenuItem fx:id="rmiPonto" mnemonicParsing="false" text="Ponto" />
                   <RadioMenuItem fx:id="rmiLinha" mnemonicParsing="false" text="Linha" />
                   <RadioMenuItem fx:id="rmiCirculo" mnemonicParsing="false" text="Circulo" />
+                  <RadioMenuItem fx:id="rmiTriangulo" mnemonicParsing="false" text="Triangulo" />
                </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Cor">
