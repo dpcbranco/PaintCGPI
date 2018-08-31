@@ -112,4 +112,15 @@ public class Linha {
 		return aAux;
 	
 	}
+	
+	public Ponto pontoMedio() {
+		int x, y;
+		
+		//xm = (x1 + x2)/2
+		x = new Double( (p1.getX() + p2.getX())/2 ).intValue();
+		y = new Double( (p1.getY() + p2.getY())/2 ).intValue();
+		
+		return new Ponto(x, y);
+		
+	}
 }
