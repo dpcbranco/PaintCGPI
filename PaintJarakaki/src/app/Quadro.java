@@ -1,17 +1,21 @@
-package grafico;
+package app;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import figuras.Sierpinski;
 import formas.CirculoGr;
 import formas.LinhaGr;
 import formas.PontoGr;
+import formas.TrianguloGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 
@@ -23,17 +27,22 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiPonto;
 	@FXML RadioMenuItem rmiLinha;
 	@FXML RadioMenuItem rmiCirculo;
+	@FXML RadioMenuItem rmiTriangulo;
+	@FXML RadioMenuItem rmiSierpinski;
+	@FXML MenuItem miLimpar;
 	
 	@FXML RadioMenuItem rmiPreto;
 	@FXML RadioMenuItem rmiAmarelo;
 	@FXML RadioMenuItem rmiVerde;
 	@FXML RadioMenuItem rmiAzul;
 	@FXML RadioMenuItem rmiVermelho;
+	@FXML Slider slBorda;
+	@FXML MenuItem miBorda;
 	
 	@FXML Canvas cv_quadro;
 	
 	
-	PontoGr p1 = null, p2 = null;
+	PontoGr p1 = null, p2 = null, p3 = null;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -47,6 +56,8 @@ public class Quadro implements Initializable{
 		rmiPonto.setToggleGroup(tgFormas);
 		rmiLinha.setToggleGroup(tgFormas);
 		rmiCirculo.setToggleGroup(tgFormas);
+		rmiTriangulo.setToggleGroup(tgFormas);
+		rmiSierpinski.setToggleGroup(tgFormas);
 		
 		//Define grupo de cores a serem escolhidas
 		rmiPreto.setToggleGroup(tgCores);
@@ -66,7 +77,22 @@ public class Quadro implements Initializable{
 		rmiPonto.setSelected(true);
 		rmiPreto.setSelected(true);
 		
+		miBorda.setText(new Double(slBorda.getMajorTickUnit()).intValue() + "px");
+		
 		gcCanvas = cv_quadro.getGraphicsContext2D();
+		
+		slBorda.valueProperty().addListener(
+			(ev)->{
+				miBorda.setText(new Double(slBorda.getValue()).intValue() + "px");
+			}
+		);
+		
+		miLimpar.setOnAction(
+		
+			(ev)->{
+				gcCanvas.clearRect(0, 0, 1280, 770);
+			}
+		);
 		
 		cv_quadro.setOnMouseClicked(
 			(ev)->{
@@ -78,22 +104,25 @@ public class Quadro implements Initializable{
 					case "Ponto":{
 						//Elimina resquícios dos outros desenhos
 						p1 = null;
+						p2 = null;
+						p3 = null;
 						
-						new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData()).desenharPonto(gcCanvas);
+						//Desenha novo ponto na tela, à partir do X e Y do canvas
+						new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharPonto(gcCanvas);
 						break;
 					}
 					
 					case "Linha":{
 						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p1.desenharPonto(gcCanvas);
 						}
 						
 						else {
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p2.desenharPonto(gcCanvas);
 							
-							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData()).desenharLinha(gcCanvas);
+							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharLinha(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
@@ -105,14 +134,12 @@ public class Quadro implements Initializable{
 					case "Circulo":{
 						if (p1 == null) {
 							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
-							p1.desenharPonto(gcCanvas);
 						}
 						
 						else {
 							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
-							p2.desenharPonto(gcCanvas);
 							
-							new CirculoGr(p1, p2, (Color) rmiOpcaoCor.getUserData()).desenharCirculo(gcCanvas);
+							new CirculoGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharCirculo(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
@@ -120,21 +147,38 @@ public class Quadro implements Initializable{
 						
 						break;
 					}
+					
+					case "Triangulo":{
+						if (p1 == null) {
+							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p1.desenharPonto(gcCanvas);
+						}
+						
+						else if (p2 == null) {
+							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p2.desenharPonto(gcCanvas);
+						}
+						
+						else {
+							p3 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p3.desenharPonto(gcCanvas);
+							
+							new TrianguloGr(p1, p2, p3, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharTriangulo(gcCanvas);
+							
+							p1 = null;
+							p2 = null;
+							p3 = null;
+						}
+					}
+					
+					case "Sierpinski":{
+						new Sierpinski(7, new Double(slBorda.getValue()).intValue(), (Color) rmiOpcaoCor.getUserData()).desenharSierpinski(gcCanvas);
+					}
 				}
 
 			}
 		);		
 		
-	}
-    
-	
-	public void buttonsEvents(String event) {
-		
-		switch(event) {
-			case "Ponto":
-				System.out.println("clicou no ponto");
-			break;
-		}
 	}
 
 }

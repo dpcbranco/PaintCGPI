@@ -10,6 +10,11 @@
    <top>
       <MenuBar fx:id="menuOpcoes" BorderPane.alignment="CENTER">
         <menus>
+            <Menu mnemonicParsing="false" text="Funções">
+              <items>
+                <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Formas">
                <items>
                   <RadioMenuItem fx:id="rmiPonto" mnemonicParsing="false" text="Ponto" />
