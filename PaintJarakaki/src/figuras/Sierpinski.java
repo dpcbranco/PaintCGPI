@@ -40,7 +40,7 @@ public class Sierpinski {
 		tgrPai = new TrianguloGr(p1, p2, p3, clCor, borda);
 		tgrPai.desenharTriangulo(g);
 		
-		desenharIteracao(tgrPai, 3, g);
+		desenharIteracao(tgrPai, iteracoes, g);
 	}
 	
 	private void desenharIteracao(TrianguloGr t, int iIteracoes, GraphicsContext g) {
@@ -65,8 +65,9 @@ public class Sierpinski {
 
 		if (iIteracoes != 1) {
 			for (TrianguloGr tgrFilho : alFilhos) {
-				desenharIteracao(tgrFilho, iIteracoes-1, g);}
+				desenharIteracao(tgrFilho, iIteracoes-1, g);
 			}
 		}
 		
+	}
 }
