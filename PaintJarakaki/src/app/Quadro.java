@@ -49,6 +49,8 @@ public class Quadro implements Initializable{
 	
 	GraphicsContext gcCanvas;
 	
+	Sierpinski sierpDesenho;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 				
@@ -91,6 +93,7 @@ public class Quadro implements Initializable{
 		
 			(ev)->{
 				gcCanvas.clearRect(0, 0, 1280, 770);
+				sierpDesenho = null;
 			}
 		);
 		
@@ -172,7 +175,13 @@ public class Quadro implements Initializable{
 					}
 					
 					case "Sierpinski":{
-						new Sierpinski(7, new Double(slBorda.getValue()).intValue(), (Color) rmiOpcaoCor.getUserData()).desenharSierpinski(gcCanvas);
+						if (sierpDesenho == null) {
+							sierpDesenho = new Sierpinski();
+						}
+						
+						sierpDesenho.setBorda(new Double (slBorda.getValue()).intValue());
+						sierpDesenho.setCor((Color) rmiOpcaoCor.getUserData());
+						sierpDesenho.desenharIteracao(gcCanvas);
 					}
 				}
 
