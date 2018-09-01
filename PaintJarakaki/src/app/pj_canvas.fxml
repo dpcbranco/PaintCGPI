@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.canvas.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1243.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Quadro">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Quadro">
    <top>
       <MenuBar fx:id="menuOpcoes" BorderPane.alignment="CENTER">
         <menus>
@@ -16,6 +16,7 @@
                   <RadioMenuItem fx:id="rmiLinha" mnemonicParsing="false" text="Linha" />
                   <RadioMenuItem fx:id="rmiCirculo" mnemonicParsing="false" text="Circulo" />
                   <RadioMenuItem fx:id="rmiTriangulo" mnemonicParsing="false" text="Triangulo" />
+                  <RadioMenuItem fx:id="rmiSierpinski" mnemonicParsing="false" text="Sierpinski" />
                </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Cor">
@@ -40,6 +41,6 @@
       </MenuBar>
    </top>
    <center>
-      <Canvas fx:id="cv_quadro" height="606.0" width="1243.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="cv_quadro" height="770.0" width="1280.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

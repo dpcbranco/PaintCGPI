@@ -30,15 +30,26 @@ public class TrianguloGr extends Triangulo{
 	}
 	
 	//retorna lista de pontos médios das retas do triângulo
-	public Ponto[] pontosMedios(){
+	public Ponto[] getPontosMedios(){
 		Ponto[] pPontosMedios = new Ponto[3];
 		
-		pPontosMedios[0] = lgrReta1.pontoMedio();
-		pPontosMedios[1] = lgrReta2.pontoMedio();
-		pPontosMedios[2] = lgrReta3.pontoMedio();
+		pPontosMedios[0] = lgrReta1.getPontoMedio();
+		pPontosMedios[1] = lgrReta2.getPontoMedio();
+		pPontosMedios[2] = lgrReta3.getPontoMedio();
 		
 		return pPontosMedios;
 	}
+	
+	public Ponto getPontoMedioP1P2() {
+		return lgrReta1.getPontoMedio();
+	}
 
+	public Ponto getPontoMedioP1P3() {
+		return lgrReta2.getPontoMedio();
+	}
+	
+	public Ponto getPontoMedioP2P3() {
+		return lgrReta3.getPontoMedio();
+	}
 
 }

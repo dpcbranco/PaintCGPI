@@ -113,7 +113,7 @@ public class Linha {
 	
 	}
 	
-	public Ponto pontoMedio() {
+	public Ponto getPontoMedio() {
 		int x, y;
 		
 		//xm = (x1 + x2)/2
@@ -123,4 +123,15 @@ public class Linha {
 		return new Ponto(x, y);
 		
 	}
+	
+
+	public int getComprimento() {
+		double x = Math.pow((p2.getX() - p1.getX()), 2);
+		double y = Math.pow((p2.getY() - p1.getY()), 2);
+		
+		double comprimento = Math.sqrt(x + y);
+		
+		return new Double(comprimento).intValue();
+	}
+	
 }
