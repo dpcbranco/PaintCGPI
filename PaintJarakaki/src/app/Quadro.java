@@ -180,7 +180,7 @@ public class Quadro implements Initializable{
 						if (sierpDesenho == null) {
 							sierpDesenho = new Sierpinski();
 						}
-						
+
 						sierpDesenho.setBorda(new Double (slBorda.getValue()).intValue());
 						sierpDesenho.setCor((Color) rmiOpcaoCor.getUserData());
 						sierpDesenho.desenharIteracao(gcCanvas);
