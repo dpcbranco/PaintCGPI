@@ -1,7 +1,6 @@
 package figuras;
 
 import java.util.ArrayList;
-
 import formas.PontoGr;
 import formas.TrianguloGr;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,7 +12,6 @@ public class Sierpinski {
 	int borda;
 	Color clCor;
 	ArrayList<TrianguloGr> alFilhos = new ArrayList<>();
-	
 	
 	public void setBorda(int borda) {
 		this.borda = borda;
@@ -52,6 +50,7 @@ public class Sierpinski {
 			tgrNovo.desenharTriangulo(g);
 			
 			alFilhos.add(tgrNovo);
+
 		}
 		
 		else {
@@ -70,8 +69,10 @@ public class Sierpinski {
 				tgrNovo = new TrianguloGr(tgrFilho.getPontoMedioP1P3(), tgrFilho.getPontoMedioP2P3(), tgrFilho.getP3(), clCor, borda);
 				tgrNovo.desenharTriangulo(g);
 				alFilhos.add(tgrNovo);
-			
+				
 			}
-		}	
+		}
+		
+		System.out.println(alFilhos.size());
 	}
 }

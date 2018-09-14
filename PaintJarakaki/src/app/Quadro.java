@@ -172,6 +172,8 @@ public class Quadro implements Initializable{
 							p2 = null;
 							p3 = null;
 						}
+						
+						break;
 					}
 					
 					case "Sierpinski":{
@@ -182,6 +184,8 @@ public class Quadro implements Initializable{
 						sierpDesenho.setBorda(new Double (slBorda.getValue()).intValue());
 						sierpDesenho.setCor((Color) rmiOpcaoCor.getUserData());
 						sierpDesenho.desenharIteracao(gcCanvas);
+						
+						break;
 					}
 				}
 

@@ -37,7 +37,7 @@
                <items>
                   <MenuItem fx:id="miBorda" mnemonicParsing="false">
                      <graphic>
-                        <Slider fx:id="slBorda" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-background-color: Grey;" value="5.0" />
+                        <Slider fx:id="slBorda" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" style="-fx-background-color: Grey;" value="5.0" />
                      </graphic>
                   </MenuItem>
                </items>
