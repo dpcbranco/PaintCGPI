@@ -10,6 +10,7 @@ import formas.PontoGr;
 import formas.TrianguloGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.MenuBar;
@@ -17,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 
@@ -41,6 +43,7 @@ public class Quadro implements Initializable{
 	
 	@FXML Canvas cv_quadro;
 	
+	WritableImage imgSnapshot;
 	
 	PontoGr p1 = null, p2 = null, p3 = null;
 	LinhaGr novaLinha;  //Objeto usado para desenho e redesenho de linha elástica
@@ -117,7 +120,8 @@ public class Quadro implements Initializable{
 							}
 							
 							else {
-								novaLinha.apagarLinha(gcCanvas);
+								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+								//novaLinha.apagarLinha(gcCanvas);
 								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
 								novaLinha.desenharLinha(gcCanvas);
 							}
@@ -150,14 +154,14 @@ public class Quadro implements Initializable{
 							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p1.desenharPonto(gcCanvas);
 							
+							imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
+							
 						}
 						
 						else {
 							
 							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p2.desenharPonto(gcCanvas);
-							
-							novaLinha.apagarLinha(gcCanvas);
 							
 							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharLinha(gcCanvas);
 							
