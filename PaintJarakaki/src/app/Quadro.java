@@ -43,13 +43,13 @@ public class Quadro implements Initializable{
 	
 	
 	PontoGr p1 = null, p2 = null, p3 = null;
+	LinhaGr novaLinha;  //Objeto usado para desenho e redesenho de linha elástica
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
-	
 	GraphicsContext gcCanvas;
-	
 	Sierpinski sierpDesenho;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -79,9 +79,11 @@ public class Quadro implements Initializable{
 		rmiPonto.setSelected(true);
 		rmiPreto.setSelected(true);
 		
+		
 		miBorda.setText(new Double(slBorda.getMajorTickUnit()).intValue() + "px");
 		
 		gcCanvas = cv_quadro.getGraphicsContext2D();
+		gcCanvas.setFill(Color.WHITE);
 		
 		slBorda.valueProperty().addListener(
 			(ev)->{
@@ -93,7 +95,35 @@ public class Quadro implements Initializable{
 		
 			(ev)->{
 				gcCanvas.clearRect(0, 0, 1280, 770);
+				gcCanvas.setFill(Color.WHITE);
 				sierpDesenho = null;
+			}
+		);
+		
+		
+		cv_quadro.setOnMouseMoved(
+			(ev)->{
+				
+				String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
+				Color opcaoCor = (Color)((RadioMenuItem)tgCores.getSelectedToggle()).getUserData();
+				
+				if (p1 != null) {
+					switch (opcaoForma) {
+						case "Linha":{
+							PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, new Double(slBorda.getValue()).intValue());
+							if (novaLinha == null) {
+								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+								novaLinha.desenharLinha(gcCanvas);
+							}
+							
+							else {
+								novaLinha.apagarLinha(gcCanvas);
+								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+								novaLinha.desenharLinha(gcCanvas);
+							}
+						}
+					}
+				}
 			}
 		);
 		
@@ -119,16 +149,21 @@ public class Quadro implements Initializable{
 						if (p1 == null) {
 							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p1.desenharPonto(gcCanvas);
+							
 						}
 						
 						else {
+							
 							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
 							p2.desenharPonto(gcCanvas);
+							
+							novaLinha.apagarLinha(gcCanvas);
 							
 							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharLinha(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
+							novaLinha = null;
 						}
 						
 						break;

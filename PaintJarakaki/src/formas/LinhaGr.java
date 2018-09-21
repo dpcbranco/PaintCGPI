@@ -12,6 +12,8 @@ public class LinhaGr extends Linha {
 	Color cCor;
 	int iBorda;
 	
+	ArrayList<int[]> alCoordenadas;
+	
 	public LinhaGr(Ponto p1, Ponto p2, Color cCor, int iBorda) {
 		super(p1, p2);
 		this.cCor = cCor;
@@ -19,10 +21,16 @@ public class LinhaGr extends Linha {
 	}
 	
 	public void desenharLinha(GraphicsContext g) {
-		ArrayList<int[]> alCoordenadas = this.calcularLinha();
+		alCoordenadas = this.calcularLinha();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
 			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenharPonto(g);;
+		}
+	}
+
+	public void apagarLinha(GraphicsContext g) {
+		for (int[] iCoordenadas : alCoordenadas) {
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, iBorda).desenharPonto(g);;
 		}
 	}
 	
