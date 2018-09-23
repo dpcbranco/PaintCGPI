@@ -47,8 +47,11 @@ public class Quadro implements Initializable{
 	WritableImage imgSnapshot;
 	
 	PontoGr p1 = null, p2 = null, p3 = null;
-	LinhaGr novaLinha;  //Objeto usado para desenho e redesenho de linha elástica
+	
+	//Objeto usado para desenho e redesenho de linha elástica
+	LinhaGr novaLinha;  
 	CirculoGr novoCirculo;
+	TrianguloGr novoTriangulo;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -126,6 +129,16 @@ public class Quadro implements Initializable{
 							elasticoCirculo(ev, opcaoCor, opcaoBorda);
 							break;
 						}
+						
+						case "Triangulo":{
+							//para dois primeiros pontos, será utilizado elástico de linha
+							if (p2 == null) {
+								elasticoLinha(ev, opcaoCor, opcaoBorda);
+							}
+							else {
+								elasticoTriangulo(ev, opcaoCor, opcaoBorda);
+							}
+						}
 					}
 				}
 			}
@@ -179,6 +192,19 @@ public class Quadro implements Initializable{
 		
 	}
 	
+	private void elasticoTriangulo(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
+		PontoGr p3 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
+		if (novoTriangulo == null) {
+			novoTriangulo = new TrianguloGr(p1, p2, p3, opcaoCor, opcaoBorda);
+			novoTriangulo.desenhar(gcCanvas);
+		}
+		else {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			novoTriangulo = new TrianguloGr(p1, p2, p3, opcaoCor, opcaoBorda);
+			novoTriangulo.desenhar(gcCanvas);
+		}
+	}
+
 	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
 	private void elasticoLinha(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
 		PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
@@ -214,11 +240,17 @@ public class Quadro implements Initializable{
 		if (p1 == null) {
 			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			p1.desenhar(gcCanvas);
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
 		else if (p2 == null) {
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//remove resquicios do desenho anterior	
 			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-			p2.desenhar(gcCanvas);
+			
+			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do triângulo
+			new LinhaGr(p1, p2, cor, borda);
+			novaLinha = null;
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
 		else {
@@ -231,22 +263,22 @@ public class Quadro implements Initializable{
 			p1 = null;
 			p2 = null;
 			p3 = null;
+			novoTriangulo = null;
 		}
 	}
 	
 	//Desenha circulo de acordo com o clique no quadro
 	private void desenharCirculo(MouseEvent ev, Color cor, int borda) {
 		
-		//Se centro do cï¿½rculo ainda nï¿½o foi fixado, ï¿½ criado ponto no local do clique
+		//Se centro do círculo ainda não foi fixado, é criado ponto no local do clique
 		if (p1 == null) {
 			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), Color.WHITE, 0);
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null); //Usado para efeito de elástico
 		}
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
 		else {
-			//remove resquicios do desenho anterior
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			
 			new CirculoGr(p1, p2, cor, borda).desenhar(gcCanvas);
@@ -254,6 +286,7 @@ public class Quadro implements Initializable{
 			//Limpa dados do circulo para desenho de novas formas
 			p1 = null;
 			p2 = null;
+			novoCirculo = null;
 		}
 	}
 
@@ -264,12 +297,11 @@ public class Quadro implements Initializable{
 			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			p1.desenhar(gcCanvas);
 			
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);			
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
 		else {
-			//remove resquicios do desenho anterior
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			p2.desenhar(gcCanvas);
 			
@@ -284,12 +316,12 @@ public class Quadro implements Initializable{
 
 	//Desenha ponto conforme clique no quadro
 	private void desenharPonto(MouseEvent ev, Color cor, int borda) {
-		//Elimina resquï¿½cios dos outros desenhos
+		//Elimina resquícios de outras formas não terminadas
 		p1 = null;
 		p2 = null;
 		p3 = null;
 		
-		//Desenha novo ponto na tela, ï¿½ partir do X e Y do canvas
+		//Desenha novo ponto na tela, à partir do X e Y do canvas
 		new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda).desenhar(gcCanvas);
 	}
 
