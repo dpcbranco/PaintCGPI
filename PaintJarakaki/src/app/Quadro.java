@@ -87,6 +87,7 @@ public class Quadro implements Initializable{
 		
 		gcCanvas = cv_quadro.getGraphicsContext2D();
 		gcCanvas.setFill(Color.WHITE);
+		gcCanvas.fill();
 		
 		slBorda.valueProperty().addListener(
 			(ev)->{
@@ -98,7 +99,7 @@ public class Quadro implements Initializable{
 		
 			(ev)->{
 				gcCanvas.clearRect(0, 0, 1280, 770);
-				gcCanvas.setFill(Color.WHITE);
+				gcCanvas.fill();
 				sierpDesenho = null;
 			}
 		);
