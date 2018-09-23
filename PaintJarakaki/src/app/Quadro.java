@@ -117,14 +117,14 @@ public class Quadro implements Initializable{
 							PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, new Double(slBorda.getValue()).intValue());
 							if (novaLinha == null) {
 								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
-								novaLinha.desenharLinha(gcCanvas);
+								novaLinha.desenhar(gcCanvas);
 							}
 							
 							else {
 								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 								//novaLinha.apagarLinha(gcCanvas);
 								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
-								novaLinha.desenharLinha(gcCanvas);
+								novaLinha.desenhar(gcCanvas);
 							}
 						}
 					}
@@ -137,6 +137,9 @@ public class Quadro implements Initializable{
 				RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();
 				RadioMenuItem rmiOpcaoCor = (RadioMenuItem) tgCores.getSelectedToggle();
 				
+				Color cor = (Color) rmiOpcaoCor.getUserData();
+				int borda = new Double(slBorda.getValue()).intValue();
+				
 				
 				switch (rmiOpcaoForma.getText()) {
 					case "Ponto":{
@@ -146,14 +149,14 @@ public class Quadro implements Initializable{
 						p3 = null;
 						
 						//Desenha novo ponto na tela, à partir do X e Y do canvas
-						new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharPonto(gcCanvas);
+						new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda).desenhar(gcCanvas);
 						break;
 					}
 					
 					case "Linha":{
 						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
-							p1.desenharPonto(gcCanvas);
+							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+							p1.desenhar(gcCanvas);
 							
 							imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
 							
@@ -161,10 +164,10 @@ public class Quadro implements Initializable{
 						
 						else {
 							
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue());
-							p2.desenharPonto(gcCanvas);
+							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+							p2.desenhar(gcCanvas);
 							
-							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharLinha(gcCanvas);
+							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenhar(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
@@ -176,13 +179,13 @@ public class Quadro implements Initializable{
 					
 					case "Circulo":{
 						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), Color.WHITE, 0);
 						}
 						
 						else {
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 							
-							new CirculoGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharCirculo(gcCanvas);
+							new CirculoGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenhar(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
@@ -193,20 +196,20 @@ public class Quadro implements Initializable{
 					
 					case "Triangulo":{
 						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
-							p1.desenharPonto(gcCanvas);
+							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+							p1.desenhar(gcCanvas);
 						}
 						
 						else if (p2 == null) {
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
-							p2.desenharPonto(gcCanvas);
+							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+							p2.desenhar(gcCanvas);
 						}
 						
 						else {
-							p3 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
-							p3.desenharPonto(gcCanvas);
+							p3 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+							p3.desenhar(gcCanvas);
 							
-							new TrianguloGr(p1, p2, p3, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharTriangulo(gcCanvas);
+							new TrianguloGr(p1, p2, p3, cor, borda).desenhar(gcCanvas);
 							
 							p1 = null;
 							p2 = null;
@@ -221,8 +224,8 @@ public class Quadro implements Initializable{
 							sierpDesenho = new Sierpinski();
 						}
 
-						sierpDesenho.setBorda(new Double (slBorda.getValue()).intValue());
-						sierpDesenho.setCor((Color) rmiOpcaoCor.getUserData());
+						sierpDesenho.setBorda(borda);
+						sierpDesenho.setCor(cor);
 						sierpDesenho.desenharIteracao(gcCanvas);
 						
 						break;

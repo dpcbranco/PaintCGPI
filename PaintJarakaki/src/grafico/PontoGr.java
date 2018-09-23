@@ -11,23 +11,10 @@ import javafx.scene.paint.Color;
  * @version v1.0 Data: 2018/05/06
  * 
  */
-public class PontoGr extends Ponto {
+public class PontoGr extends Ponto implements FormaGr {
 	Color cor; // cor do ponto 
-	int diametro = 5; // diametro do ponto, default = 5
-
-	/**
-	 * Constroi um ponto na posicao x, y e com os atributos
-	 * 
-	 * @param x coordenada x
-	 * @param y coordenada y
-	 * @param cor cor do ponto a ser construido
-	 * @param diametro diametro do ponto
-	 */
-	public PontoGr(int x, int y, Color cor){
-		super((double)x, (double)y);
-		setCor(cor);	 	 	 
-	}
-
+	int diametro; // diametro do ponto, default = 5
+	
 	/**
 	 * Constroi um ponto na posicao x, y e com os atributos
 	 * 
@@ -55,27 +42,6 @@ public class PontoGr extends Ponto {
 		setDiametro(diametro);
 	}
 
-	/**
-	 * Constroi um ponto na posicao 0, 0 com diametro e cor Black
-	 * 
-	 * @param diametro
-	 */
-	public PontoGr(int x, int y){
-		super((double)x, (double)y);
-		setCor(Color.BLACK);	 	  
-	}
-
-	/**
-	 * Constroi um ponto na posicao 0, 0 com diametro e cor Black
-	 * 
-	 * @param diametro
-	 */
-	public PontoGr(int diametro){
-		super(0, 0);	 
-		setCor(Color.BLACK);	  
-		setDiametro(diametro);
-
-	}
 
 	private Color getCor() {
 		return cor;
@@ -99,7 +65,7 @@ public class PontoGr extends Ponto {
 	 * 
 	 * @param g contexto grafico
 	 */
-	public void desenharPonto(GraphicsContext g) {
+	public void desenhar(GraphicsContext g) {
 		// desenha ponto como um oval
 		g.setFill(getCor());
 		g.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());
