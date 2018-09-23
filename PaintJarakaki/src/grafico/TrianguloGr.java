@@ -1,10 +1,10 @@
-package formas;
+package grafico;
 
+import formas.Linha;
+import formas.Ponto;
+import formas.Triangulo;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Linha;
-import math.Ponto;
-import math.Triangulo;
 
 public class TrianguloGr extends Triangulo{
 	

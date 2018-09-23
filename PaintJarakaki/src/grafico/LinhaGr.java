@@ -1,11 +1,11 @@
-package formas;
+package grafico;
 
 import java.util.ArrayList;
 
+import formas.Linha;
+import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Linha;
-import math.Ponto;
 
 public class LinhaGr extends Linha {
 

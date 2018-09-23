@@ -1,8 +1,8 @@
-package formas;
+package grafico;
 
+import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Ponto;
 
 /**
  * Representa um ponto gráfico

@@ -4,10 +4,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
-import formas.CirculoGr;
-import formas.LinhaGr;
-import formas.PontoGr;
-import formas.TrianguloGr;
+import grafico.CirculoGr;
+import grafico.LinhaGr;
+import grafico.PontoGr;
+import grafico.TrianguloGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;

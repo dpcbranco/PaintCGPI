@@ -1,4 +1,4 @@
-package math;
+package formas;
 
 import javafx.geometry.Point2D;
 

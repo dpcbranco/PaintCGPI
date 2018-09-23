@@ -1,11 +1,12 @@
 package figuras;
 
 import java.util.ArrayList;
-import formas.PontoGr;
-import formas.TrianguloGr;
+
+import formas.Linha;
+import grafico.PontoGr;
+import grafico.TrianguloGr;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Linha;
 
 public class Sierpinski {
 	

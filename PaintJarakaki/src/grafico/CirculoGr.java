@@ -1,11 +1,11 @@
-package formas;
+package grafico;
 
 import java.util.ArrayList;
 
+import formas.Circulo;
+import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Circulo;
-import math.Ponto;
 
 public class CirculoGr extends Circulo {
 	
