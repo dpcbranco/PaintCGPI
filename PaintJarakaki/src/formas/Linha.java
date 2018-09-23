@@ -133,5 +133,14 @@ public class Linha {
 		
 		return new Double(comprimento).intValue();
 	}
+
+	public Ponto getP1() {
+		return this.p1;
+	}
+	
+	public Ponto getP2() {
+		return this.p2;
+	}
+	
 	
 }

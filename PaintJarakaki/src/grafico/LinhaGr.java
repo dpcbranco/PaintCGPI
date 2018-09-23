@@ -9,28 +9,34 @@ import javafx.scene.paint.Color;
 
 public class LinhaGr extends Linha implements FormaGr{
 
-	Color cCor;
-	int iBorda;
+	Color cor;
+	int borda;
 	
 	ArrayList<int[]> alCoordenadas;
 	
-	public LinhaGr(Ponto p1, Ponto p2, Color cCor, int iBorda) {
+	public LinhaGr(Ponto p1, Ponto p2, Color cor, int borda) {
 		super(p1, p2);
-		this.cCor = cCor;
-		this.iBorda = iBorda;
+		this.cor = cor;
+		this.borda = borda;
+	}
+	
+	public LinhaGr(Linha l, Color cor, int borda){
+		super(l.getP1(), l.getP2());
+		this.cor = cor;
+		this.borda = borda;
 	}
 	
 	public void desenhar(GraphicsContext g) {
 		alCoordenadas = this.calcularLinha();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda).desenhar(g);;
 		}
 	}
 
 	public void apagarLinha(GraphicsContext g) {
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, iBorda).desenhar(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, borda).desenhar(g);;
 		}
 	}
 	

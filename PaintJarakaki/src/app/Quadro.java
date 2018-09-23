@@ -7,6 +7,7 @@ import figuras.Sierpinski;
 import grafico.CirculoGr;
 import grafico.LinhaGr;
 import grafico.PontoGr;
+import grafico.RetanguloGr;
 import grafico.TrianguloGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,13 +33,15 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiCirculo;
 	@FXML RadioMenuItem rmiTriangulo;
 	@FXML RadioMenuItem rmiSierpinski;
-	@FXML MenuItem miLimpar;
-	
+	@FXML RadioMenuItem rmiRetangulo;
+
 	@FXML RadioMenuItem rmiPreto;
 	@FXML RadioMenuItem rmiAmarelo;
 	@FXML RadioMenuItem rmiVerde;
 	@FXML RadioMenuItem rmiAzul;
 	@FXML RadioMenuItem rmiVermelho;
+	
+	@FXML MenuItem miLimpar;
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
 	
@@ -52,6 +55,7 @@ public class Quadro implements Initializable{
 	LinhaGr novaLinha;  
 	CirculoGr novoCirculo;
 	TrianguloGr novoTriangulo;
+	RetanguloGr novoRetangulo;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -68,6 +72,7 @@ public class Quadro implements Initializable{
 		rmiCirculo.setToggleGroup(tgFormas);
 		rmiTriangulo.setToggleGroup(tgFormas);
 		rmiSierpinski.setToggleGroup(tgFormas);
+		rmiRetangulo.setToggleGroup(tgFormas);
 		
 		//Define grupo de cores a serem escolhidas
 		rmiPreto.setToggleGroup(tgCores);
@@ -138,6 +143,12 @@ public class Quadro implements Initializable{
 							else {
 								elasticoTriangulo(ev, opcaoCor, opcaoBorda);
 							}
+							break;
+						}
+						
+						case "Retangulo":{
+							elasticoRetangulo(ev, opcaoCor, opcaoBorda);
+							break;
 						}
 					}
 				}
@@ -174,6 +185,11 @@ public class Quadro implements Initializable{
 						break;
 					}
 					
+					case "Retangulo":{
+						desenharRetangulo(ev, cor, borda);
+						break;
+					}
+					
 					case "Sierpinski":{
 						if (sierpDesenho == null) {
 							sierpDesenho = new Sierpinski();
@@ -190,6 +206,21 @@ public class Quadro implements Initializable{
 			}
 		);		
 		
+	}
+	
+	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
+	private void elasticoRetangulo(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
+		PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
+		if (novoRetangulo == null) {
+			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, opcaoBorda);
+			novoRetangulo.desenhar(gcCanvas);
+		}
+		
+		else {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+			novoRetangulo.desenhar(gcCanvas);
+		}
 	}
 	
 	private void elasticoTriangulo(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
@@ -233,6 +264,29 @@ public class Quadro implements Initializable{
 			novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
 			novoCirculo.desenhar(gcCanvas);
 		}
+	}
+	
+	private void desenharRetangulo(MouseEvent ev, Color cor, int borda) {
+		if (p1 == null) {
+
+			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p1.desenhar(gcCanvas);
+			
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
+		}
+		
+		else {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
+			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p2.desenhar(gcCanvas);
+			
+			new RetanguloGr(p1, p2, cor, borda).desenhar(gcCanvas);
+			
+			p1 = null;
+			p2 = null;
+			novoRetangulo = null;
+		}
+		
 	}
 
 	//Desenha triângulo à partir de pontos já desenhados e do clique no quadro
