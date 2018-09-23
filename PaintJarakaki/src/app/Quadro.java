@@ -135,14 +135,14 @@ public class Quadro implements Initializable{
 							PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, new Double(slBorda.getValue()).intValue());
 							if (novoCirculo == null) {
 								novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
-								novoCirculo.desenharCirculo(gcCanvas);
+								novoCirculo.desenhar(gcCanvas);
 							}
 							
 							else {
 								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 								//novaLinha.apagarLinha(gcCanvas);
 								novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
-								novoCirculo.desenharCirculo(gcCanvas);
+								novoCirculo.desenhar(gcCanvas);
 							}
 							break;
 						}
