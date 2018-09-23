@@ -48,7 +48,7 @@ public class Sierpinski {
 				);
 				
 			tgrNovo = new TrianguloGr(p1, p2, p3, clCor, borda);
-			tgrNovo.desenharTriangulo(g);
+			tgrNovo.desenhar(g);
 			
 			alFilhos.add(tgrNovo);
 
@@ -58,17 +58,17 @@ public class Sierpinski {
 			for (TrianguloGr tgrFilho : alGalhos) {
 				//desenha triangulo tendo p1 do pai como base
 				tgrNovo = new TrianguloGr(tgrFilho.getP1(), tgrFilho.getPontoMedioP1P2(), tgrFilho.getPontoMedioP1P3(), clCor, borda);
-				tgrNovo.desenharTriangulo(g);
+				tgrNovo.desenhar(g);
 				alFilhos.add(tgrNovo);
 			
 				//desenha triangulo tendo p2 do pai como base
 				tgrNovo = new TrianguloGr(tgrFilho.getPontoMedioP1P2(), tgrFilho.getP2(), tgrFilho.getPontoMedioP2P3(), clCor, borda);
-				tgrNovo.desenharTriangulo(g);
+				tgrNovo.desenhar(g);
 				alFilhos.add(tgrNovo);
 			
 				//desenha triangulo tendo p3 do pai como base
 				tgrNovo = new TrianguloGr(tgrFilho.getPontoMedioP1P3(), tgrFilho.getPontoMedioP2P3(), tgrFilho.getP3(), clCor, borda);
-				tgrNovo.desenharTriangulo(g);
+				tgrNovo.desenhar(g);
 				alFilhos.add(tgrNovo);
 				
 			}

@@ -6,7 +6,7 @@ import formas.Triangulo;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class TrianguloGr extends Triangulo{
+public class TrianguloGr extends Triangulo implements FormaGr {
 	
 	Color cCor;
 	int iBorda;
@@ -18,7 +18,7 @@ public class TrianguloGr extends Triangulo{
 		iBorda = borda;
 	}
 	
-	public void desenharTriangulo(GraphicsContext g) {
+	public void desenhar(GraphicsContext g) {
 		
 		LinhaGr lgrReta1, lgrReta2, lgrReta3;
 		
@@ -26,9 +26,9 @@ public class TrianguloGr extends Triangulo{
 		lgrReta2 = new LinhaGr(this.p1, this.p3, cCor, iBorda);
 		lgrReta3 = new LinhaGr(this.p2, this.p3, cCor, iBorda);
 		
-		lgrReta1.desenharLinha(g);
-		lgrReta2.desenharLinha(g);
-		lgrReta3.desenharLinha(g);
+		lgrReta1.desenhar(g);
+		lgrReta2.desenhar(g);
+		lgrReta3.desenhar(g);
 		
 	}
 	

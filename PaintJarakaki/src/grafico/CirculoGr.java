@@ -7,7 +7,7 @@ import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class CirculoGr extends Circulo {
+public class CirculoGr extends Circulo implements FormaGr {
 	
 	Color cCor;
 	int iBorda;
@@ -18,11 +18,11 @@ public class CirculoGr extends Circulo {
 		this.iBorda = iBorda;
 	}
 	
-	public void desenharCirculo(GraphicsContext g) {
+	public void desenhar(GraphicsContext g) {
 		ArrayList<int[]> alCoordenadas = this.calcularCirculo();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenharPonto(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(g);;
 		}
 	}
 	
