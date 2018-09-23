@@ -19,6 +19,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 
@@ -143,79 +144,22 @@ public class Quadro implements Initializable{
 				
 				switch (rmiOpcaoForma.getText()) {
 					case "Ponto":{
-						//Elimina resquícios dos outros desenhos
-						p1 = null;
-						p2 = null;
-						p3 = null;
-						
-						//Desenha novo ponto na tela, à partir do X e Y do canvas
-						new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda).desenhar(gcCanvas);
+						desenharPonto(ev, cor, borda);
 						break;
 					}
 					
 					case "Linha":{
-						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							p1.desenhar(gcCanvas);
-							
-							imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
-							
-						}
-						
-						else {
-							
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							p2.desenhar(gcCanvas);
-							
-							new LinhaGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenhar(gcCanvas);
-							
-							p1 = null;
-							p2 = null;
-							novaLinha = null;
-						}
-						
+						desenharLinha(ev, cor, borda);						
 						break;
 					}
 					
 					case "Circulo":{
-						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), Color.WHITE, 0);
-						}
-						
-						else {
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							
-							new CirculoGr(p1, p2, (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenhar(gcCanvas);
-							
-							p1 = null;
-							p2 = null;
-						}
-						
+						desenharCirculo(ev, cor, borda);						
 						break;
 					}
 					
 					case "Triangulo":{
-						if (p1 == null) {
-							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							p1.desenhar(gcCanvas);
-						}
-						
-						else if (p2 == null) {
-							p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							p2.desenhar(gcCanvas);
-						}
-						
-						else {
-							p3 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-							p3.desenhar(gcCanvas);
-							
-							new TrianguloGr(p1, p2, p3, cor, borda).desenhar(gcCanvas);
-							
-							p1 = null;
-							p2 = null;
-							p3 = null;
-						}
-						
+						desenharTriangulo(ev, cor, borda);						
 						break;
 					}
 					
@@ -235,6 +179,86 @@ public class Quadro implements Initializable{
 			}
 		);		
 		
+	}
+	
+	//Desenha triângulo à partir de pontos já desenhados e do clique no quadro
+	private void desenharTriangulo(MouseEvent ev, Color cor, int borda) {
+		if (p1 == null) {
+			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p1.desenhar(gcCanvas);
+		}
+		
+		else if (p2 == null) {
+			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p2.desenhar(gcCanvas);
+		}
+		
+		else {
+			p3 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p3.desenhar(gcCanvas);
+			
+			new TrianguloGr(p1, p2, p3, cor, borda).desenhar(gcCanvas);
+			
+			//Limpa dados do triangulo atual para desenho de nova forma
+			p1 = null;
+			p2 = null;
+			p3 = null;
+		}
+	}
+	
+	//Desenha circulo de acordo com o clique no quadro
+	private void desenharCirculo(MouseEvent ev, Color cor, int borda) {
+		
+		//Se centro do círculo ainda não foi fixado, é criado ponto no local do clique
+		if (p1 == null) {
+			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), Color.WHITE, 0);
+		}
+		
+		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
+		else {
+			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			
+			new CirculoGr(p1, p2, cor, borda).desenhar(gcCanvas);
+			
+			//Limpa dados do circulo para desenho de novas formas
+			p1 = null;
+			p2 = null;
+		}
+	}
+
+	//Desenha linha de acordo cliques no quadro
+	private void desenharLinha(MouseEvent ev, Color cor, int borda) {
+		if (p1 == null) {
+			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p1.desenhar(gcCanvas);
+			
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
+			
+		}
+		
+		else {
+			
+			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
+			p2.desenhar(gcCanvas);
+			
+			new LinhaGr(p1, p2, cor, borda).desenhar(gcCanvas);
+			
+			p1 = null;
+			p2 = null;
+			novaLinha = null;
+		}
+		
+	}
+
+	//Desenha ponto conforme clique no quadro
+	private void desenharPonto(MouseEvent ev, Color cor, int borda) {
+		//Elimina resquícios dos outros desenhos
+		p1 = null;
+		p2 = null;
+		p3 = null;
+		
+		//Desenha novo ponto na tela, à partir do X e Y do canvas
+		new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda).desenhar(gcCanvas);
 	}
 
 }
