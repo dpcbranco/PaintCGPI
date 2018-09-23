@@ -46,7 +46,8 @@ public class Quadro implements Initializable{
 	WritableImage imgSnapshot;
 	
 	PontoGr p1 = null, p2 = null, p3 = null;
-	LinhaGr novaLinha;  //Objeto usado para desenho e redesenho de linha elástica
+	LinhaGr novaLinha;  //Objeto usado para desenho e redesenho de linha elï¿½stica
+	CirculoGr novoCirculo;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -71,14 +72,14 @@ public class Quadro implements Initializable{
 		rmiAzul.setToggleGroup(tgCores);
 		rmiVermelho.setToggleGroup(tgCores);
 		
-		//Define a cor que cada botão representa
+		//Define a cor que cada botï¿½o representa
 		rmiPreto.setUserData(Color.BLACK);
 		rmiAmarelo.setUserData(Color.YELLOW);
 		rmiVerde.setUserData(Color.GREEN);
 		rmiAzul.setUserData(Color.BLUE);
 		rmiVermelho.setUserData(Color.RED);
 		
-		//Define opções "DEFAULT"
+		//Define opï¿½ï¿½es "DEFAULT"
 		rmiPonto.setSelected(true);
 		rmiPreto.setSelected(true);
 		
@@ -125,6 +126,23 @@ public class Quadro implements Initializable{
 								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
 								novaLinha.desenharLinha(gcCanvas);
 							}
+							break;
+						}
+						
+						case "Circulo":{
+							PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, new Double(slBorda.getValue()).intValue());
+							if (novoCirculo == null) {
+								novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+								novoCirculo.desenharCirculo(gcCanvas);
+							}
+							
+							else {
+								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+								//novaLinha.apagarLinha(gcCanvas);
+								novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+								novoCirculo.desenharCirculo(gcCanvas);
+							}
+							break;
 						}
 					}
 				}
@@ -139,12 +157,12 @@ public class Quadro implements Initializable{
 				
 				switch (rmiOpcaoForma.getText()) {
 					case "Ponto":{
-						//Elimina resquícios dos outros desenhos
+						//Elimina resquï¿½cios dos outros desenhos
 						p1 = null;
 						p2 = null;
 						p3 = null;
 						
-						//Desenha novo ponto na tela, à partir do X e Y do canvas
+						//Desenha novo ponto na tela, ï¿½ partir do X e Y do canvas
 						new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData(), new Double(slBorda.getValue()).intValue()).desenharPonto(gcCanvas);
 						break;
 					}
@@ -176,6 +194,7 @@ public class Quadro implements Initializable{
 					case "Circulo":{
 						if (p1 == null) {
 							p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), (Color) rmiOpcaoCor.getUserData());
+							imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);
 						}
 						
 						else {
