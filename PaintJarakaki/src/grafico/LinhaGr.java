@@ -1,13 +1,13 @@
-package formas;
+package grafico;
 
 import java.util.ArrayList;
 
+import formas.Linha;
+import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import math.Linha;
-import math.Ponto;
 
-public class LinhaGr extends Linha {
+public class LinhaGr extends Linha implements FormaGr{
 
 	Color cCor;
 	int iBorda;
@@ -20,17 +20,17 @@ public class LinhaGr extends Linha {
 		this.iBorda = iBorda;
 	}
 	
-	public void desenharLinha(GraphicsContext g) {
+	public void desenhar(GraphicsContext g) {
 		alCoordenadas = this.calcularLinha();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenharPonto(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(g);;
 		}
 	}
 
 	public void apagarLinha(GraphicsContext g) {
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, iBorda).desenharPonto(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, iBorda).desenhar(g);;
 		}
 	}
 	

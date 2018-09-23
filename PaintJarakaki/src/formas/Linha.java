@@ -1,4 +1,4 @@
-package math;
+package formas;
 
 import java.util.ArrayList;
 
