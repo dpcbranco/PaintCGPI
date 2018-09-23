@@ -124,7 +124,6 @@ public class Quadro implements Initializable{
 							
 							else {
 								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-								//novaLinha.apagarLinha(gcCanvas);
 								novaLinha = new LinhaGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
 								novaLinha.desenhar(gcCanvas);
 							}
@@ -140,7 +139,6 @@ public class Quadro implements Initializable{
 							
 							else {
 								cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-								//novaLinha.apagarLinha(gcCanvas);
 								novoCirculo = new CirculoGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
 								novoCirculo.desenhar(gcCanvas);
 							}
@@ -235,6 +233,8 @@ public class Quadro implements Initializable{
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
 		else {
+			//remove resquicios do desenho anterior
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			
 			new CirculoGr(p1, p2, cor, borda).desenhar(gcCanvas);
@@ -248,6 +248,7 @@ public class Quadro implements Initializable{
 	//Desenha linha de acordo cliques no quadro
 	private void desenharLinha(MouseEvent ev, Color cor, int borda) {
 		if (p1 == null) {
+
 			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			p1.desenhar(gcCanvas);
 			
@@ -255,7 +256,8 @@ public class Quadro implements Initializable{
 		}
 		
 		else {
-			
+			//remove resquicios do desenho anterior
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
 			p2.desenhar(gcCanvas);
 			
