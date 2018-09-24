@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import figuras.Sierpinski;
 import grafico.CirculoGr;
 import grafico.LinhaGr;
+import grafico.PoligonoGr;
 import grafico.PontoGr;
 import grafico.RetanguloGr;
 import grafico.TrianguloGr;
@@ -20,6 +21,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -34,6 +36,7 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiTriangulo;
 	@FXML RadioMenuItem rmiSierpinski;
 	@FXML RadioMenuItem rmiRetangulo;
+	@FXML RadioMenuItem rmiPoligono;
 
 	@FXML RadioMenuItem rmiPreto;
 	@FXML RadioMenuItem rmiAmarelo;
@@ -49,6 +52,7 @@ public class Quadro implements Initializable{
 	
 	WritableImage imgSnapshot;
 	
+	PontoGr novoPonto;
 	PontoGr p1 = null, p2 = null, p3 = null;
 	
 	//Objeto usado para desenho e redesenho de linha elástica
@@ -56,6 +60,7 @@ public class Quadro implements Initializable{
 	CirculoGr novoCirculo;
 	TrianguloGr novoTriangulo;
 	RetanguloGr novoRetangulo;
+	PoligonoGr novoPoligono;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -73,6 +78,7 @@ public class Quadro implements Initializable{
 		rmiTriangulo.setToggleGroup(tgFormas);
 		rmiSierpinski.setToggleGroup(tgFormas);
 		rmiRetangulo.setToggleGroup(tgFormas);
+		rmiPoligono.setToggleGroup(tgFormas);
 		
 		//Define grupo de cores a serem escolhidas
 		rmiPreto.setToggleGroup(tgCores);
@@ -150,6 +156,11 @@ public class Quadro implements Initializable{
 							elasticoRetangulo(ev, opcaoCor, opcaoBorda);
 							break;
 						}
+						
+						case "Poligono":{
+							elasticoPoligono(ev, opcaoCor, opcaoBorda);
+							break;
+						}
 					}
 				}
 			}
@@ -190,6 +201,13 @@ public class Quadro implements Initializable{
 						break;
 					}
 					
+					case "Poligono":{
+						desenharPoligono(ev, cor, borda);
+						break;
+						
+					}
+					
+					
 					case "Sierpinski":{
 						if (sierpDesenho == null) {
 							sierpDesenho = new Sierpinski();
@@ -208,6 +226,43 @@ public class Quadro implements Initializable{
 		
 	}
 	
+	private void elasticoPoligono(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
+		novoPonto = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
+		LinhaGr linhaPoligono;
+		
+		if (novoPoligono != null) {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			linhaPoligono = new LinhaGr(novoPoligono.getPN(), novoPonto, opcaoCor, opcaoBorda);
+			linhaPoligono.desenhar(gcCanvas);
+		}
+	}
+
+	private void desenharPoligono(MouseEvent ev, Color cor, int borda) {
+		
+		if (ev.getButton() == MouseButton.PRIMARY) {
+			
+			p1 = new PontoGr((int) ev.getX(), (int) ev.getY(), cor, borda);
+			
+			if (novoPoligono == null) {
+				novoPoligono = new PoligonoGr(p1, cor, borda);
+				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
+			}
+		
+			else {
+				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+				novoPoligono.desenhar(p1, gcCanvas);
+				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
+			}
+		}
+		else if (ev.getButton() == MouseButton.SECONDARY) {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			novoPoligono.finalizarPoligono(gcCanvas);
+			
+			novoPoligono = null;
+		}
+		
+	}
+
 	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
 	private void elasticoRetangulo(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
 		PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
@@ -218,7 +273,7 @@ public class Quadro implements Initializable{
 		
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, new Double(slBorda.getValue()).intValue());
+			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, opcaoBorda);
 			novoRetangulo.desenhar(gcCanvas);
 		}
 	}
