@@ -4,15 +4,13 @@ import java.util.ArrayList;
 
 public class Circulo {
 	
-	Ponto p1, p2;
+	protected Ponto p1, p2;
 	double dRaio;
 	
 	public Circulo(Ponto p1, Ponto p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 		
-		//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
-		dRaio = Math.sqrt( Math.pow( (p2.getX() - p1.getX()), 2 ) + Math.pow( (p2.getY() - p1.getY()), 2 ) );
 	}
 	
 	protected ArrayList<int[]> calcularCirculo() {
@@ -20,6 +18,9 @@ public class Circulo {
 		int iCentroX, iCentroY;
 		double dSeno, dCosseno, iAngulo;
 		int dX, dY;
+		
+		//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
+		dRaio = Math.sqrt( Math.pow( (p2.getX() - p1.getX()), 2 ) + Math.pow( (p2.getY() - p1.getY()), 2 ) );
 		
 		//Valores de X e Y do ponto central transformados em int
 		iCentroX = new Double(p1.getX()).intValue();

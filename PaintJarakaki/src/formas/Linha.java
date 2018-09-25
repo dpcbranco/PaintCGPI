@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Linha {
 	
-	Ponto p1, p2, pAux;
+	protected Ponto p1, p2, pAux;
 	
 	public Linha (Ponto p1, Ponto p2) {
 		this.p1 = p1;

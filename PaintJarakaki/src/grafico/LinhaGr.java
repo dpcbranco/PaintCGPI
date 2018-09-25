@@ -39,5 +39,13 @@ public class LinhaGr extends Linha implements FormaGr{
 			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, borda).desenhar(g);;
 		}
 	}
+
+	public void setP1(PontoGr p) {
+		this.p1 = p;
+	}
+	
+	public void setP2(PontoGr p) {
+		this.p2 = p;
+	}
 	
 }

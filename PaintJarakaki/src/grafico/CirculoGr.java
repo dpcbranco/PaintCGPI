@@ -25,5 +25,22 @@ public class CirculoGr extends Circulo implements FormaGr {
 			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(g);;
 		}
 	}
+
+	
+	public void setP1(PontoGr p) {
+		this.p2 = p;
+	}
+	
+	public void setP2(PontoGr p) {
+		this.p2 = p;
+	}
+
+	public Ponto getP1() {
+		return this.p1;
+	}
+	
+	public Ponto getP2() {
+		return this.p2;
+	}
 	
 }
