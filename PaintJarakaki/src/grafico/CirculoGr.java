@@ -12,8 +12,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 	Color cCor;
 	int iBorda;
 
-	public CirculoGr(Ponto p1, Ponto p2, Color cCor, int iBorda) {
-		super(p1, p2);
+	public CirculoGr(Color cCor, int iBorda) {
 		this.cCor = cCor;
 		this.iBorda = iBorda;
 	}
@@ -26,21 +25,5 @@ public class CirculoGr extends Circulo implements FormaGr {
 		}
 	}
 
-	
-	public void setP1(PontoGr p) {
-		this.p2 = p;
-	}
-	
-	public void setP2(PontoGr p) {
-		this.p2 = p;
-	}
-
-	public Ponto getP1() {
-		return this.p1;
-	}
-	
-	public Ponto getP2() {
-		return this.p2;
-	}
 	
 }
