@@ -4,15 +4,9 @@ import java.util.ArrayList;
 
 public class Circulo {
 	
-	protected Ponto p1, p2;
+	protected Ponto centro, raio;
 	double dRaio;
-	
-	public Circulo(Ponto p1, Ponto p2) {
-		this.p1 = p1;
-		this.p2 = p2;
-		
-	}
-	
+
 	protected ArrayList<int[]> calcularCirculo() {
 		ArrayList<int[]> alCoordenadas = new ArrayList<>();
 		int iCentroX, iCentroY;
@@ -20,11 +14,11 @@ public class Circulo {
 		int dX, dY;
 		
 		//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
-		dRaio = Math.sqrt( Math.pow( (p2.getX() - p1.getX()), 2 ) + Math.pow( (p2.getY() - p1.getY()), 2 ) );
+		dRaio = Math.sqrt( Math.pow( (raio.getX() - centro.getX()), 2 ) + Math.pow( (raio.getY() - centro.getY()), 2 ) );
 		
 		//Valores de X e Y do ponto central transformados em int
-		iCentroX = new Double(p1.getX()).intValue();
-		iCentroY = new Double(p1.getY()).intValue();
+		iCentroX = new Double(centro.getX()).intValue();
+		iCentroY = new Double(centro.getY()).intValue();
 		
 		for (iAngulo = 0; iAngulo <= 45; iAngulo = iAngulo + 0.125) {
 			
@@ -62,5 +56,21 @@ public class Circulo {
 		}
 		
 		return alCoordenadas;
+	}
+	
+	public void setCentro(Ponto p) {
+		this.centro = p;
+	}
+	
+	public void setRaio(Ponto p) {
+		this.raio = p;
+	}
+
+	public Ponto getCentro() {
+		return this.centro;
+	}
+	
+	public Ponto getRaio() {
+		return this.raio;
 	}
 }
