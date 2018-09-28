@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 public class Linha {
 	
-	protected Ponto p1, p2, pAux;
+	public Linha() {
+		
+	}
 	
 	public Linha (Ponto p1, Ponto p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
+	
+	protected Ponto p1, p2, pAux;
 	
 	protected ArrayList<int[]> calcularLinha(){
 		ArrayList<int[]> alCoordenadas = new ArrayList<>();
@@ -140,6 +144,15 @@ public class Linha {
 	
 	public Ponto getP2() {
 		return this.p2;
+	}
+	
+
+	public void setP1(Ponto ponto) {
+		this.p1 = ponto;
+	}
+	
+	public void setP2(Ponto ponto) {
+		this.p2 = ponto;
 	}
 	
 	

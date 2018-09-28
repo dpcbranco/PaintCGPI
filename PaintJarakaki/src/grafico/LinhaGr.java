@@ -3,7 +3,6 @@ package grafico;
 import java.util.ArrayList;
 
 import formas.Linha;
-import formas.Ponto;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -14,14 +13,15 @@ public class LinhaGr extends Linha implements FormaGr{
 	
 	ArrayList<int[]> alCoordenadas;
 	
-	public LinhaGr(Ponto p1, Ponto p2, Color cor, int borda) {
-		super(p1, p2);
+	public LinhaGr(Color cor, int borda) {
 		this.cor = cor;
 		this.borda = borda;
 	}
 	
 	public LinhaGr(Linha l, Color cor, int borda){
-		super(l.getP1(), l.getP2());
+		setP1(l.getP1());
+		setP2(l.getP2());
+		
 		this.cor = cor;
 		this.borda = borda;
 	}
@@ -40,12 +40,4 @@ public class LinhaGr extends Linha implements FormaGr{
 		}
 	}
 
-	public void setP1(PontoGr p) {
-		this.p1 = p;
-	}
-	
-	public void setP2(PontoGr p) {
-		this.p2 = p;
-	}
-	
 }
