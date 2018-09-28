@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import figuras.Sierpinski;
 import grafico.CirculoGr;
 import grafico.LinhaGr;
+import grafico.LinhaPoligonalGr;
 import grafico.PoligonoGr;
 import grafico.PontoGr;
 import grafico.RetanguloGr;
@@ -37,7 +38,8 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiSierpinski;
 	@FXML RadioMenuItem rmiRetangulo;
 	@FXML RadioMenuItem rmiPoligono;
-
+	@FXML RadioMenuItem rmiLinhaPoligonal;
+	
 	@FXML RadioMenuItem rmiPreto;
 	@FXML RadioMenuItem rmiAmarelo;
 	@FXML RadioMenuItem rmiVerde;
@@ -61,6 +63,7 @@ public class Quadro implements Initializable{
 	TrianguloGr novoTriangulo;
 	RetanguloGr novoRetangulo;
 	PoligonoGr novoPoligono;
+	LinhaPoligonalGr novaLinhaPoligonal;
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -79,6 +82,7 @@ public class Quadro implements Initializable{
 		rmiSierpinski.setToggleGroup(tgFormas);
 		rmiRetangulo.setToggleGroup(tgFormas);
 		rmiPoligono.setToggleGroup(tgFormas);
+		rmiLinhaPoligonal.setToggleGroup(tgFormas);
 		
 		//Define grupo de cores a serem escolhidas
 		rmiPreto.setToggleGroup(tgCores);
@@ -168,6 +172,11 @@ public class Quadro implements Initializable{
 						elasticoPoligono(pontoEv, opcaoCor, opcaoBorda);
 						break;
 					}
+					
+					case "Linha Poligonal":{
+						elasticoLinhaPoligonal(pontoEv, opcaoCor, opcaoBorda);
+						break;
+					}
 				}
 				
 			}
@@ -215,6 +224,11 @@ public class Quadro implements Initializable{
 						
 					}
 					
+					case "Linha Poligonal":{
+						desenharLinhaPoligonal(ev, cor, borda);
+						break;
+					}
+					
 					
 					case "Sierpinski":{
 						if (sierpDesenho == null) {
@@ -234,6 +248,40 @@ public class Quadro implements Initializable{
 		
 	}
 	
+	private void elasticoLinhaPoligonal(PontoGr p, Color opcaoCor, int opcaoBorda) {
+		LinhaGr linhaPoligono;
+		
+		if (novaLinhaPoligonal != null) {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), p, opcaoCor, opcaoBorda);
+			linhaPoligono.desenhar(gcCanvas);
+		}
+	}
+
+	private void desenharLinhaPoligonal(MouseEvent ev, Color cor, int borda) {
+		
+		PontoGr p = new PontoGr((int)ev.getX(),(int)ev.getY(), cor, borda);
+		
+		if (ev.getButton() == MouseButton.PRIMARY) {
+			
+			if (novaLinhaPoligonal == null) {
+				novaLinhaPoligonal = new LinhaPoligonalGr(p, cor, borda);
+				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
+			}
+		
+			else {
+				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+				novaLinhaPoligonal.desenhar(p, gcCanvas);
+				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
+			}
+		}
+		else if (ev.getButton() == MouseButton.SECONDARY) {
+			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			novaLinhaPoligonal.desenhar(p, gcCanvas);
+			novaLinhaPoligonal = null;
+		}
+	}
+
 	private void elasticoPoligono(PontoGr p, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaPoligono;
 		

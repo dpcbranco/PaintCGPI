@@ -23,6 +23,7 @@
                   <RadioMenuItem fx:id="rmiTriangulo" mnemonicParsing="false" text="Triangulo" />
                   <RadioMenuItem fx:id="rmiRetangulo" mnemonicParsing="false" text="Retangulo" />
                   <RadioMenuItem fx:id="rmiPoligono" mnemonicParsing="false" text="Poligono" />
+                  <RadioMenuItem fx:id="rmiLinhaPoligonal" mnemonicParsing="false" text="Linha Poligonal" />
                   <RadioMenuItem fx:id="rmiSierpinski" mnemonicParsing="false" text="Sierpinski" />
                </items>
           </Menu>
