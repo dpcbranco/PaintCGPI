@@ -18,6 +18,13 @@ public class LinhaGr extends Linha implements FormaGr{
 		this.borda = borda;
 	}
 	
+	public LinhaGr (PontoGr p1, PontoGr p2, Color cor, int borda) {
+		this.p1 = p1;
+		this.p2 = p2;
+		this.cor = cor;
+		this.borda = borda;
+	}
+	
 	public LinhaGr(Linha l, Color cor, int borda){
 		setP1(l.getP1());
 		setP2(l.getP2());

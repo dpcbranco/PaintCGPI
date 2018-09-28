@@ -23,4 +23,20 @@ public class Retangulo {
 		
 		return alRetas;
 	}
+	
+	public Ponto getP1() {
+		return p1;
+	}
+	
+	public Ponto getP2() {
+		return p2;
+	}
+	
+	public void setP1(Ponto p) {
+		this.p1 = p;
+	}
+	
+	public void setP2(Ponto p) {
+		this.p2 = p;
+	}
 }

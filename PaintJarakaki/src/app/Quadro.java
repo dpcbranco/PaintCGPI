@@ -160,12 +160,12 @@ public class Quadro implements Initializable{
 					}
 						
 					case "Retangulo":{
-						elasticoRetangulo(ev, opcaoCor, opcaoBorda);
+						elasticoRetangulo(pontoEv, opcaoCor, opcaoBorda);
 						break;
 					}
 						
 					case "Poligono":{
-						elasticoPoligono(ev, opcaoCor, opcaoBorda);
+						elasticoPoligono(pontoEv, opcaoCor, opcaoBorda);
 						break;
 					}
 				}
@@ -205,7 +205,7 @@ public class Quadro implements Initializable{
 					}
 					
 					case "Retangulo":{
-						desenharRetangulo(ev, cor, borda);
+						desenharRetangulo(novoPonto, cor, borda);
 						break;
 					}
 					
@@ -234,13 +234,12 @@ public class Quadro implements Initializable{
 		
 	}
 	
-	private void elasticoPoligono(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
-		novoPonto = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
+	private void elasticoPoligono(PontoGr p, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaPoligono;
 		
 		if (novoPoligono != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			linhaPoligono = new LinhaGr(opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), p, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(gcCanvas);
 		}
 	}
@@ -272,17 +271,12 @@ public class Quadro implements Initializable{
 	}
 
 	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
-	private void elasticoRetangulo(MouseEvent ev, Color opcaoCor, int opcaoBorda) {
-		PontoGr p2 = new PontoGr((int) ev.getX(), (int) ev.getY(), opcaoCor, opcaoBorda);
-		if (novoRetangulo == null) {
-			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, opcaoBorda);
-			novoRetangulo.desenhar(gcCanvas);
-		}
-		
-		else {
+	private void elasticoRetangulo(PontoGr p, Color opcaoCor, int opcaoBorda) {
+		RetanguloGr retanguloLinha;
+		if (novoRetangulo != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			novoRetangulo = new RetanguloGr(p1, p2, opcaoCor, opcaoBorda);
-			novoRetangulo.desenhar(gcCanvas);
+			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), p, opcaoCor, opcaoBorda);
+			retanguloLinha.desenhar(gcCanvas);
 		}
 	}
 	
@@ -323,24 +317,16 @@ public class Quadro implements Initializable{
 		}
 	}
 	
-	private void desenharRetangulo(MouseEvent ev, Color cor, int borda) {
-		if (p1 == null) {
-
-			p1 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-			p1.desenhar(gcCanvas);
-			
+	private void desenharRetangulo(PontoGr p, Color cor, int borda) {
+		if (novoRetangulo == null) {
+			novoRetangulo = new RetanguloGr(p, null, cor, borda);			
 			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
-			p2 = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);
-			p2.desenhar(gcCanvas);
-			
-			new RetanguloGr(p1, p2, cor, borda).desenhar(gcCanvas);
-			
-			p1 = null;
-			p2 = null;
+			novoRetangulo.setP2(p);
+			novoRetangulo.desenhar(gcCanvas);
 			novoRetangulo = null;
 		}
 		
