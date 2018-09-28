@@ -240,7 +240,7 @@ public class Quadro implements Initializable{
 		
 		if (novoPoligono != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			linhaPoligono = new LinhaGr(novoPoligono.getPN(), novoPonto, opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr(opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(gcCanvas);
 		}
 	}
@@ -303,7 +303,9 @@ public class Quadro implements Initializable{
 		
 		if (novaLinha != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			linhaElastico = new LinhaGr(novaLinha.getP1(), p, opcaoCor, opcaoBorda);
+			linhaElastico = new LinhaGr(opcaoCor, opcaoBorda);
+			linhaElastico.setP1(novaLinha.getP1());
+			linhaElastico.setP2(p);
 			linhaElastico.desenhar(gcCanvas);
 		}
 	}
@@ -349,7 +351,8 @@ public class Quadro implements Initializable{
 		if (novoTriangulo == null) {
 			
 			novoTriangulo = new TrianguloGr(p, null, null, cor, borda);
-			novaLinha = new LinhaGr(p, null, cor, borda);
+			novaLinha = new LinhaGr(cor, borda);
+			novaLinha.setP1(p);
 			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
@@ -398,8 +401,8 @@ public class Quadro implements Initializable{
 	private void desenharLinha(PontoGr p, Color cor, int borda) {
 		
 		if (novaLinha == null) {
-
-			novaLinha = new LinhaGr(p, null, cor, borda);
+			novaLinha = new LinhaGr(cor, borda);			
+			novaLinha.setP1(p);
 			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		

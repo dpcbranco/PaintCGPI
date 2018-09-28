@@ -16,7 +16,7 @@ public class Retangulo {
 		p3 = new Ponto((int)p2.getX(), (int)p1.getY());
 		p4 = new Ponto((int)p1.getX(), (int)p2.getY());
 		
-		alRetas.add(new Linha(p1, p3));
+		alRetas.add(new Linha(p1, p3));		
 		alRetas.add(new Linha(p1, p4));
 		alRetas.add(new Linha(p2, p3));
 		alRetas.add(new Linha(p2, p4));

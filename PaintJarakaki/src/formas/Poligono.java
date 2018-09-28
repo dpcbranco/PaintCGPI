@@ -12,7 +12,11 @@ public class Poligono {
 	
 	
 	public Linha calcularNovaLinha(Ponto novoPonto) {
-		Linha novaLinha = new Linha(pontos.get(pontos.size() - 1), novoPonto);
+		Linha novaLinha = new Linha();
+		
+		novaLinha.setP1(pontos.get(pontos.size() - 1));
+		novaLinha.setP2(novoPonto);
+		
 		pontos.add(novoPonto);
 		return novaLinha;
 	}

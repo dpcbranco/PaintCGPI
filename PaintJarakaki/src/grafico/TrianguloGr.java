@@ -20,14 +20,17 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 	
 	public void desenhar(GraphicsContext g) {
 		
-		LinhaGr lgrReta1, lgrReta2, lgrReta3;
+		LinhaGr lgrReta2, lgrReta3;
 		
-		lgrReta1 = new LinhaGr(this.p1, this.p2, cCor, iBorda);
-		lgrReta2 = new LinhaGr(this.p1, this.p3, cCor, iBorda);
-		lgrReta3 = new LinhaGr(this.p2, this.p3, cCor, iBorda);
-		
-		lgrReta1.desenhar(g);
+		lgrReta2 = new LinhaGr(cCor, iBorda);
+		lgrReta3 = new LinhaGr(cCor, iBorda);
+
+		lgrReta2.setP1(this.p1);
+		lgrReta2.setP2(this.p3);
 		lgrReta2.desenhar(g);
+		
+		lgrReta3.setP1(this.p2);
+		lgrReta3.setP2(this.p3);
 		lgrReta3.desenhar(g);
 		
 	}
