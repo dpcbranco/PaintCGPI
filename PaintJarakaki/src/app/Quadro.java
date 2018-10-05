@@ -1,6 +1,7 @@
 package app;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
@@ -13,6 +14,7 @@ import grafico.RetanguloGr;
 import grafico.TrianguloGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -49,6 +51,8 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiVermelho;
 	
 	@FXML MenuItem miLimpar;
+	@FXML MenuItem miSelecionar;	
+	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
 	
@@ -72,6 +76,8 @@ public class Quadro implements Initializable{
 	GraphicsContext gcCanvas;
 	Sierpinski sierpDesenho;
 	
+	//Armazena desenhos de iteração anterior
+	ArrayList<Node> listaFormas = new ArrayList<>();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -109,6 +115,8 @@ public class Quadro implements Initializable{
 		gcCanvas = cv_quadro.getGraphicsContext2D();
 		gcCanvas.setFill(Color.WHITE);
 		gcCanvas.fill();
+		
+		cv_quadro.toFront();
 		
 		slBorda.valueProperty().addListener(
 			(ev)->{
@@ -345,11 +353,15 @@ public class Quadro implements Initializable{
 		LinhaGr linhaElastico;
 		
 		if (novaLinha != null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+	//		cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			linhaElastico = new LinhaGr(opcaoCor, opcaoBorda);
 			linhaElastico.setP1(novaLinha.getP1());
 			linhaElastico.setP2(p);
 			linhaElastico.desenhar(paneCanvas);
+			
+			cv_quadro.toFront();
 		}
 	}
 	
@@ -438,11 +450,15 @@ public class Quadro implements Initializable{
 		if (novaLinha == null) {
 			novaLinha = new LinhaGr(cor, borda);			
 			novaLinha.setP1(p);
+			listaFormas.addAll(paneCanvas.getChildren());
 			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
 		}
 		
 		else {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
+			//remove resquicios do snapshot anterior
+			paneCanvas.getChildren().clear();	
+			paneCanvas.getChildren().addAll(listaFormas);
+			
 			p = new PontoGr((int)p.getX(), (int)p.getY(), cor, borda);
 			p.desenhar(paneCanvas);
 			
@@ -450,6 +466,7 @@ public class Quadro implements Initializable{
 			novaLinha.desenhar(paneCanvas);
 			
 			novaLinha = null;
+			listaFormas.clear();
 		}
 		
 	}

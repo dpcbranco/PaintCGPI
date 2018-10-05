@@ -76,7 +76,7 @@ public class PontoGr extends Ponto implements FormaGr {
 		e.setRadiusY(getDiametro());
 		
 		e.setFill(getCor());
-				
+		
 		pane.getChildren().add(e);
 		/*g.setFill(getCor());
 		sc.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());*/
