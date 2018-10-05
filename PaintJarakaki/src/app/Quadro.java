@@ -535,7 +535,6 @@ public class Quadro implements Initializable{
 			paneCanvas.getChildren().addAll(listaFormas);
 			
 			p = new PontoGr((int)p.getX(), (int)p.getY(), cor, borda);
-			p.desenhar(paneCanvas);
 			
 			novaLinha.setP2(p);
 			novaLinha.desenhar(paneCanvas);
