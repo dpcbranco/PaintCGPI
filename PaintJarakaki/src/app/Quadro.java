@@ -227,65 +227,66 @@ public class Quadro implements Initializable{
 		
 		cv_quadro.setOnMouseClicked(
 			(ev)->{
-				RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();
-				RadioMenuItem rmiOpcaoCor = (RadioMenuItem) tgCores.getSelectedToggle();
+				if (!selecionar) {
+					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();
+					RadioMenuItem rmiOpcaoCor = (RadioMenuItem) tgCores.getSelectedToggle();
 				
-				Color cor = (Color) rmiOpcaoCor.getUserData();
-				int borda = new Double(slBorda.getValue()).intValue();
+					Color cor = (Color) rmiOpcaoCor.getUserData();
+					int borda = new Double(slBorda.getValue()).intValue();
 				
-				novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);				
+					novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);				
 				
-				switch (rmiOpcaoForma.getText()) {
-					case "Ponto":{
-						desenharPonto();
-						break;
-					}
-					
-					case "Linha":{
-						desenharLinha(novoPonto, cor, borda);						
-						break;
-					}
-					
-					case "Circulo":{
-						desenharCirculo(novoPonto, cor, borda);						
-						break;
-					}
-					
-					case "Triangulo":{
-						desenharTriangulo(novoPonto, cor, borda);						
-						break;
-					}
-					
-					case "Retangulo":{
-						desenharRetangulo(novoPonto, cor, borda);
-						break;
-					}
-					
-					case "Poligono":{
-						desenharPoligono(ev, cor, borda);
-						break;
-						
-					}
-					
-					case "Linha Poligonal":{
-						desenharLinhaPoligonal(ev, cor, borda);
-						break;
-					}
-					
-					
-					case "Sierpinski":{
-						if (sierpDesenho == null) {
-							sierpDesenho = new Sierpinski();
+					switch (rmiOpcaoForma.getText()) {
+						case "Ponto":{
+							desenharPonto();
+							break;
 						}
-
-						sierpDesenho.setBorda(borda);
-						sierpDesenho.setCor(cor);
-						sierpDesenho.desenharIteracao(paneCanvas);
+					
+						case "Linha":{
+							desenharLinha(novoPonto, cor, borda);						
+							break;
+						}
+					
+						case "Circulo":{
+							desenharCirculo(novoPonto, cor, borda);						
+							break;
+						}
+					
+						case "Triangulo":{
+							desenharTriangulo(novoPonto, cor, borda);						
+							break;
+						}
+					
+						case "Retangulo":{
+							desenharRetangulo(novoPonto, cor, borda);
+							break;
+						}
+					
+						case "Poligono":{
+							desenharPoligono(ev, cor, borda);
+							break;
 						
-						break;
+						}
+					
+						case "Linha Poligonal":{
+							desenharLinhaPoligonal(ev, cor, borda);
+							break;
+						}
+					
+					
+						case "Sierpinski":{
+							if (sierpDesenho == null) {
+								sierpDesenho = new Sierpinski();
+							}
+
+							sierpDesenho.setBorda(borda);
+							sierpDesenho.setCor(cor);
+							sierpDesenho.desenharIteracao(paneCanvas);
+						
+							break;
+						}
 					}
 				}
-
 			}
 		);		
 		
