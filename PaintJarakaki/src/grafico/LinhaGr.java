@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import formas.Linha;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 
 public class LinhaGr extends Linha implements FormaGr{
 
@@ -12,6 +13,7 @@ public class LinhaGr extends Linha implements FormaGr{
 	int borda;
 	
 	ArrayList<int[]> alCoordenadas;
+	ArrayList<PontoGr> pontosLinha = new ArrayList<>();
 	
 	public LinhaGr(Color cor, int borda) {
 		this.cor = cor;
@@ -37,8 +39,26 @@ public class LinhaGr extends Linha implements FormaGr{
 		alCoordenadas = this.calcularLinha();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda).desenhar(pane);;
+			PontoGr novoPonto = new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda);
+			novoPonto.desenhar(pane);
+			novoPonto.obterElipse().setOnMouseClicked(
+				(ev) ->{
+					selecionar();
+				}
+			);
+			pontosLinha.add(novoPonto);
 		}
+	}
+
+	private void selecionar() {
+		for (PontoGr p : pontosLinha) {
+			Ellipse e = p.obterElipse();
+			e.setFill(Color.FUCHSIA);
+		}
+	}
+
+	public ArrayList<PontoGr> getPontos() {
+		return this.pontosLinha;
 	}
 
 }

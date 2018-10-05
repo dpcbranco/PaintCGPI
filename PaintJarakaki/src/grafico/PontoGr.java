@@ -15,6 +15,7 @@ import javafx.scene.shape.Ellipse;
 public class PontoGr extends Ponto implements FormaGr {
 	Color cor; // cor do ponto 
 	int diametro; // diametro do ponto, default = 5
+	Ellipse e;
 	
 	/**
 	 * Constroi um ponto na posicao x, y e com os atributos
@@ -67,7 +68,7 @@ public class PontoGr extends Ponto implements FormaGr {
 	 * @param pane contexto grafico
 	 */
 	public void desenhar(Pane pane) {
-		Ellipse e = new Ellipse();
+		e = new Ellipse();
 		
 		// desenha ponto como um oval
 		e.setCenterX(getX());
@@ -77,8 +78,23 @@ public class PontoGr extends Ponto implements FormaGr {
 		
 		e.setFill(getCor());
 		
+		e.setOnMouseClicked(
+			(ev)->{
+				this.selecionar(e);
+			}
+		);
+		
 		pane.getChildren().add(e);
 		/*g.setFill(getCor());
 		sc.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());*/
+	}
+
+	//@Override
+	public void selecionar(Ellipse e) {
+		e.setFill(Color.FUCHSIA);
+	}
+	
+	public Ellipse obterElipse() {
+		return this.e;
 	}
 }

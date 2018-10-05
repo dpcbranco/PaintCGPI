@@ -28,6 +28,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 
 
 public class Quadro implements Initializable{
@@ -52,6 +53,7 @@ public class Quadro implements Initializable{
 	
 	@FXML MenuItem miLimpar;
 	@FXML MenuItem miSelecionar;	
+	@FXML MenuItem miDeletar;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -63,7 +65,7 @@ public class Quadro implements Initializable{
 	PontoGr novoPonto;
 	PontoGr p1 = null, p2 = null, p3 = null;
 	
-	//Objeto usado para desenho e redesenho de linha el·stica
+	//Objeto usado para desenho e redesenho de linha el√°stica
 	LinhaGr novaLinha;  
 	CirculoGr novoCirculo;
 	TrianguloGr novoTriangulo;
@@ -76,8 +78,10 @@ public class Quadro implements Initializable{
 	GraphicsContext gcCanvas;
 	Sierpinski sierpDesenho;
 	
-	//Armazena desenhos de iteraÁ„o anterior
+	//Armazena desenhos de itera√ß√£o anterior
 	ArrayList<Node> listaFormas = new ArrayList<>();
+	
+	boolean selecionar = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -99,14 +103,14 @@ public class Quadro implements Initializable{
 		rmiAzul.setToggleGroup(tgCores);
 		rmiVermelho.setToggleGroup(tgCores);
 		
-		//Define a cor que cada bot„o representa
+		//Define a cor que cada bot√£o representa
 		rmiPreto.setUserData(Color.BLACK);
 		rmiAmarelo.setUserData(Color.YELLOW);
 		rmiVerde.setUserData(Color.GREEN);
 		rmiAzul.setUserData(Color.BLUE);
 		rmiVermelho.setUserData(Color.RED);
 		
-		//Define opÁıes "DEFAULT"
+		//Define op√ß√µes "DEFAULT"
 		rmiPonto.setSelected(true);
 		rmiPreto.setSelected(true);
 		
@@ -127,9 +131,39 @@ public class Quadro implements Initializable{
 		miLimpar.setOnAction(
 		
 			(ev)->{
-				gcCanvas.clearRect(0, 0, 1280, 770);
-				gcCanvas.fill();
+				paneCanvas.getChildren().clear();
+				paneCanvas.getChildren().add(cv_quadro);
 				sierpDesenho = null;
+			}
+		);
+		
+		miSelecionar.setOnAction(
+			(ev)->{
+				if (selecionar == false) {
+					cv_quadro.toBack();
+					selecionar = true;
+					miSelecionar.setText("‚úì Selecionar");
+				}
+				
+				else{
+					cv_quadro.toFront();
+					selecionar = false;
+					miSelecionar.setText("Selecionar");
+				}
+					
+			}
+		);
+		
+		miDeletar.setOnAction( 
+			(ev)->{
+				ArrayList<Node> formas = new ArrayList<>();
+				formas.addAll(paneCanvas.getChildren());
+				for (int i = 1; i < formas.size(); i++) {
+					Ellipse e = (Ellipse) formas.get(i);
+					if (e.getFill() == Color.FUCHSIA) {
+						paneCanvas.getChildren().remove(e);
+					}
+				}
 			}
 		);
 		
@@ -160,7 +194,7 @@ public class Quadro implements Initializable{
 					}
 						
 					case "Triangulo":{
-						//para dois primeiros pontos, ser· utilizado el·stico de linha
+						//para dois primeiros pontos, ser√° utilizado el√°stico de linha
 						if (novoTriangulo != null) {
 							if (novoTriangulo.getP2() == null) {
 								elasticoLinha(pontoEv, opcaoCor, opcaoBorda);
@@ -261,9 +295,12 @@ public class Quadro implements Initializable{
 		LinhaGr linhaPoligono;
 		
 		if (novaLinhaPoligonal != null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), p, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(paneCanvas);
+			
+			cv_quadro.toFront();
 		}
 	}
 
@@ -275,18 +312,24 @@ public class Quadro implements Initializable{
 			
 			if (novaLinhaPoligonal == null) {
 				novaLinhaPoligonal = new LinhaPoligonalGr(p, cor, borda);
-				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico
+				listaFormas.addAll(paneCanvas.getChildren());
 			}
 		
 			else {
-				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+				paneCanvas.getChildren().clear();
+				paneCanvas.getChildren().addAll(listaFormas);
 				novaLinhaPoligonal.desenhar(p, paneCanvas);
-				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico
+				
+				listaFormas.clear();
+				listaFormas.addAll(paneCanvas.getChildren());
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			novaLinhaPoligonal.desenhar(p, paneCanvas);
+			
+			listaFormas.clear();
 			novaLinhaPoligonal = null;
 		}
 	}
@@ -295,9 +338,12 @@ public class Quadro implements Initializable{
 		LinhaGr linhaPoligono;
 		
 		if (novoPoligono != null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), p, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(paneCanvas);
+			
+			cv_quadro.toFront();
 		}
 	}
 
@@ -309,31 +355,39 @@ public class Quadro implements Initializable{
 			
 			if (novoPoligono == null) {
 				novoPoligono = new PoligonoGr(p1, cor, borda);
-				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico
+				listaFormas.addAll(paneCanvas.getChildren());
 			}
 		
 			else {
-				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+				paneCanvas.getChildren().clear();
+				paneCanvas.getChildren().addAll(listaFormas);
 				novoPoligono.desenhar(p1, paneCanvas);
-				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico
+				listaFormas.clear();
+				listaFormas.addAll(paneCanvas.getChildren());
+				
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			novoPoligono.finalizarPoligono(paneCanvas);
 			
+			listaFormas.clear();
 			novoPoligono = null;
 		}
 		
 	}
 
-	//Desenha linhas que reproduzem efeito do el·stico movimento do mouse
+	//Desenha linhas que reproduzem efeito do el√°stico movimento do mouse
 	private void elasticoRetangulo(PontoGr p, Color opcaoCor, int opcaoBorda) {
 		RetanguloGr retanguloLinha;
 		if (novoRetangulo != null) {
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), p, opcaoCor, opcaoBorda);
 			retanguloLinha.desenhar(paneCanvas);
+			cv_quadro.toFront();
 		}
 	}
 	
@@ -341,14 +395,17 @@ public class Quadro implements Initializable{
 		TrianguloGr trianguloElastico;
 		
 		if (novoTriangulo != null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			trianguloElastico = new TrianguloGr(novoTriangulo.getP1(), novoTriangulo.getP2(), p, opcaoCor, opcaoBorda);
 			trianguloElastico.desenhar(paneCanvas);
+			
+			cv_quadro.toFront();
 		}
 		
 	}
 
-	//Desenha linhas que reproduzem efeito do el·stico movimento do mouse
+	//Desenha linhas que reproduzem efeito do el√°stico movimento do mouse
 	private void elasticoLinha(PontoGr p, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaElastico;
 		
@@ -370,55 +427,70 @@ public class Quadro implements Initializable{
 		CirculoGr circuloElastico;
 		
 		if (novoCirculo != null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			circuloElastico = new CirculoGr(opcaoCor, opcaoBorda);
 			circuloElastico.setCentro(novoCirculo.getCentro());
 			circuloElastico.setRaio(p);
 			circuloElastico.desenhar(paneCanvas);
+			
+			cv_quadro.toFront();
 		}
 	}
 	
 	private void desenharRetangulo(PontoGr p, Color cor, int borda) {
 		if (novoRetangulo == null) {
 			novoRetangulo = new RetanguloGr(p, null, cor, borda);			
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico	
+			listaFormas.addAll(paneCanvas.getChildren());	
 		}
 		
 		else {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
+			//remove resquicios do snapshot anterior
+			paneCanvas.getChildren().clear();	
+			paneCanvas.getChildren().addAll(listaFormas);
+			
 			novoRetangulo.setP2(p);
 			novoRetangulo.desenhar(paneCanvas);
+			listaFormas.clear();
 			novoRetangulo = null;
 		}
 		
 	}
 
-	//Desenha tri‚ngulo ‡ partir de pontos j· desenhados e do clique no quadro
+	//Desenha tri√¢ngulo √† partir de pontos j√° desenhados e do clique no quadro
 	private void desenharTriangulo(PontoGr p, Color cor, int borda) {
 		if (novoTriangulo == null) {
-			
+			listaFormas.addAll(paneCanvas.getChildren());
 			novoTriangulo = new TrianguloGr(p, null, null, cor, borda);
 			novaLinha = new LinhaGr(cor, borda);
 			novaLinha.setP1(p);
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico	
+	
 		}
 		
 		else if (novoTriangulo.getP2() == null) {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do desenho anterior	
+			//remove resquicios do snapshot anterior
+			paneCanvas.getChildren().clear();	
+			paneCanvas.getChildren().addAll(listaFormas);
+				
 			novoTriangulo.setP2(p);
 			
-			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do tri‚ngulo
+			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do tri√¢ngulo
 			novaLinha.setP2(p);
 			novaLinha.desenhar(paneCanvas);
 			novaLinha = null;
 			
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico	
+			listaFormas.clear();
+			listaFormas.addAll(paneCanvas.getChildren());
 		}
 		
 		else {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
+			//remove resquicios do snapshot anterior
+			paneCanvas.getChildren().clear();	
+			paneCanvas.getChildren().addAll(listaFormas);
+			
 			novoTriangulo.setP3(p);
 			novoTriangulo.desenhar(paneCanvas);
+			listaFormas.clear();
 			novoTriangulo = null;
 		}
 	}
@@ -426,20 +498,23 @@ public class Quadro implements Initializable{
 	//Desenha circulo de acordo com o clique no quadro
 	private void desenharCirculo(PontoGr p, Color cor, int borda) {
 		
-		//Se centro do cÌrculo ainda n„o foi fixado, È criado ponto no local do clique
+		//Se centro do c√≠rculo ainda n√£o foi fixado, √© criado ponto no local do clique
 		if (novoCirculo == null) {
+			listaFormas.addAll(paneCanvas.getChildren());
 			novoCirculo = new CirculoGr(cor, borda);
 			novoCirculo.setCentro(p);
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null); //Usado para efeito de el·stico
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null); //Usado para efeito de el√°stico
 		}
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
 		else {
-			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
+			paneCanvas.getChildren().clear();
+			paneCanvas.getChildren().addAll(listaFormas);
 			novoCirculo.setRaio(p);
 			novoCirculo.desenhar(paneCanvas);
 			
 			//Limpa dados do circulo para desenho de novas formas
+			listaFormas.clear();
 			novoCirculo = null;
 		}
 	}
@@ -451,7 +526,7 @@ public class Quadro implements Initializable{
 			novaLinha = new LinhaGr(cor, borda);			
 			novaLinha.setP1(p);
 			listaFormas.addAll(paneCanvas.getChildren());
-			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el·stico	
+			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de el√°stico	
 		}
 		
 		else {
@@ -474,6 +549,7 @@ public class Quadro implements Initializable{
 	//Desenha ponto conforme clique no quadro
 	private void desenharPonto() {
 		novoPonto.desenhar(paneCanvas);
+		cv_quadro.toFront();
 	}
 
 }
