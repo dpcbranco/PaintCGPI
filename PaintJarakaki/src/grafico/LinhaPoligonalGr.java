@@ -2,7 +2,7 @@ package grafico;
 
 import formas.LinhaPoligonal;
 import formas.Ponto;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class LinhaPoligonalGr extends LinhaPoligonal{
@@ -15,9 +15,9 @@ public class LinhaPoligonalGr extends LinhaPoligonal{
 		this.borda = borda;
 	}
 
-	public void desenhar(Ponto p, GraphicsContext g) {
+	public void desenhar(Ponto p, Pane pane) {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(p), cor, borda);
-		novaLinha.desenhar(g);
+		novaLinha.desenhar(pane);
 	}
 	
 }

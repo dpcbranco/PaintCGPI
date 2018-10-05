@@ -49,6 +49,10 @@
       </MenuBar>
    </top>
    <center>
-      <Canvas fx:id="cv_quadro" height="770.0" width="1280.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="paneCanvas">
+         <children>
+            <Canvas fx:id="cv_quadro" height="770.0" width="1280.0" BorderPane.alignment="CENTER" />
+         </children>
+      </Pane>
    </center>
 </BorderPane>

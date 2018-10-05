@@ -1,8 +1,9 @@
 package grafico;
 
 import formas.Ponto;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 
 /**
  * Representa um ponto gráfico
@@ -63,11 +64,21 @@ public class PontoGr extends Ponto implements FormaGr {
 	/**
 	 * desenha um ponto utilizando o oval 
 	 * 
-	 * @param g contexto grafico
+	 * @param pane contexto grafico
 	 */
-	public void desenhar(GraphicsContext g) {
+	public void desenhar(Pane pane) {
+		Ellipse e = new Ellipse();
+		
 		// desenha ponto como um oval
-		g.setFill(getCor());
-		g.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());
+		e.setCenterX(getX());
+		e.setCenterY(getY());
+		e.setRadiusX(getDiametro());
+		e.setRadiusY(getDiametro());
+		
+		e.setFill(getCor());
+				
+		pane.getChildren().add(e);
+		/*g.setFill(getCor());
+		sc.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());*/
 	}
 }

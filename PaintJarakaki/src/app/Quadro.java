@@ -24,12 +24,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 
 public class Quadro implements Initializable{
 
 	@FXML MenuBar menuOpcoes;
+	@FXML Pane paneCanvas;
 	
 	@FXML RadioMenuItem rmiPonto;
 	@FXML RadioMenuItem rmiLinha;
@@ -91,7 +93,7 @@ public class Quadro implements Initializable{
 		rmiAzul.setToggleGroup(tgCores);
 		rmiVermelho.setToggleGroup(tgCores);
 		
-		//Define a cor que cada botï¿½o representa
+		//Define a cor que cada botão representa
 		rmiPreto.setUserData(Color.BLACK);
 		rmiAmarelo.setUserData(Color.YELLOW);
 		rmiVerde.setUserData(Color.GREEN);
@@ -101,7 +103,6 @@ public class Quadro implements Initializable{
 		//Define opções "DEFAULT"
 		rmiPonto.setSelected(true);
 		rmiPreto.setSelected(true);
-		
 		
 		miBorda.setText(new Double(slBorda.getMajorTickUnit()).intValue() + "px");
 		
@@ -237,7 +238,7 @@ public class Quadro implements Initializable{
 
 						sierpDesenho.setBorda(borda);
 						sierpDesenho.setCor(cor);
-						sierpDesenho.desenharIteracao(gcCanvas);
+						sierpDesenho.desenharIteracao(paneCanvas);
 						
 						break;
 					}
@@ -254,7 +255,7 @@ public class Quadro implements Initializable{
 		if (novaLinhaPoligonal != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), p, opcaoCor, opcaoBorda);
-			linhaPoligono.desenhar(gcCanvas);
+			linhaPoligono.desenhar(paneCanvas);
 		}
 	}
 
@@ -271,13 +272,13 @@ public class Quadro implements Initializable{
 		
 			else {
 				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-				novaLinhaPoligonal.desenhar(p, gcCanvas);
+				novaLinhaPoligonal.desenhar(p, paneCanvas);
 				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			novaLinhaPoligonal.desenhar(p, gcCanvas);
+			novaLinhaPoligonal.desenhar(p, paneCanvas);
 			novaLinhaPoligonal = null;
 		}
 	}
@@ -288,7 +289,7 @@ public class Quadro implements Initializable{
 		if (novoPoligono != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), p, opcaoCor, opcaoBorda);
-			linhaPoligono.desenhar(gcCanvas);
+			linhaPoligono.desenhar(paneCanvas);
 		}
 	}
 
@@ -305,13 +306,13 @@ public class Quadro implements Initializable{
 		
 			else {
 				cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-				novoPoligono.desenhar(p1, gcCanvas);
+				novoPoligono.desenhar(p1, paneCanvas);
 				imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
-			novoPoligono.finalizarPoligono(gcCanvas);
+			novoPoligono.finalizarPoligono(paneCanvas);
 			
 			novoPoligono = null;
 		}
@@ -324,7 +325,7 @@ public class Quadro implements Initializable{
 		if (novoRetangulo != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), p, opcaoCor, opcaoBorda);
-			retanguloLinha.desenhar(gcCanvas);
+			retanguloLinha.desenhar(paneCanvas);
 		}
 	}
 	
@@ -334,7 +335,7 @@ public class Quadro implements Initializable{
 		if (novoTriangulo != null) {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			trianguloElastico = new TrianguloGr(novoTriangulo.getP1(), novoTriangulo.getP2(), p, opcaoCor, opcaoBorda);
-			trianguloElastico.desenhar(gcCanvas);
+			trianguloElastico.desenhar(paneCanvas);
 		}
 		
 	}
@@ -348,7 +349,7 @@ public class Quadro implements Initializable{
 			linhaElastico = new LinhaGr(opcaoCor, opcaoBorda);
 			linhaElastico.setP1(novaLinha.getP1());
 			linhaElastico.setP2(p);
-			linhaElastico.desenhar(gcCanvas);
+			linhaElastico.desenhar(paneCanvas);
 		}
 	}
 	
@@ -361,7 +362,7 @@ public class Quadro implements Initializable{
 			circuloElastico = new CirculoGr(opcaoCor, opcaoBorda);
 			circuloElastico.setCentro(novoCirculo.getCentro());
 			circuloElastico.setRaio(p);
-			circuloElastico.desenhar(gcCanvas);
+			circuloElastico.desenhar(paneCanvas);
 		}
 	}
 	
@@ -374,7 +375,7 @@ public class Quadro implements Initializable{
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			novoRetangulo.setP2(p);
-			novoRetangulo.desenhar(gcCanvas);
+			novoRetangulo.desenhar(paneCanvas);
 			novoRetangulo = null;
 		}
 		
@@ -396,7 +397,7 @@ public class Quadro implements Initializable{
 			
 			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do triângulo
 			novaLinha.setP2(p);
-			novaLinha.desenhar(gcCanvas);
+			novaLinha.desenhar(paneCanvas);
 			novaLinha = null;
 			
 			imgSnapshot = cv_quadro.snapshot(new SnapshotParameters(), null);	//Usado para efeito de elástico	
@@ -405,7 +406,7 @@ public class Quadro implements Initializable{
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			novoTriangulo.setP3(p);
-			novoTriangulo.desenhar(gcCanvas);
+			novoTriangulo.desenhar(paneCanvas);
 			novoTriangulo = null;
 		}
 	}
@@ -424,7 +425,7 @@ public class Quadro implements Initializable{
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			novoCirculo.setRaio(p);
-			novoCirculo.desenhar(gcCanvas);
+			novoCirculo.desenhar(paneCanvas);
 			
 			//Limpa dados do circulo para desenho de novas formas
 			novoCirculo = null;
@@ -443,10 +444,10 @@ public class Quadro implements Initializable{
 		else {
 			cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);	//remove resquicios do snapshot anterior
 			p = new PontoGr((int)p.getX(), (int)p.getY(), cor, borda);
-			p.desenhar(gcCanvas);
+			p.desenhar(paneCanvas);
 			
 			novaLinha.setP2(p);
-			novaLinha.desenhar(gcCanvas);
+			novaLinha.desenhar(paneCanvas);
 			
 			novaLinha = null;
 		}
@@ -455,7 +456,7 @@ public class Quadro implements Initializable{
 
 	//Desenha ponto conforme clique no quadro
 	private void desenharPonto() {
-		novoPonto.desenhar(gcCanvas);
+		novoPonto.desenhar(paneCanvas);
 	}
 
 }

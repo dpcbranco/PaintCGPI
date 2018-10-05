@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import formas.Linha;
 import formas.Ponto;
 import formas.Retangulo;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class RetanguloGr extends Retangulo implements FormaGr {
@@ -19,13 +19,13 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		this.borda = borda;
 	}
 
-	public void desenhar(GraphicsContext g) {
+	public void desenhar(Pane pane) {
 		ArrayList<Linha> retasRetangulo = this.calcularRetangulo();
 		LinhaGr retaGrafica;
 		
 		for (Linha reta : retasRetangulo) {
 			retaGrafica = new LinhaGr(reta, cor, borda);	
-			retaGrafica.desenhar(g);
+			retaGrafica.desenhar(pane);
 		}
 	}
 

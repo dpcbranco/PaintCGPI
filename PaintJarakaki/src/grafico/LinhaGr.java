@@ -3,7 +3,7 @@ package grafico;
 import java.util.ArrayList;
 
 import formas.Linha;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class LinhaGr extends Linha implements FormaGr{
@@ -33,17 +33,11 @@ public class LinhaGr extends Linha implements FormaGr{
 		this.borda = borda;
 	}
 	
-	public void desenhar(GraphicsContext g) {
+	public void desenhar(Pane pane) {
 		alCoordenadas = this.calcularLinha();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda).desenhar(g);;
-		}
-	}
-
-	public void apagarLinha(GraphicsContext g) {
-		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], Color.WHITE, borda).desenhar(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda).desenhar(pane);;
 		}
 	}
 

@@ -3,7 +3,7 @@ package grafico;
 import formas.Linha;
 import formas.Ponto;
 import formas.Triangulo;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class TrianguloGr extends Triangulo implements FormaGr {
@@ -18,7 +18,7 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		iBorda = borda;
 	}
 	
-	public void desenhar(GraphicsContext g) {
+	public void desenhar(Pane pane) {
 		
 		LinhaGr lgrReta1, lgrReta2, lgrReta3;
 		
@@ -28,15 +28,15 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		
 		lgrReta1.setP1(this.p1);
 		lgrReta1.setP2(this.p2);
-		lgrReta1.desenhar(g);
+		lgrReta1.desenhar(pane);
 
 		lgrReta2.setP1(this.p1);
 		lgrReta2.setP2(this.p3);
-		lgrReta2.desenhar(g);
+		lgrReta2.desenhar(pane);
 		
 		lgrReta3.setP1(this.p2);
 		lgrReta3.setP2(this.p3);
-		lgrReta3.desenhar(g);
+		lgrReta3.desenhar(pane);
 		
 	}
 	

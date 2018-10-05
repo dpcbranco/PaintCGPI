@@ -1,7 +1,7 @@
 package grafico;
 
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 
 public interface FormaGr {
-	public void desenhar(GraphicsContext g);
+	public void desenhar(Pane p);
 }

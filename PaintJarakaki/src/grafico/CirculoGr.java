@@ -3,8 +3,7 @@ package grafico;
 import java.util.ArrayList;
 
 import formas.Circulo;
-import formas.Ponto;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class CirculoGr extends Circulo implements FormaGr {
@@ -17,11 +16,11 @@ public class CirculoGr extends Circulo implements FormaGr {
 		this.iBorda = iBorda;
 	}
 	
-	public void desenhar(GraphicsContext g) {
+	public void desenhar(Pane pane) {
 		ArrayList<int[]> alCoordenadas = this.calcularCirculo();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(g);;
+			new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda).desenhar(pane);;
 		}
 	}
 
