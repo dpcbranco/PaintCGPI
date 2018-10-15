@@ -32,9 +32,8 @@ public class Desenho extends Elastico{
 		}
 		
 		else {
-			//remove resquicios do snapshot anterior
-			pc.getChildren().clear();	
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
 			
 			p = new PontoGr((int)p.getX(), (int)p.getY(), cor, borda);
 			
@@ -58,9 +57,8 @@ public class Desenho extends Elastico{
 		}
 		
 		else if (novoTriangulo.getP2() == null) {
-			//remove resquicios do snapshot anterior
-			pc.getChildren().clear();	
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
 				
 			novoTriangulo.setP2(p);
 			
@@ -74,9 +72,8 @@ public class Desenho extends Elastico{
 		}
 		
 		else {
-			//remove resquicios do snapshot anterior
-			pc.getChildren().clear();	
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
 			
 			novoTriangulo.setP3(p);
 			novoTriangulo.desenhar(pc);
@@ -98,8 +95,9 @@ public class Desenho extends Elastico{
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
 		else {
-			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
+			
 			novoCirculo.setRaio(p);
 			novoCirculo.desenhar(pc);
 			
@@ -116,9 +114,8 @@ public class Desenho extends Elastico{
 		}
 		
 		else {
-			//remove resquicios do snapshot anterior
-			pc.getChildren().clear();	
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
 			
 			novoRetangulo.setP2(p);
 			novoRetangulo.desenhar(pc);
@@ -140,8 +137,9 @@ public class Desenho extends Elastico{
 			}
 		
 			else {
-				pc.getChildren().clear();
-				pc.getChildren().addAll(listaFormas);
+				//remove resquicios do elastico
+				restaurar();
+				
 				novaLinhaPoligonal.desenhar(p, pc);
 				
 				listaFormas.clear();
@@ -149,8 +147,9 @@ public class Desenho extends Elastico{
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
-			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
+			
 			novaLinhaPoligonal.desenhar(p, pc);
 			
 			listaFormas.clear();
@@ -171,17 +170,20 @@ public class Desenho extends Elastico{
 			}
 		
 			else {
-				pc.getChildren().clear();
-				pc.getChildren().addAll(listaFormas);
+				//remove resquicios do elastico
+				restaurar();
+				
 				novoPoligono.desenhar(this.getNovoPonto(), pc);
+				
 				listaFormas.clear();
 				listaFormas.addAll(pc.getChildren());
 				
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
-			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			//remove resquicios do elastico
+			restaurar();
+			
 			novoPoligono.finalizarPoligono(pc);
 			
 			listaFormas.clear();

@@ -49,9 +49,8 @@ public class Quadro implements Initializable{
 	
 	@FXML Canvas cv_quadro;
 	
-	Desenho desenhador;
 	
-	PontoGr novoPonto;
+	Desenho desenhador; //Objeto responsável pelo desenho das formas conforme evento recebido	
 	
 	ToggleGroup tgFormas = new ToggleGroup();
 	ToggleGroup tgCores = new ToggleGroup();
@@ -95,6 +94,7 @@ public class Quadro implements Initializable{
 		
 		miBorda.setText(new Double(slBorda.getMajorTickUnit()).intValue() + "px");
 		
+		//Traz quadro para frente para que eventos do mouse sejam capturados
 		cv_quadro.toFront();
 		
 		slBorda.valueProperty().addListener(
@@ -185,6 +185,7 @@ public class Quadro implements Initializable{
 					}
 				}
 				
+				//Traz canvas para frente, para que próximos eventos possam ser capturados
 				cv_quadro.toFront();
 				
 			}
@@ -193,13 +194,14 @@ public class Quadro implements Initializable{
 		cv_quadro.setOnMouseClicked(
 			(ev)->{
 				if (!selecionar) {
+					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();
 					RadioMenuItem rmiOpcaoCor = (RadioMenuItem) tgCores.getSelectedToggle();
 				
 					Color cor = (Color) rmiOpcaoCor.getUserData();
 					int borda = new Double(slBorda.getValue()).intValue();
 					
-					novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);	
+					PontoGr novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);	
 					desenhador.setNovoPonto(novoPonto);
 				
 					switch (rmiOpcaoForma.getText()) {

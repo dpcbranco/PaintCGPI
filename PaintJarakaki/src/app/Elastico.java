@@ -173,4 +173,9 @@ public class Elastico {
 		this.novaLinhaPoligonal = novaLinhaPoligonal;
 	}
 
+	//Restaura formas existentes no Pane antes da criação da nova forma
+	public void restaurar() {
+		pc.getChildren().clear();
+		pc.getChildren().addAll(listaFormas);
+	}
 }
