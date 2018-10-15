@@ -43,6 +43,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miLimpar;
 	@FXML MenuItem miSelecionar;	
 	@FXML MenuItem miDeletar;
+	@FXML MenuItem miSalvar;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;

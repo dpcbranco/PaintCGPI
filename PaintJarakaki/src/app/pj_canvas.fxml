@@ -15,6 +15,7 @@
                   <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar" />
                 <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar" />
                   <MenuItem fx:id="miSelecionar" mnemonicParsing="false" text="Selecionar" />
+                  <MenuItem fx:id="miSalvar" mnemonicParsing="false" text="Salvar" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Formas">
