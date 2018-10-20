@@ -1,15 +1,20 @@
 package app;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
+import formas.Formas;
+import formas.Ponto;
 import grafico.PontoGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -18,6 +23,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import xml.Xml;
+import javafx.stage.Stage;
 
 
 public class Quadro implements Initializable{
@@ -57,6 +66,10 @@ public class Quadro implements Initializable{
 	ToggleGroup tgCores = new ToggleGroup();
 	Sierpinski sierpDesenho;
 	
+	String txtXml;
+	Xml arqXml;
+	
+	ArrayList<Formas> listaFormas = new ArrayList<>();
 	
 	boolean selecionar = false;
 	
@@ -143,6 +156,24 @@ public class Quadro implements Initializable{
 			}
 		);
 		
+		miSalvar.setOnAction( 
+			(ev)->{
+				FileChooser fc = new FileChooser();
+				fc.setTitle("Salvar imagem...");
+				fc.getExtensionFilters().add(new ExtensionFilter("XML File (.xml)", "*.xml"));
+				
+				try {
+					arqXml = new Xml(fc.showSaveDialog(new Stage()));	
+					arqXml.escreverXml(listaFormas);
+				}catch (IOException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("ERRO AO SALVAR !");
+					alert.setContentText("Erro ao salvar arquivo XML. Favor verifique a permissão da pasta e tente novamente!");
+					alert.showAndWait();
+				}
+			}
+		);
+		
 		//Trata movimento do mouse durante desenho das formas
 		cv_quadro.setOnMouseMoved(
 			(ev)->{
@@ -153,42 +184,43 @@ public class Quadro implements Initializable{
 				
 				PontoGr pontoEv = new PontoGr((int)ev.getX(), (int)ev.getY(), opcaoCor, opcaoBorda);
 				
+				if (!selecionar) {
 
-				switch (opcaoForma) {
-					case "Linha":{	
-						desenhador.elasticoLinha(pontoEv, opcaoCor, opcaoBorda);
-						break;
-					}
+					switch (opcaoForma) {
+						case "Linha":{	
+							desenhador.elasticoLinha(pontoEv, opcaoCor, opcaoBorda);
+							break;
+						}
 						
-					case "Circulo":{
-						desenhador.elasticoCirculo(pontoEv, opcaoCor, opcaoBorda);	
-						break;
-					}
+						case "Circulo":{
+							desenhador.elasticoCirculo(pontoEv, opcaoCor, opcaoBorda);	
+							break;
+						}
 						
-					case "Triangulo":{
-						desenhador.elasticoTriangulo(pontoEv, opcaoCor, opcaoBorda);	
-						break;
-					}
+						case "Triangulo":{
+							desenhador.elasticoTriangulo(pontoEv, opcaoCor, opcaoBorda);	
+							break;
+						}
 						
-					case "Retangulo":{
-						desenhador.elasticoRetangulo(pontoEv, opcaoCor, opcaoBorda);
-						break;
-					}
-						
-					case "Poligono":{
-						desenhador.elasticoPoligono(pontoEv, opcaoCor, opcaoBorda);
-						break;
-					}
+						case "Retangulo":{
+							desenhador.elasticoRetangulo(pontoEv, opcaoCor, opcaoBorda);
+							break;
+						}
+							
+						case "Poligono":{
+							desenhador.elasticoPoligono(pontoEv, opcaoCor, opcaoBorda);
+							break;
+						}
 					
-					case "Linha Poligonal":{
-						desenhador.elasticoLinhaPoligonal(pontoEv, opcaoCor, opcaoBorda);
-						break;
+						case "Linha Poligonal":{
+							desenhador.elasticoLinhaPoligonal(pontoEv, opcaoCor, opcaoBorda);
+							break;
+						}
 					}
+				
+					//Traz canvas para frente, para que próximos eventos possam ser capturados
+					cv_quadro.toFront();
 				}
-				
-				//Traz canvas para frente, para que próximos eventos possam ser capturados
-				cv_quadro.toFront();
-				
 			}
 		);
 		
@@ -208,37 +240,38 @@ public class Quadro implements Initializable{
 					switch (rmiOpcaoForma.getText()) {
 						case "Ponto":{
 							desenhador.desenharPonto();
+							listaFormas.add((Ponto) novoPonto);
 							break;
 						}
 					
 						case "Linha":{
-							desenhador.desenharLinha(novoPonto, cor, borda);						
+							desenhador.desenharLinha(novoPonto, listaFormas, cor, borda);						
 							break;
 						}
 					
 						case "Circulo":{
-							desenhador.desenharCirculo(novoPonto, cor, borda);						
+							desenhador.desenharCirculo(novoPonto, listaFormas, cor, borda);						
 							break;
 						}
 					
 						case "Triangulo":{
-							desenhador.desenharTriangulo(novoPonto, cor, borda);						
+							desenhador.desenharTriangulo(novoPonto, listaFormas, cor, borda);						
 							break;
 						}
 					
 						case "Retangulo":{
-							desenhador.desenharRetangulo(novoPonto, cor, borda);
+							desenhador.desenharRetangulo(novoPonto, listaFormas, cor, borda);
 							break;
 						}
 					
 						case "Poligono":{
-							desenhador.desenharPoligono(ev, cor, borda);
+							desenhador.desenharPoligono(ev, listaFormas, cor, borda);
 							break;
 						
 						}
 					
 						case "Linha Poligonal":{
-							desenhador.desenharLinhaPoligonal(ev, cor, borda);
+							desenhador.desenharLinhaPoligonal(ev, listaFormas, cor, borda);
 							break;
 						}
 					

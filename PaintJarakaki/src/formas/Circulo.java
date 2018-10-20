@@ -2,10 +2,10 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Circulo {
+public class Circulo implements Formas{
 	
-	protected Ponto centro, raio;
-	double dRaio;
+	protected Ponto centro, perimetro;
+	double raio;
 
 	protected ArrayList<int[]> calcularCirculo() {
 		ArrayList<int[]> alCoordenadas = new ArrayList<>();
@@ -14,7 +14,7 @@ public class Circulo {
 		int dX, dY;
 		
 		//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
-		dRaio = Math.sqrt( Math.pow( (raio.getX() - centro.getX()), 2 ) + Math.pow( (raio.getY() - centro.getY()), 2 ) );
+		raio = Math.sqrt( Math.pow( (perimetro.getX() - centro.getX()), 2 ) + Math.pow( (perimetro.getY() - centro.getY()), 2 ) );
 		
 		//Valores de X e Y do ponto central transformados em int
 		iCentroX = new Double(centro.getX()).intValue();
@@ -25,8 +25,8 @@ public class Circulo {
 			dSeno = Math.sin( Math.toRadians(iAngulo));
 			dCosseno = Math.cos( Math.toRadians(iAngulo));
 			
-			dX = new Double( dRaio *  dCosseno).intValue();
-			dY = new Double( dRaio * dSeno).intValue();
+			dX = new Double( raio *  dCosseno).intValue();
+			dY = new Double( raio * dSeno).intValue();
 			
 			//Cálculo por octante dos pontos:
 			//Ponto(x,y)
@@ -58,19 +58,27 @@ public class Circulo {
 		return alCoordenadas;
 	}
 	
+	public double getRaio() {
+		return raio;
+	}
+
+	public void setRaio(double raio) {
+		this.raio = raio;
+	}
+
 	public void setCentro(Ponto p) {
 		this.centro = p;
 	}
 	
-	public void setRaio(Ponto p) {
-		this.raio = p;
+	public void setPerimetro(Ponto p) {
+		this.perimetro = p;
 	}
 
 	public Ponto getCentro() {
 		return this.centro;
 	}
 	
-	public Ponto getRaio() {
-		return this.raio;
+	public Ponto getPerimetro() {
+		return this.perimetro;
 	}
 }

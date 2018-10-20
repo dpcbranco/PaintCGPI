@@ -37,8 +37,12 @@ public class LinhaPoligonalGr extends LinhaPoligonal{
 	private void selecionar() {
 		for (PontoGr p : pontosLPoligonal) {
 			Ellipse e = p.obterElipse();
-			e.setFill(Color.FUCHSIA);
+			e.setStroke(Color.FUCHSIA);
 		}
+	}
+
+	public Color getCor() {
+		return this.cor;
 	}
 	
 }

@@ -2,7 +2,7 @@ package formas;
 
 import javafx.geometry.Point2D;
 
-public class Ponto extends Point2D{
+public class Ponto extends Point2D implements Formas{
 	public Ponto () {
 		super(0, 0);
 	}

@@ -2,7 +2,8 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Retangulo {
+public class Retangulo implements Formas{
+
 	Ponto p1, p2, p3, p4;
 	
 	//Pontos da diagonal do retângulo
@@ -39,4 +40,21 @@ public class Retangulo {
 	public void setP2(Ponto p) {
 		this.p2 = p;
 	}
+	
+	public Ponto getP3() {
+		return p3;
+	}
+
+	public void setP3(Ponto p3) {
+		this.p3 = p3;
+	}
+
+	public Ponto getP4() {
+		return p4;
+	}
+
+	public void setP4(Ponto p4) {
+		this.p4 = p4;
+	}
+
 }

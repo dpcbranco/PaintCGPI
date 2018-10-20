@@ -52,7 +52,7 @@
       </MenuBar>
    </top>
    <center>
-      <Pane fx:id="paneCanvas">
+      <Pane fx:id="paneCanvas" maxHeight="770.0" maxWidth="1280.0" minHeight="770.0" minWidth="1280.0" prefHeight="770.0" prefWidth="1280.0">
          <children>
             <Canvas fx:id="cv_quadro" height="770.0" width="1280.0" BorderPane.alignment="CENTER" />
          </children>

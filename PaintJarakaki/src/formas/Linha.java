@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Linha {
+public class Linha implements Formas{
 	
 	public Linha() {
 		

@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Poligono {
+public class Poligono implements Formas{
 	
 	ArrayList<Ponto> pontos = new ArrayList<>();
 	
@@ -21,7 +21,7 @@ public class Poligono {
 		return novaLinha;
 	}
 	
-	
+	//Pega primeiro ponto
 	public Ponto getP1() {
 		return pontos.get(0);
 	}
@@ -29,6 +29,11 @@ public class Poligono {
 	//retorna último ponto do polígono
 	public Ponto getPN() {
 		return pontos.get(pontos.size() - 1);
+	}
+	
+	//Retorna lista de pontos
+	public ArrayList<Ponto> getPontos(){
+		return this.pontos;
 	}
 	
 }

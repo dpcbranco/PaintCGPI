@@ -28,7 +28,7 @@ public class Elastico {
 	Pane pc;
 	
 	//Lista de formas da pane - Usado para implementação do elástico
-	ArrayList<Node> listaFormas = new ArrayList<>();
+	ArrayList<Node> formasPane = new ArrayList<>();
 	
 	public Elastico(Pane pc) {
 		this.pc = pc;
@@ -41,7 +41,7 @@ public class Elastico {
 		if (novaLinha != null) {
 	//		cv_quadro.getGraphicsContext2D().drawImage(imgSnapshot, 0, 0);
 			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			pc.getChildren().addAll(formasPane);
 			linhaElastico = new LinhaGr(opcaoCor, opcaoBorda);
 			linhaElastico.setP1(novaLinha.getP1());
 			linhaElastico.setP2(p);
@@ -56,7 +56,7 @@ public class Elastico {
 		if (novoTriangulo != null) {
 			if (novoTriangulo.getP2() != null) {
 				pc.getChildren().clear();
-				pc.getChildren().addAll(listaFormas);
+				pc.getChildren().addAll(formasPane);
 				trianguloElastico = new TrianguloGr(novoTriangulo.getP1(), novoTriangulo.getP2(), p, opcaoCor, opcaoBorda);
 				trianguloElastico.desenhar(pc);
 			}
@@ -73,7 +73,7 @@ public class Elastico {
 		RetanguloGr retanguloLinha;
 		if (novoRetangulo != null) {
 			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			pc.getChildren().addAll(formasPane);
 			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), p, opcaoCor, opcaoBorda);
 			retanguloLinha.desenhar(pc);
 		}
@@ -84,10 +84,10 @@ public class Elastico {
 		
 		if (novoCirculo != null) {
 			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			pc.getChildren().addAll(formasPane);
 			circuloElastico = new CirculoGr(opcaoCor, opcaoBorda);
 			circuloElastico.setCentro(novoCirculo.getCentro());
-			circuloElastico.setRaio(p);
+			circuloElastico.setPerimetro(p);
 			circuloElastico.desenhar(pc);
 		}
 	}
@@ -97,7 +97,7 @@ public class Elastico {
 		
 		if (novoPoligono != null) {
 			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			pc.getChildren().addAll(formasPane);
 			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), p, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 			
@@ -109,7 +109,7 @@ public class Elastico {
 		
 		if (novaLinhaPoligonal != null) {
 			pc.getChildren().clear();
-			pc.getChildren().addAll(listaFormas);
+			pc.getChildren().addAll(formasPane);
 			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), p, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 		}
@@ -176,6 +176,6 @@ public class Elastico {
 	//Restaura formas existentes no Pane antes da criação da nova forma
 	public void restaurar() {
 		pc.getChildren().clear();
-		pc.getChildren().addAll(listaFormas);
+		pc.getChildren().addAll(formasPane);
 	}
 }

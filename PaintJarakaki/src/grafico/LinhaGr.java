@@ -53,12 +53,16 @@ public class LinhaGr extends Linha implements FormaGr{
 	private void selecionar() {
 		for (PontoGr p : pontosLinha) {
 			Ellipse e = p.obterElipse();
-			e.setFill(Color.FUCHSIA);
+			e.setStroke(Color.FUCHSIA);
 		}
 	}
 
 	public ArrayList<PontoGr> getPontos() {
 		return this.pontosLinha;
+	}
+
+	public Color getCor() {
+		return this.cor;
 	}
 
 }

@@ -44,8 +44,13 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 	private void selecionar() {
 		for (PontoGr p : pontosRetangulo) {
 			Ellipse e = p.obterElipse();
-			e.setFill(Color.FUCHSIA);
+			e.setStroke(Color.FUCHSIA);
 		}
+	}
+
+
+	public Color getCor() {
+		return this.cor;
 	}
 
 }

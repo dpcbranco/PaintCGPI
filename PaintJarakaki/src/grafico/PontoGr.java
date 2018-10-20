@@ -45,7 +45,7 @@ public class PontoGr extends Ponto implements FormaGr {
 	}
 
 
-	private Color getCor() {
+	public Color getCor() {
 		return cor;
 	}
 
@@ -91,7 +91,7 @@ public class PontoGr extends Ponto implements FormaGr {
 
 	//@Override
 	public void selecionar(Ellipse e) {
-		e.setFill(Color.FUCHSIA);
+		e.setStroke(Color.FUCHSIA);
 	}
 	
 	public Ellipse obterElipse() {

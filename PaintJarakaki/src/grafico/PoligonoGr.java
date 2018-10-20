@@ -38,13 +38,17 @@ public class PoligonoGr extends Poligono {
 	private void selecionar() {
 		for (PontoGr p : pontosPoligono) {
 			Ellipse e = p.obterElipse();
-			e.setFill(Color.FUCHSIA);
+			e.setStroke(Color.FUCHSIA);
 		}
 	}
 
 	public void finalizarPoligono(Pane pane) {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(this.getP1()), cor, borda);
 		novaLinha.desenhar(pane);
+	}
+
+	public Color getCor() {
+		return this.cor;
 	}
 	
 }

@@ -1,5 +1,14 @@
 package app;
 
+import java.util.ArrayList;
+
+import formas.Circulo;
+import formas.Formas;
+import formas.Linha;
+import formas.LinhaPoligonal;
+import formas.Poligono;
+import formas.Retangulo;
+import formas.Triangulo;
 import grafico.CirculoGr;
 import grafico.LinhaGr;
 import grafico.LinhaPoligonalGr;
@@ -23,12 +32,12 @@ public class Desenho extends Elastico{
 		novoPonto.desenhar(pc);
 	}
 	
-	public void desenharLinha(PontoGr p, Color cor, int borda) {
+	public void desenharLinha(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		if (novaLinha == null) {
 			novaLinha = new LinhaGr(cor, borda);			
 			novaLinha.setP1(p);
-			listaFormas.addAll(pc.getChildren());
+			formasPane.addAll(pc.getChildren());
 		}
 		
 		else {
@@ -40,16 +49,18 @@ public class Desenho extends Elastico{
 			novaLinha.setP2(p);
 			novaLinha.desenhar(pc);
 			
+			listaXML.add((Linha) novaLinha);
+			
 			novaLinha = null;
-			listaFormas.clear();
+			formasPane.clear();
 		}
 		
 	}
 	
 	//Desenha triângulo à partir de pontos já desenhados e do clique no quadro
-	public void desenharTriangulo(PontoGr p, Color cor, int borda) {
+	public void desenharTriangulo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
 		if (novoTriangulo == null) {
-			listaFormas.addAll(pc.getChildren());
+			formasPane.addAll(pc.getChildren());
 			novoTriangulo = new TrianguloGr(p, null, null, cor, borda);
 			novaLinha = new LinhaGr(cor, borda);
 			novaLinha.setP1(p);
@@ -67,8 +78,8 @@ public class Desenho extends Elastico{
 			novaLinha.desenhar(pc);
 			novaLinha = null;
 			
-			listaFormas.clear();
-			listaFormas.addAll(pc.getChildren());
+			formasPane.clear();
+			formasPane.addAll(pc.getChildren());
 		}
 		
 		else {
@@ -77,18 +88,22 @@ public class Desenho extends Elastico{
 			
 			novoTriangulo.setP3(p);
 			novoTriangulo.desenhar(pc);
-			listaFormas.clear();
+			
+			listaXML.add((Triangulo) novoTriangulo);
+			
+			formasPane.clear();
 			novoTriangulo = null;
 		}
+		
 	}
 	
 	
 	//Desenha circulo de acordo com o clique no quadro
-	public void desenharCirculo(PontoGr p, Color cor, int borda) {
+	public void desenharCirculo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		//Se centro do círculo ainda não foi fixado, é criado ponto no local do clique
 		if (novoCirculo == null) {
-			listaFormas.addAll(pc.getChildren());
+			formasPane.addAll(pc.getChildren());
 			novoCirculo = new CirculoGr(cor, borda);
 			novoCirculo.setCentro(p);
 		}
@@ -98,19 +113,22 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novoCirculo.setRaio(p);
+			novoCirculo.setPerimetro(p);
 			novoCirculo.desenhar(pc);
 			
+			listaXML.add((Circulo) novoCirculo);
+			
 			//Limpa dados do circulo para desenho de novas formas
-			listaFormas.clear();
+			formasPane.clear();
 			novoCirculo = null;
 		}
+		
 	}
 	
-	public void desenharRetangulo(PontoGr p, Color cor, int borda) {
+	public void desenharRetangulo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
 		if (novoRetangulo == null) {
 			novoRetangulo = new RetanguloGr(p, null, cor, borda);			
-			listaFormas.addAll(pc.getChildren());	
+			formasPane.addAll(pc.getChildren());	
 		}
 		
 		else {
@@ -119,13 +137,16 @@ public class Desenho extends Elastico{
 			
 			novoRetangulo.setP2(p);
 			novoRetangulo.desenhar(pc);
-			listaFormas.clear();
+			
+			listaXML.add((Retangulo) novoRetangulo);
+			
+			formasPane.clear();
 			novoRetangulo = null;
 		}
 		
 	}
 	
-	public void desenharLinhaPoligonal(MouseEvent ev, Color cor, int borda) {
+	public void desenharLinhaPoligonal(MouseEvent ev, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		PontoGr p = new PontoGr((int)ev.getX(),(int)ev.getY(), cor, borda);
 		
@@ -133,7 +154,7 @@ public class Desenho extends Elastico{
 			
 			if (novaLinhaPoligonal == null) {
 				novaLinhaPoligonal = new LinhaPoligonalGr(p, cor, borda);
-				listaFormas.addAll(pc.getChildren());
+				formasPane.addAll(pc.getChildren());
 			}
 		
 			else {
@@ -142,8 +163,8 @@ public class Desenho extends Elastico{
 				
 				novaLinhaPoligonal.desenhar(p, pc);
 				
-				listaFormas.clear();
-				listaFormas.addAll(pc.getChildren());
+				formasPane.clear();
+				formasPane.addAll(pc.getChildren());
 			}
 		}
 		else if (ev.getButton() == MouseButton.SECONDARY) {
@@ -151,14 +172,15 @@ public class Desenho extends Elastico{
 			restaurar();
 			
 			novaLinhaPoligonal.desenhar(p, pc);
+			listaXML.add((LinhaPoligonal) novaLinhaPoligonal);
 			
-			listaFormas.clear();
+			formasPane.clear();
 			novaLinhaPoligonal = null;
 		}
 	}
 
 
-	public void desenharPoligono(MouseEvent ev, Color cor, int borda) {
+	public void desenharPoligono(MouseEvent ev, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		if (ev.getButton() == MouseButton.PRIMARY) {
 			
@@ -166,7 +188,7 @@ public class Desenho extends Elastico{
 			
 			if (novoPoligono == null) {
 				novoPoligono = new PoligonoGr(this.getNovoPonto(), cor, borda);
-				listaFormas.addAll(pc.getChildren());
+				formasPane.addAll(pc.getChildren());
 			}
 		
 			else {
@@ -175,8 +197,8 @@ public class Desenho extends Elastico{
 				
 				novoPoligono.desenhar(this.getNovoPonto(), pc);
 				
-				listaFormas.clear();
-				listaFormas.addAll(pc.getChildren());
+				formasPane.clear();
+				formasPane.addAll(pc.getChildren());
 				
 			}
 		}
@@ -185,8 +207,9 @@ public class Desenho extends Elastico{
 			restaurar();
 			
 			novoPoligono.finalizarPoligono(pc);
+			listaXML.add((Poligono) novoPoligono);
 			
-			listaFormas.clear();
+			formasPane.clear();
 			novoPoligono = null;
 		}
 		

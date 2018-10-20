@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class LinhaPoligonal {
+public class LinhaPoligonal implements Formas{
 	
 	ArrayList<Ponto> pontos = new ArrayList<>();
 	
@@ -29,5 +29,10 @@ public class LinhaPoligonal {
 	//retorna último ponto do polígono
 	public Ponto getPN() {
 		return pontos.get(pontos.size() - 1);
+	}
+	
+	//retorna lista de pontos da L. Poligonal
+	public ArrayList<Ponto> getPontos(){
+		return pontos;
 	}
 }
