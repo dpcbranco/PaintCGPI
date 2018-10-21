@@ -1,5 +1,8 @@
 package xml;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import grafico.PontoGr;
 import javafx.scene.paint.Color;
 
@@ -24,5 +27,24 @@ public class PontoXML {
 				+ 		"</Cor>"
 				+ 	"</Ponto>" ;
 		return pontoXML;
+	}
+	
+	public static PontoGr carregarPonto(Node circulo) {
+		
+		//Transformação em Element para captura de atributos pelo nome
+		Element eCirculo = (Element) circulo;
+		Element eCor = (Element) circulo.getLastChild(); 
+		
+		double x = Double.parseDouble(eCirculo.getElementsByTagName("x").item(0).getTextContent()) * telaX;
+		double y = Double.parseDouble(eCirculo.getElementsByTagName("y").item(0).getTextContent()) * telaY;
+		
+		//RGB da cor
+		double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;
+		double g = Double.parseDouble(eCor.getElementsByTagName("G").item(0).getTextContent()) / 255;
+		double b = Double.parseDouble(eCor.getElementsByTagName("B").item(0).getTextContent()) / 255;
+		
+		Color cor = new Color(r, g, b, 1);
+		
+		return new PontoGr((int)x, (int)y, cor, 5);
 	}
 }

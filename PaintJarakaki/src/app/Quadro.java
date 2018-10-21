@@ -53,6 +53,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miSelecionar;	
 	@FXML MenuItem miDeletar;
 	@FXML MenuItem miSalvar;
+	@FXML MenuItem miAbrir;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -173,6 +174,27 @@ public class Quadro implements Initializable{
 				}
 			}
 		);
+		
+		
+		//Abrir arquivo XML
+		miAbrir.setOnAction(
+			(ev)->{
+				try {
+					//limpa desenho anterior
+					paneCanvas.getChildren().clear();
+					paneCanvas.getChildren().add(cv_quadro);
+					sierpDesenho = null;
+					
+					//Carrega desenho a partir de XML escolhido
+					FileChooser fc = new FileChooser();
+					arqXml = new Xml(fc.showOpenDialog(new Stage()));
+					listaFormas = arqXml.lerXml(paneCanvas);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		);
+		
 		
 		//Trata movimento do mouse durante desenho das formas
 		cv_quadro.setOnMouseMoved(
