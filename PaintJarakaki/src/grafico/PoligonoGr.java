@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import formas.Linha;
 import formas.Poligono;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
@@ -19,20 +20,26 @@ public class PoligonoGr extends Poligono {
 		this.cor = cor;
 		this.borda = borda;
 	}
+	
+	public PoligonoGr(ArrayList<Ponto> pontos, Color cor, int borda) {
+		super(pontos);
+		this.cor = cor;
+		this.borda = borda;
+	}
 
 	public void desenhar(Ponto p, Pane pane) {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(p), cor, borda);
 		novaLinha.desenhar(pane);
 		
-		pontosPoligono.addAll(novaLinha.getPontos());
-		
-		for (PontoGr ponto : pontosPoligono) {
+		for (PontoGr ponto : novaLinha.getPontos()) {
 			ponto.obterElipse().setOnMouseClicked( 
 				(ev)->{
 					selecionar();
 				}
 			);
 		}
+		
+		pontosPoligono.addAll(novaLinha.getPontos());
 	}
 
 	private void selecionar() {
@@ -46,9 +53,32 @@ public class PoligonoGr extends Poligono {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(this.getP1()), cor, borda);
 		novaLinha.desenhar(pane);
 	}
+	
+	//Usado na leitura do XML - Quando todos os pontos do poligono estão definidos
+	public void desenharCarregado (Pane pane) {
+		ArrayList<Linha> linhasPoligono = this.calcularPoligono();
+		
+		for (Linha l : linhasPoligono) {
+			LinhaGr novaLinha = new LinhaGr(l, cor, borda);
+			novaLinha.desenhar(pane);
+			
+			for (PontoGr ponto : novaLinha.getPontos()) {
+				ponto.obterElipse().setOnMouseClicked( 
+					(ev)->{
+						selecionar();
+					}
+				);
+			}
+			
+			pontosPoligono.addAll(novaLinha.getPontos());
+		}
+	}
 
 	public Color getCor() {
 		return this.cor;
 	}
 	
+	public void setPontosPoligono(ArrayList<PontoGr> pontosPoligono) {
+		this.pontosPoligono = pontosPoligono;
+	}
 }

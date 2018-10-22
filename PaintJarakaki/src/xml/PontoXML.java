@@ -32,11 +32,11 @@ public class PontoXML {
 	public static PontoGr carregarPonto(Node circulo) {
 		
 		//Transformação em Element para captura de atributos pelo nome
-		Element eCirculo = (Element) circulo;
+		Element ePonto = (Element) circulo;
 		Element eCor = (Element) circulo.getLastChild(); 
 		
-		double x = Double.parseDouble(eCirculo.getElementsByTagName("x").item(0).getTextContent()) * telaX;
-		double y = Double.parseDouble(eCirculo.getElementsByTagName("y").item(0).getTextContent()) * telaY;
+		double x = Double.parseDouble(ePonto.getElementsByTagName("x").item(0).getTextContent()) * telaX;
+		double y = Double.parseDouble(ePonto.getElementsByTagName("y").item(0).getTextContent()) * telaY;
 		
 		//RGB da cor
 		double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;

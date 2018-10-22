@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import formas.Linha;
 import formas.LinhaPoligonal;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
@@ -18,6 +19,12 @@ public class LinhaPoligonalGr extends LinhaPoligonal{
 		this.cor = cor;
 		this.borda = borda;
 	}
+	
+	public LinhaPoligonalGr(ArrayList<Ponto> pontos, Color cor, int borda) {
+		super(pontos);
+		this.cor = cor;
+		this.borda = borda;
+	}
 
 	public void desenhar(Ponto p, Pane pane) {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(p), cor, borda);
@@ -31,6 +38,26 @@ public class LinhaPoligonalGr extends LinhaPoligonal{
 					selecionar();
 				}
 			);
+		}
+	}
+	
+	//Usado na leitura do XML - Quando todos os pontos do poligono estão definidos
+	public void desenharCarregado (Pane pane) {
+		ArrayList<Linha> linhasPoligono = this.calcularLPoligonal();
+			
+		for (Linha l : linhasPoligono) {
+			LinhaGr novaLinha = new LinhaGr(l, cor, borda);
+			novaLinha.desenhar(pane);
+			
+			for (PontoGr ponto : novaLinha.getPontos()) {
+				ponto.obterElipse().setOnMouseClicked( 
+					(ev)->{
+						selecionar();
+					}
+				);
+			}
+				
+			pontosLPoligonal.addAll(novaLinha.getPontos());
 		}
 	}
 

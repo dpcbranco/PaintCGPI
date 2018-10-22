@@ -1,5 +1,9 @@
 package xml;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import formas.Ponto;
 import grafico.TrianguloGr;
 import javafx.scene.paint.Color;
@@ -36,6 +40,39 @@ public class TrianguloXML {
 				+ "</Triangulo>";		
 		
 		return trianguloXML;
+	}
+
+	public static TrianguloGr carregarTriangulo(Node triangulo) {
+		
+		//Transformação em Element para captura de atributos pelo nome
+				NodeList pontosXML = triangulo.getChildNodes();
+				Ponto pontosRet[] = new Ponto[3];
+				Color cor = new Color(0, 0, 0, 1); //Padrão: Preto
+				
+				for (int i = 0; i < pontosXML.getLength(); i++) {
+					
+					if (pontosXML.item(i).getNodeName() == "Ponto") {
+						Element ePonto = (Element) pontosXML.item(i);
+						
+						int x = (int) (Double.parseDouble(ePonto.getElementsByTagName("x").item(0).getTextContent()) * telaX);
+						int y = (int) (Double.parseDouble(ePonto.getElementsByTagName("y").item(0).getTextContent()) * telaY);
+						
+						pontosRet[i] = new Ponto(x, y);
+					}
+					
+					else {
+						Element eCor = (Element) pontosXML.item(i);
+						
+						double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;
+						double g = Double.parseDouble(eCor.getElementsByTagName("G").item(0).getTextContent()) / 255;
+						double b = Double.parseDouble(eCor.getElementsByTagName("B").item(0).getTextContent()) / 255;
+						
+						cor = new Color(r, g, b, 1);
+					}
+					
+				}
+				
+				return new TrianguloGr(pontosRet[0], pontosRet[1], pontosRet[2], cor, 5);
 	}
 
 }

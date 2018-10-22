@@ -10,6 +10,10 @@ public class LinhaPoligonal implements Formas{
 		pontos.add(p1);
 	}
 	
+	public LinhaPoligonal (ArrayList<Ponto> pontos) {
+		this.pontos = pontos;
+	}
+	
 	
 	public Linha calcularNovaLinha(Ponto novoPonto) {
 		Linha novaLinha = new Linha();
@@ -19,6 +23,26 @@ public class LinhaPoligonal implements Formas{
 		
 		pontos.add(novoPonto);
 		return novaLinha;
+	}
+	
+	//Usado apenas caso poligono já esteja com todos os pontos definidos (Leitura XML)
+	protected ArrayList<Linha> calcularLPoligonal() {
+		Ponto pAnterior = null; //Usado para traçar as linhas
+		ArrayList<Linha> linhas = new ArrayList<>();
+		
+		for(Ponto p : pontos) {
+			if (pAnterior == null) {
+				pAnterior = p;
+			}
+			
+			else {
+				Linha l = new Linha(pAnterior, p);
+				linhas.add(l);
+				pAnterior = p;
+			}
+		}
+		
+		return linhas;
 	}
 	
 	

@@ -85,8 +85,7 @@ public class Elastico {
 		if (novoCirculo != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			circuloElastico = new CirculoGr(opcaoCor, opcaoBorda);
-			circuloElastico.setCentro(novoCirculo.getCentro());
+			circuloElastico = new CirculoGr(novoCirculo.getCentro(), opcaoCor, opcaoBorda);
 			circuloElastico.setPerimetro(p);
 			circuloElastico.desenhar(pc);
 		}

@@ -5,53 +5,64 @@ import java.util.ArrayList;
 public class Circulo implements Formas{
 	
 	protected Ponto centro, perimetro;
-	double raio;
+	double raio = 0;
+	
+	public Circulo (Ponto centro) {
+		this.centro = centro;
+	}
+	
+	public Circulo (Ponto centro, double raio) {
+		this.centro = centro;
+		this.raio = raio;
+	}
 
 	protected ArrayList<int[]> calcularCirculo() {
 		ArrayList<int[]> alCoordenadas = new ArrayList<>();
-		int iCentroX, iCentroY;
-		double dSeno, dCosseno, iAngulo;
+		int xCentro, yCentro;
+		double seno, cosseno, angulo;
 		int dX, dY;
 		
-		//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
-		raio = Math.sqrt( Math.pow( (perimetro.getX() - centro.getX()), 2 ) + Math.pow( (perimetro.getY() - centro.getY()), 2 ) );
+		if (raio == 0) {
+			//Raio --> Distância entre pontos --> Raiz Quadrada((x2 - x1) + (y2 - y1))
+			raio = Math.sqrt( Math.pow( (perimetro.getX() - centro.getX()), 2 ) + Math.pow( (perimetro.getY() - centro.getY()), 2 ) );
+		}
 		
 		//Valores de X e Y do ponto central transformados em int
-		iCentroX = new Double(centro.getX()).intValue();
-		iCentroY = new Double(centro.getY()).intValue();
+		xCentro = new Double(centro.getX()).intValue();
+		yCentro = new Double(centro.getY()).intValue();
 		
-		for (iAngulo = 0; iAngulo <= 45; iAngulo = iAngulo + 0.125) {
+		for (angulo = 0; angulo <= 45; angulo = angulo + 0.125) {
 			
-			dSeno = Math.sin( Math.toRadians(iAngulo));
-			dCosseno = Math.cos( Math.toRadians(iAngulo));
+			seno = Math.sin( Math.toRadians(angulo));
+			cosseno = Math.cos( Math.toRadians(angulo));
 			
-			dX = new Double( raio *  dCosseno).intValue();
-			dY = new Double( raio * dSeno).intValue();
+			dX = new Double( raio *  cosseno).intValue();
+			dY = new Double( raio * seno).intValue();
 			
 			//Cálculo por octante dos pontos:
 			//Ponto(x,y)
-			alCoordenadas.add( new int [] {iCentroX + dX, iCentroY + dY} );
+			alCoordenadas.add( new int [] {xCentro + dX, yCentro + dY} );
 			
 			//Ponto(-x, y)
-			alCoordenadas.add( new int [] {iCentroX - dX, iCentroY + dY} );
+			alCoordenadas.add( new int [] {xCentro - dX, yCentro + dY} );
 			
 			//Ponto(x, -y)
-			alCoordenadas.add( new int [] {iCentroX + dX, iCentroY - dY} );
+			alCoordenadas.add( new int [] {xCentro + dX, yCentro - dY} );
 			
 			//Ponto(-x, -y)
-			alCoordenadas.add( new int [] {iCentroX - dX, iCentroY - dY} );
+			alCoordenadas.add( new int [] {xCentro - dX, yCentro - dY} );
 			
 			//Ponto (y, x)
-			alCoordenadas.add( new int [] {iCentroX + dY, iCentroY + dX} );
+			alCoordenadas.add( new int [] {xCentro + dY, yCentro + dX} );
 			
 			//Ponto (-y, x)
-			alCoordenadas.add( new int [] {iCentroX - dY, iCentroY + dX} );
+			alCoordenadas.add( new int [] {xCentro - dY, yCentro + dX} );
 			
 			//Ponto (y, -x)
-			alCoordenadas.add( new int [] {iCentroX + dY, iCentroY - dX} );
+			alCoordenadas.add( new int [] {xCentro + dY, yCentro - dX} );
 			
 			//Ponto(-y, -x)
-			alCoordenadas.add( new int [] {iCentroX - dY, iCentroY - dX} );
+			alCoordenadas.add( new int [] {xCentro - dY, yCentro - dX} );
 			
 		}
 		

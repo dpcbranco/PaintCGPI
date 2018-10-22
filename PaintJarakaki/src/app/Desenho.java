@@ -7,6 +7,7 @@ import formas.Formas;
 import formas.Linha;
 import formas.LinhaPoligonal;
 import formas.Poligono;
+import formas.Ponto;
 import formas.Retangulo;
 import formas.Triangulo;
 import grafico.CirculoGr;
@@ -104,8 +105,7 @@ public class Desenho extends Elastico{
 		//Se centro do círculo ainda não foi fixado, é criado ponto no local do clique
 		if (novoCirculo == null) {
 			formasPane.addAll(pc.getChildren());
-			novoCirculo = new CirculoGr(cor, borda);
-			novoCirculo.setCentro(p);
+			novoCirculo = new CirculoGr((Ponto)p, cor, borda);
 		}
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual

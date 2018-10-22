@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 public class Poligono implements Formas{
 	
-	ArrayList<Ponto> pontos = new ArrayList<>();
+	protected ArrayList<Ponto> pontos = new ArrayList<>();
 	
 	public Poligono (Ponto p1) {
 		pontos.add(p1);
+	}
+	
+	public Poligono (ArrayList<Ponto> pontos) {
+		this.pontos = pontos;
 	}
 	
 	
@@ -17,8 +21,35 @@ public class Poligono implements Formas{
 		novaLinha.setP1(pontos.get(pontos.size() - 1));
 		novaLinha.setP2(novoPonto);
 		
-		pontos.add(novoPonto);
+		//Não insere o P1 duplicado
+		if (!pontos.contains(novoPonto)) {
+			pontos.add(novoPonto);
+		}
+		
 		return novaLinha;
+	}
+	
+	//Usado apenas caso poligono já esteja com todos os pontos definidos (Leitura XML)
+	protected ArrayList<Linha> calcularPoligono() {
+		Ponto pAnterior = null; //Usado para traçar as linhas
+		ArrayList<Linha> linhas = new ArrayList<>();
+		
+		for(Ponto p : pontos) {
+			if (pAnterior == null) {
+				pAnterior = p;
+			}
+			
+			else {
+				Linha l = new Linha(pAnterior, p);
+				linhas.add(l);
+				pAnterior = p;
+			}
+		}
+		
+		//Adiciona linha ligando útlimo e primeiro pontos
+		linhas.add(new Linha(pontos.get(0), pontos.get(pontos.size() - 1)));
+		
+		return linhas;
 	}
 	
 	//Pega primeiro ponto
@@ -35,5 +66,6 @@ public class Poligono implements Formas{
 	public ArrayList<Ponto> getPontos(){
 		return this.pontos;
 	}
+	
 	
 }

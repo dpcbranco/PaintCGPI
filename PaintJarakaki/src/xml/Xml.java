@@ -111,7 +111,42 @@ public class Xml {
 						formasGr.add(ponto);
 						break;
 					}
+					
+					case "Retangulo":{
+						RetanguloGr retangulo = RetanguloXML.carregarRetangulo(forma);
+						retangulo.desenhar(pane);
+						formasGr.add(retangulo);
+						break;
+					}
+					
+					case "Circulo":{
+						CirculoGr circulo = CirculoXML.carregarCirculo(forma);
+						circulo.desenhar(pane);
+						formasGr.add(circulo);
+						break;
+					}
+					
+					case "Triangulo":{
+						TrianguloGr triangulo = TrianguloXML.carregarTriangulo(forma);
+						triangulo.desenhar(pane);
+						formasGr.add(triangulo);
+						break;
+					}
 				
+					case "Poligono":{
+						PoligonoGr poligono = PoligonoXML.carregarPoligono(forma);
+						poligono.desenharCarregado(pane);
+						formasGr.add(poligono);
+						break;
+					}
+					
+					case "LinhaPoligonal":{
+						LinhaPoligonalGr lPoligonal = LinhaPoligonalXML.carregarLPoligonal(forma);
+						lPoligonal.desenharCarregado(pane);
+						formasGr.add(lPoligonal);
+						break;
+						
+					}
 				}
 			}
 		}

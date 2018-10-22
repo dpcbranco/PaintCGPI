@@ -3,26 +3,34 @@ package grafico;
 import java.util.ArrayList;
 
 import formas.Circulo;
+import formas.Ponto;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
 public class CirculoGr extends Circulo implements FormaGr {
 	
-	Color cCor;
-	int iBorda;
+	Color cor;
+	int borda;
 	ArrayList<PontoGr> pontosCirculo = new ArrayList<>();
 
-	public CirculoGr(Color cCor, int iBorda) {
-		this.cCor = cCor;
-		this.iBorda = iBorda;
+	public CirculoGr(Ponto centro, Color cor, int borda) {
+		super(centro);
+		this.cor = cor;
+		this.borda = borda;
+	}
+	
+	public CirculoGr(Ponto centro, double raio, Color cor, int borda) {
+		super(centro, raio);
+		this.cor = cor;
+		this.borda = borda;
 	}
 	
 	public void desenhar(Pane pane) {
 		ArrayList<int[]> alCoordenadas = this.calcularCirculo();
 		
 		for (int[] iCoordenadas : alCoordenadas) {
-			PontoGr p = new PontoGr(iCoordenadas[0], iCoordenadas[1], cCor, iBorda);
+			PontoGr p = new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda);
 			p.desenhar(pane);
 			pontosCirculo.add(p);
 			
@@ -42,7 +50,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 	}
 
 	public Color getCor() {
-		return this.cCor;
+		return this.cor;
 	}
 
 	
