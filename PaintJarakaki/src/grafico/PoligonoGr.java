@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
-public class PoligonoGr extends Poligono {
+public class PoligonoGr extends Poligono implements FormaGr{
 
 	Color cor;
 	int borda;
@@ -27,8 +27,22 @@ public class PoligonoGr extends Poligono {
 		this.borda = borda;
 	}
 
-	public void desenhar(Ponto p, Pane pane) {
+	public void desenharPonto(Ponto p, Pane pane) {
 		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(p), cor, borda);
+		novaLinha.desenhar(pane);
+		
+		pontosPoligono.addAll(novaLinha.getPontos());
+	}
+
+	public void selecionar() {
+		for (PontoGr p : pontosPoligono) {
+			Ellipse e = p.obterElipse();
+			e.setOpacity(0.1);
+		}
+	}
+
+	public void finalizarPoligono(Pane pane) {
+		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(this.getP1()), cor, borda);
 		novaLinha.desenhar(pane);
 		
 		for (PontoGr ponto : novaLinha.getPontos()) {
@@ -39,23 +53,10 @@ public class PoligonoGr extends Poligono {
 			);
 		}
 		
-		pontosPoligono.addAll(novaLinha.getPontos());
-	}
-
-	private void selecionar() {
-		for (PontoGr p : pontosPoligono) {
-			Ellipse e = p.obterElipse();
-			e.setStroke(Color.FUCHSIA);
-		}
-	}
-
-	public void finalizarPoligono(Pane pane) {
-		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(this.getP1()), cor, borda);
-		novaLinha.desenhar(pane);
 	}
 	
 	//Usado na leitura do XML - Quando todos os pontos do poligono estão definidos
-	public void desenharCarregado (Pane pane) {
+	public void desenhar (Pane pane) {
 		ArrayList<Linha> linhasPoligono = this.calcularPoligono();
 		
 		for (Linha l : linhasPoligono) {

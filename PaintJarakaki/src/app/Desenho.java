@@ -161,7 +161,7 @@ public class Desenho extends Elastico{
 				//remove resquicios do elastico
 				restaurar();
 				
-				novaLinhaPoligonal.desenhar(p, pc);
+				novaLinhaPoligonal.desenharPonto(p, pc);
 				
 				formasPane.clear();
 				formasPane.addAll(pc.getChildren());
@@ -171,7 +171,7 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novaLinhaPoligonal.desenhar(p, pc);
+			novaLinhaPoligonal.desenharPonto(p, pc);
 			listaXML.add((LinhaPoligonal) novaLinhaPoligonal);
 			
 			formasPane.clear();
@@ -195,7 +195,7 @@ public class Desenho extends Elastico{
 				//remove resquicios do elastico
 				restaurar();
 				
-				novoPoligono.desenhar(this.getNovoPonto(), pc);
+				novoPoligono.desenharPonto(this.getNovoPonto(), pc);
 				
 				formasPane.clear();
 				formasPane.addAll(pc.getChildren());

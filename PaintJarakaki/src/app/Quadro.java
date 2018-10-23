@@ -127,6 +127,7 @@ public class Quadro implements Initializable{
 			}
 		);
 		
+		//Move as formas para frente, permitindo sua seleção
 		miSelecionar.setOnAction(
 			(ev)->{
 				if (selecionar == false) {
@@ -150,7 +151,7 @@ public class Quadro implements Initializable{
 				formas.addAll(paneCanvas.getChildren());
 				for (int i = 1; i < formas.size(); i++) {
 					Ellipse e = (Ellipse) formas.get(i);
-					if (e.getFill() == Color.FUCHSIA) {
+					if (e.getOpacity() == 0.1) {
 						paneCanvas.getChildren().remove(e);
 					}
 				}

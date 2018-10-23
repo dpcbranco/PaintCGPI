@@ -80,7 +80,7 @@ public class PontoGr extends Ponto implements FormaGr {
 		
 		e.setOnMouseClicked(
 			(ev)->{
-				this.selecionar(e);
+				this.selecionar();
 			}
 		);
 		
@@ -90,11 +90,12 @@ public class PontoGr extends Ponto implements FormaGr {
 	}
 
 	//@Override
-	public void selecionar(Ellipse e) {
-		e.setStroke(Color.FUCHSIA);
+	public void selecionar() {
+		e.setOpacity(0.1);
 	}
 	
 	public Ellipse obterElipse() {
 		return this.e;
 	}
+
 }

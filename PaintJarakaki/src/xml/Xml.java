@@ -135,17 +135,24 @@ public class Xml {
 				
 					case "Poligono":{
 						PoligonoGr poligono = PoligonoXML.carregarPoligono(forma);
-						poligono.desenharCarregado(pane);
+						poligono.desenhar(pane);
 						formasGr.add(poligono);
 						break;
 					}
 					
 					case "LinhaPoligonal":{
 						LinhaPoligonalGr lPoligonal = LinhaPoligonalXML.carregarLPoligonal(forma);
-						lPoligonal.desenharCarregado(pane);
+						lPoligonal.desenhar(pane);
 						formasGr.add(lPoligonal);
 						break;
 						
+					}
+					
+					case "Reta":{
+						LinhaGr linha = RetaXML.carregarReta(forma);
+						linha.desenhar(pane);
+						formasGr.add(linha);
+						break;
 					}
 				}
 			}

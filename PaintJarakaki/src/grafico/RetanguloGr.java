@@ -20,12 +20,6 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		this.cor = cor;
 		this.borda = borda;
 	}
-	
-	public RetanguloGr(Ponto p1, Ponto p2, Ponto p3, Ponto p4, Color cor, int borda) {
-		super(p1, p2, p3, p4);
-		this.cor = cor;
-		this.borda = borda;
-	}
 
 	public void desenhar(Pane pane) {
 		ArrayList<Linha> retasRetangulo = this.calcularRetangulo();
@@ -47,10 +41,10 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		}
 	}
 
-	private void selecionar() {
+	public void selecionar() {
 		for (PontoGr p : pontosRetangulo) {
 			Ellipse e = p.obterElipse();
-			e.setStroke(Color.FUCHSIA);
+			e.setOpacity(0.1);
 		}
 	}
 

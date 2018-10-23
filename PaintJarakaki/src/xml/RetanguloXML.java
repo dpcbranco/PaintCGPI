@@ -1,5 +1,7 @@
 package xml;
 
+import java.util.ArrayList;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -17,8 +19,6 @@ public class RetanguloXML {
 		String retanguloXML;
 		Ponto p1 = r.getP1();
 		Ponto p2 = r.getP2();
-		Ponto p3 = r.getP3();
-		Ponto p4 = r.getP4();
 		Color cor = r.getCor();
 		
 		retanguloXML = "<Retangulo>"
@@ -29,14 +29,6 @@ public class RetanguloXML {
 				+ 	"<Ponto>"
 				+ 		"<x>" + p2.getX()/telaX + "</x>"
 				+ 		"<y>" + p2.getY()/telaY + "</y>"
-				+ 	"</Ponto>"
-				+ 	"<Ponto>"
-				+ 		"<x>" + p3.getX()/telaX + "</x>"
-				+ 		"<y>" + p3.getY()/telaY + "</y>"
-				+ 	"</Ponto>"
-				+ 	"<Ponto>"
-				+ 		"<x>" + p4.getX()/telaX + "</x>"
-				+ 		"<y>" + p4.getY()/telaY + "</y>"
 				+ 	"</Ponto>"
 				+ 	"<Cor>"
 				+ 		"<R>" + (int)(cor.getRed() * 255) + "</R>"
@@ -52,7 +44,7 @@ public class RetanguloXML {
 		
 		//Transformação em Element para captura de atributos pelo nome
 		NodeList pontosXML = retangulo.getChildNodes();
-		Ponto pontosRet[] = new Ponto[4];
+		ArrayList<Ponto> pontosRet = new ArrayList<>();
 		Color cor = new Color(0, 0, 0, 1); //Padrão: Preto
 		
 		for (int i = 0; i < pontosXML.getLength(); i++) {
@@ -63,10 +55,10 @@ public class RetanguloXML {
 				int x = (int) (Double.parseDouble(ePonto.getElementsByTagName("x").item(0).getTextContent()) * telaX);
 				int y = (int) (Double.parseDouble(ePonto.getElementsByTagName("y").item(0).getTextContent()) * telaY);
 				
-				pontosRet[i] = new Ponto(x, y);
+				pontosRet.add(new Ponto(x, y));
 			}
 			
-			else {
+			else if (pontosXML.item(i).getNodeName() == "Cor") {
 				Element eCor = (Element) pontosXML.item(i);
 				
 				double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;
@@ -78,7 +70,7 @@ public class RetanguloXML {
 			
 		}
 		
-		return new RetanguloGr(pontosRet[0], pontosRet[1], pontosRet[2], pontosRet[3], cor, 5);
+		return new RetanguloGr(pontosRet.get(0), pontosRet.get(1), cor, 5);
 				
 	}
 }

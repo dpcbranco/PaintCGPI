@@ -56,7 +56,7 @@ public class CirculoXML {
 				raio = Integer.parseInt(atributosXML.item(i).getTextContent());
 			}
 			
-			else {
+			else if (atributosXML.item(i).getNodeName() == "Cor") {
 				Element eCor = (Element) atributosXML.item(i);
 				
 				double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;

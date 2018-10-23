@@ -12,20 +12,12 @@ public class Retangulo implements Formas{
 		this.p2 = p2;
 	}
 	
-	public Retangulo(Ponto p1, Ponto p2, Ponto p3, Ponto p4) {
-		this.p1 = p1;
-		this.p2 = p2;
-		this.p3 = p3;
-		this.p4 = p4;
-	}
-	
 	public ArrayList<Linha> calcularRetangulo(){
 		ArrayList<Linha> alRetas = new ArrayList<>();	
 		
-		if (p3 == null || p4 == null) {
-			p3 = new Ponto((int)p2.getX(), (int)p1.getY());
-			p4 = new Ponto((int)p1.getX(), (int)p2.getY());
-		}
+		
+		p3 = new Ponto((int)p2.getX(), (int)p1.getY());
+		p4 = new Ponto((int)p1.getX(), (int)p2.getY());
 		
 		alRetas.add(new Linha(p1, p3));		
 		alRetas.add(new Linha(p1, p4));

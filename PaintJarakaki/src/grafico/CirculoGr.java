@@ -42,10 +42,10 @@ public class CirculoGr extends Circulo implements FormaGr {
 		}
 	}
 
-	private void selecionar() {
+	public void selecionar() {
 		for (PontoGr p : pontosCirculo) {
 			Ellipse e = p.obterElipse();
-			e.setStroke(Color.FUCHSIA);
+			e.setOpacity(0.1);
 		}
 	}
 

@@ -56,7 +56,7 @@ public class LinhaPoligonalXML {
 				pontosRet.add(new Ponto(x, y));
 			}
 					
-			else {
+			else if (pontosXML.item(i).getNodeName() == "Cor") {
 				Element eCor = (Element) pontosXML.item(i);
 						
 				double r = Double.parseDouble(eCor.getElementsByTagName("R").item(0).getTextContent()) / 255;

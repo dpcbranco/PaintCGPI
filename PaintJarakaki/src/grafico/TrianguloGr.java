@@ -58,10 +58,10 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 	}
 	
 	
-	private void selecionar() {
+	public void selecionar() {
 		for (PontoGr p : pontosTriangulo) {
 			Ellipse e = p.obterElipse();
-			e.setStroke(Color.FUCHSIA);
+			e.setOpacity(0.1);
 		}
 	}
 
