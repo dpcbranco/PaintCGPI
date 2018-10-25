@@ -15,6 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -43,12 +45,7 @@ public class Quadro implements Initializable{
 	@FXML RadioMenuItem rmiPoligono;
 	@FXML RadioMenuItem rmiLinhaPoligonal;
 	
-	@FXML RadioMenuItem rmiPreto;
-	@FXML RadioMenuItem rmiAmarelo;
-	@FXML RadioMenuItem rmiVerde;
-	@FXML RadioMenuItem rmiAzul;
-	@FXML RadioMenuItem rmiVermelho;
-	
+	@FXML Menu mCor;	
 	@FXML MenuItem miLimpar;
 	@FXML MenuItem miSelecionar;	
 	@FXML MenuItem miDeletar;
@@ -62,14 +59,12 @@ public class Quadro implements Initializable{
 	
 	
 	Desenho desenhador; //Objeto responsável pelo desenho das formas conforme evento recebido	
-	
 	ToggleGroup tgFormas = new ToggleGroup();
-	ToggleGroup tgCores = new ToggleGroup();
+	ColorPicker corDesenho = new ColorPicker(Color.BLACK);
 	Sierpinski sierpDesenho;
 	
 	String txtXml;
-	Xml arqXml;
-	
+	Xml arqXml;	
 	ArrayList<Formas> listaFormas = new ArrayList<>();
 	
 	boolean selecionar = false;
@@ -88,26 +83,14 @@ public class Quadro implements Initializable{
 		rmiRetangulo.setToggleGroup(tgFormas);
 		rmiPoligono.setToggleGroup(tgFormas);
 		rmiLinhaPoligonal.setToggleGroup(tgFormas);
-		
-		//Define grupo de cores a serem escolhidas
-		rmiPreto.setToggleGroup(tgCores);
-		rmiAmarelo.setToggleGroup(tgCores);
-		rmiVerde.setToggleGroup(tgCores);
-		rmiAzul.setToggleGroup(tgCores);
-		rmiVermelho.setToggleGroup(tgCores);
-		
-		//Define a cor que cada botão representa
-		rmiPreto.setUserData(Color.BLACK);
-		rmiAmarelo.setUserData(Color.YELLOW);
-		rmiVerde.setUserData(Color.GREEN);
-		rmiAzul.setUserData(Color.BLUE);
-		rmiVermelho.setUserData(Color.RED);
-		
+				
 		//Define opções "DEFAULT"
 		rmiPonto.setSelected(true);
-		rmiPreto.setSelected(true);
 		
 		miBorda.setText(new Double(slBorda.getMajorTickUnit()).intValue() + "px");
+		
+		corDesenho.setStyle("-fx-color-label-visible: false ;");
+		mCor.getItems().add(new MenuItem(null, corDesenho));
 		
 		//Traz quadro para frente para que eventos do mouse sejam capturados
 		cv_quadro.toFront();
@@ -202,7 +185,7 @@ public class Quadro implements Initializable{
 			(ev)->{
 				
 				String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
-				Color opcaoCor = (Color)((RadioMenuItem)tgCores.getSelectedToggle()).getUserData();
+				Color opcaoCor = corDesenho.getValue();
 				int opcaoBorda = new Double(slBorda.getValue()).intValue();
 				
 				PontoGr pontoEv = new PontoGr((int)ev.getX(), (int)ev.getY(), opcaoCor, opcaoBorda);
@@ -251,10 +234,8 @@ public class Quadro implements Initializable{
 			(ev)->{
 				if (!selecionar) {
 					//Obtém opções selecionadas de forma, cor e borda
-					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();
-					RadioMenuItem rmiOpcaoCor = (RadioMenuItem) tgCores.getSelectedToggle();
-				
-					Color cor = (Color) rmiOpcaoCor.getUserData();
+					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
+					Color cor = corDesenho.getValue();
 					int borda = new Double(slBorda.getValue()).intValue();
 					
 					PontoGr novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);	

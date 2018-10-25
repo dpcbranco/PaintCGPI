@@ -31,15 +31,7 @@
                   <RadioMenuItem fx:id="rmiSierpinski" mnemonicParsing="false" text="Sierpinski" />
                </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Cor">
-              <items>
-                  <RadioMenuItem fx:id="rmiPreto" mnemonicParsing="false" text="Preto" />
-                  <RadioMenuItem fx:id="rmiAmarelo" mnemonicParsing="false" text="Amarelo" />
-                  <RadioMenuItem fx:id="rmiVerde" mnemonicParsing="false" text="Verde" />
-                  <RadioMenuItem fx:id="rmiAzul" mnemonicParsing="false" text="Azul" />
-                  <RadioMenuItem fx:id="rmiVermelho" mnemonicParsing="false" text="Vermelho" />
-              </items>
-            </Menu>
+            <Menu fx:id="mCor" mnemonicParsing="false" text="Cor" />
             <Menu mnemonicParsing="false" text="Borda">
                <items>
                   <MenuItem fx:id="miBorda" mnemonicParsing="false">
