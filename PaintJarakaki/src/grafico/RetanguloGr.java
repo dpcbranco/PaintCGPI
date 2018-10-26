@@ -32,7 +32,7 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		}
 		
 		for (PontoGr ponto : pontosRetangulo) {
-			Ellipse e = ponto.obterElipse();
+			Ellipse e = ponto.getEllipse();
 			e.setOnMouseClicked(  
 				(ev)-> {
 					this.selecionar();
@@ -43,7 +43,7 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 
 	public void selecionar() {
 		for (PontoGr p : pontosRetangulo) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}
@@ -51,6 +51,10 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 
 	public Color getCor() {
 		return this.cor;
+	}
+	
+	public ArrayList<PontoGr> getPontosRetangulo(){
+		return pontosRetangulo;
 	}
 
 }

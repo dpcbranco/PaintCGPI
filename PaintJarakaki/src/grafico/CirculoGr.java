@@ -34,7 +34,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 			p.desenhar(pane);
 			pontosCirculo.add(p);
 			
-			p.obterElipse().setOnMouseClicked( 
+			p.getEllipse().setOnMouseClicked( 
 				(ev)->{
 					selecionar();
 				}
@@ -44,7 +44,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 
 	public void selecionar() {
 		for (PontoGr p : pontosCirculo) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}

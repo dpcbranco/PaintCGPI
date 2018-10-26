@@ -36,7 +36,7 @@ public class PoligonoGr extends Poligono implements FormaGr{
 
 	public void selecionar() {
 		for (PontoGr p : pontosPoligono) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}
@@ -46,7 +46,7 @@ public class PoligonoGr extends Poligono implements FormaGr{
 		novaLinha.desenhar(pane);
 		
 		for (PontoGr ponto : novaLinha.getPontos()) {
-			ponto.obterElipse().setOnMouseClicked( 
+			ponto.getEllipse().setOnMouseClicked( 
 				(ev)->{
 					selecionar();
 				}
@@ -64,7 +64,7 @@ public class PoligonoGr extends Poligono implements FormaGr{
 			novaLinha.desenhar(pane);
 			
 			for (PontoGr ponto : novaLinha.getPontos()) {
-				ponto.obterElipse().setOnMouseClicked( 
+				ponto.getEllipse().setOnMouseClicked( 
 					(ev)->{
 						selecionar();
 					}
