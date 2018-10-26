@@ -16,7 +16,7 @@ public class CirculoXML {
 	public static String salvarCirculo(CirculoGr c) {
 		String circuloXML;
 		Ponto centro = c.getCentro();
-		int raio = (int) c.getRaio();
+		double raio = c.getRaio();
 		Color cor = c.getCor();
 		
 		circuloXML = "<Circulo>"
@@ -24,7 +24,7 @@ public class CirculoXML {
 				+ 			"<x>" + (centro.getX()/telaX) + "</x>"
 				+ 			"<y>" + (centro.getY()/telaY) + "</y>"
 				+ 		"</Ponto>"
-				+ 		"<Raio>" + raio + "</Raio>"
+				+ 		"<Raio>" + raio/telaX + "</Raio>"
 				+ 		"<Cor>"
 				+ 			"<R>" + (int)(cor.getRed()*255) + "</R>"
 				+ 			"<G>" + (int)(cor.getGreen()*255) + "</G>"
@@ -37,9 +37,9 @@ public class CirculoXML {
 
 	public static CirculoGr carregarCirculo(Node circulo) {
 		NodeList atributosXML = circulo.getChildNodes();
-		int raio = 0;
+		double raio = 0;
 		Ponto centro = null;
-		Color cor = new Color(0, 0, 0, 1); //Padrão: Preto
+		Color cor = new Color(0, 0, 0, 1); //Padrï¿½o: Preto
 		
 		for (int i = 0; i < atributosXML.getLength(); i++) {
 			
@@ -53,7 +53,7 @@ public class CirculoXML {
 			}
 			
 			else if (atributosXML.item(i).getNodeName() == "Raio") {
-				raio = Integer.parseInt(atributosXML.item(i).getTextContent());
+				raio = Double.parseDouble(atributosXML.item(i).getTextContent()) * telaX;
 			}
 			
 			else if (atributosXML.item(i).getNodeName() == "Cor") {
