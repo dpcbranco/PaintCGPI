@@ -24,7 +24,7 @@ public class Elastico {
 	RetanguloGr novoRetangulo;
 	PoligonoGr novoPoligono;
 	LinhaPoligonalGr novaLinhaPoligonal;
-	RetanguloGr retCorte;
+	RetanguloGr retanguloCorte;
 	
 	//Pane onde formas são desenhadas
 	Pane pc;
@@ -119,10 +119,10 @@ public class Elastico {
 	public void elasticoCorte(Ponto pontoElastico) {
 		RetanguloGr corteElastico;
 		
-		if(retCorte != null) {
+		if(retanguloCorte != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			corteElastico = new RetanguloGr(retCorte.getP1(), pontoElastico, Color.GRAY, 1);
+			corteElastico = new RetanguloGr(retanguloCorte.getP1(), pontoElastico, Color.GRAY, 1);
 			corteElastico.desenhar(pc);
 			
 		}

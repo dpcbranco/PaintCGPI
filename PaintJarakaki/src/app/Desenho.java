@@ -217,20 +217,20 @@ public class Desenho extends Elastico{
 	}
 	
 	public void desenharCorte(Ponto p) {
-		if (retCorte == null) {
-			retCorte = new RetanguloGr(p, null, Color.GRAY, 2);
+		if (retanguloCorte == null) {
+			retanguloCorte = new RetanguloGr(p, null, Color.GRAY, 2);
 			formasPane.addAll(pc.getChildren());
 		}
 		
 		else {
 			restaurar();
-			retCorte.setP2(p);
-			retCorte.desenhar(pc);
+			retanguloCorte.setP2(p);
+			retanguloCorte.desenhar(pc);
 			
-			for (PontoGr pgr : retCorte.getPontosRetangulo()) {
+			for (PontoGr pgr : retanguloCorte.getPontosRetangulo()) {
 				pc.getChildren().remove(pgr.getEllipse());
 			}
-			retCorte = null;
+			retanguloCorte = null;
 		}
 	}
 

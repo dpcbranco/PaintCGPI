@@ -1,13 +1,15 @@
 package app;
 
+import java.util.ArrayList;
+
 import formas.Ponto;
 import grafico.RetanguloGr;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,27 +39,41 @@ public class Clipping {
 
 	public void encerrarCorte(Ponto novoPonto) {
 		Stage janelaCorte = new Stage();
-		Rectangle2D viewport = new Rectangle2D(pInicial.getX(), pInicial.getY(), this.larguraCorte(novoPonto), this.alturaCorte(novoPonto));
-		SnapshotParameters paramClip = new SnapshotParameters();
-		WritableImage clip;
-		Canvas telaClip = new Canvas();
-		Pane parent = new Pane();
-		
-		janelaCorte.setHeight(this.alturaCorte(novoPonto));
-		janelaCorte.setWidth(larguraCorte(novoPonto));
-		
-		parent.getChildren().add(telaClip);
-		
-		paramClip.setViewport(viewport);
-		clip = desenhoSelecao.getPaneCanvas().snapshot(paramClip, null);
-		telaClip.getGraphicsContext2D().drawImage(clip, 0, 0);
+		Rectangle2D areaClip = new Rectangle2D(pInicial.getX(), pInicial.getY(), larguraCorte(novoPonto), alturaCorte(novoPonto));
+		ArrayList<Ellipse> listaRecorte = new ArrayList<>();
+		Pane clip = new Pane();
 		
 		desenhoSelecao.desenharCorte(novoPonto);
+		
+		for (Node n : desenhoSelecao.getPaneCanvas().getChildren()) {
+			if (n.getClass().getSimpleName().equals("Ellipse")) {
+				Ellipse e = (Ellipse) n;
+				if (areaClip.contains(e.getCenterX(), e.getCenterY())) {
+					listaRecorte.add(copiarEllipse(e));
+				}
+			}
+		}
+		
+		clip.getChildren().addAll(listaRecorte);
+		
 		janelaCorte.initModality(Modality.APPLICATION_MODAL);
-		janelaCorte.setScene(new Scene(parent));
+		janelaCorte.setScene(new Scene(clip));
 		janelaCorte.show();
 	}
 	
+	//Copia propriedades de um Ellipse
+	private Ellipse copiarEllipse(Ellipse e) {
+		Ellipse copia = new Ellipse();
+		
+		copia.setCenterX(e.getCenterX());
+		copia.setCenterY(e.getCenterY());
+		copia.setRadiusX(e.getRadiusX());
+		copia.setRadiusY(e.getRadiusY());
+		copia.setFill(e.getFill());
+		
+		return copia;
+	}
+
 	public void elasticoCorte (Ponto pontoElastico) {
 		desenhoSelecao.elasticoCorte(pontoElastico);
 	}
