@@ -231,6 +231,7 @@ public class Desenho extends Elastico{
 				pc.getChildren().remove(pgr.getEllipse());
 			}
 			retanguloCorte = null;
+			formasPane.clear();
 		}
 	}
 

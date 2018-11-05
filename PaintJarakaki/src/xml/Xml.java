@@ -161,4 +161,8 @@ public class Xml {
 		return formasGr;
 		
 	}
+
+	public File getArqXml() {
+		return arqXml;
+	}
 }

@@ -163,7 +163,9 @@ public class Quadro implements Initializable{
 				
 				try {
 					arqXml = new Xml(fc.showSaveDialog(new Stage()));	
-					arqXml.escreverXml(listaFormas);
+					if (arqXml.getArqXml() != null) {
+						arqXml.escreverXml(listaFormas);
+					}
 				}catch (IOException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("ERRO AO SALVAR !");
@@ -185,8 +187,13 @@ public class Quadro implements Initializable{
 					
 					//Carrega desenho a partir de XML escolhido
 					FileChooser fc = new FileChooser();
+					fc.setTitle("Abrir imagem...");
+					fc.getExtensionFilters().add(new ExtensionFilter("XML File (.xml)", "*.xml"));
+					
 					arqXml = new Xml(fc.showOpenDialog(new Stage()));
-					listaFormas = arqXml.lerXml(paneCanvas);
+					if (arqXml.getArqXml() != null) {
+						listaFormas = arqXml.lerXml(paneCanvas);
+					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}

@@ -59,6 +59,8 @@ public class Clipping {
 		janelaCorte.initModality(Modality.APPLICATION_MODAL);
 		janelaCorte.setScene(new Scene(clip));
 		janelaCorte.show();
+		
+		pInicial = null;
 	}
 	
 	//Copia propriedades de um Ellipse
