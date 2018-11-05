@@ -2,6 +2,7 @@ package app;
 
 import java.util.ArrayList;
 
+import formas.Ponto;
 import grafico.CirculoGr;
 import grafico.LinhaGr;
 import grafico.LinhaPoligonalGr;
@@ -23,6 +24,7 @@ public class Elastico {
 	RetanguloGr novoRetangulo;
 	PoligonoGr novoPoligono;
 	LinhaPoligonalGr novaLinhaPoligonal;
+	RetanguloGr retanguloCorte;
 	
 	//Pane onde formas são desenhadas
 	Pane pc;
@@ -35,7 +37,7 @@ public class Elastico {
 	}
 	
 	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
-	public void elasticoLinha(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoLinha(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaElastico;
 		
 		if (novaLinha != null) {
@@ -44,76 +46,87 @@ public class Elastico {
 			pc.getChildren().addAll(formasPane);
 			linhaElastico = new LinhaGr(opcaoCor, opcaoBorda);
 			linhaElastico.setP1(novaLinha.getP1());
-			linhaElastico.setP2(p);
+			linhaElastico.setP2(pontoEv);
 			linhaElastico.desenhar(pc);
 		}
 	}
 	
 	
-	public void elasticoTriangulo(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoTriangulo(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		TrianguloGr trianguloElastico;
 		
 		if (novoTriangulo != null) {
 			if (novoTriangulo.getP2() != null) {
 				pc.getChildren().clear();
 				pc.getChildren().addAll(formasPane);
-				trianguloElastico = new TrianguloGr(novoTriangulo.getP1(), novoTriangulo.getP2(), p, opcaoCor, opcaoBorda);
+				trianguloElastico = new TrianguloGr(novoTriangulo.getP1(), novoTriangulo.getP2(), pontoEv, opcaoCor, opcaoBorda);
 				trianguloElastico.desenhar(pc);
 			}
 			
 			else {
-				elasticoLinha(p, opcaoCor, opcaoBorda);
+				elasticoLinha(pontoEv, opcaoCor, opcaoBorda);
 			}
 		}
 		
 	}
 	
 	//Desenha linhas que reproduzem efeito do elástico movimento do mouse
-	public void elasticoRetangulo(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoRetangulo(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		RetanguloGr retanguloLinha;
 		if (novoRetangulo != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), p, opcaoCor, opcaoBorda);
+			retanguloLinha = new RetanguloGr(novoRetangulo.getP1(), pontoEv, opcaoCor, opcaoBorda);
 			retanguloLinha.desenhar(pc);
 		}
 	}
 	
-	public void elasticoCirculo(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoCirculo(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		CirculoGr circuloElastico;
 		
 		if (novoCirculo != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
 			circuloElastico = new CirculoGr(novoCirculo.getCentro(), opcaoCor, opcaoBorda);
-			circuloElastico.setPerimetro(p);
+			circuloElastico.setPerimetro(pontoEv);
 			circuloElastico.desenhar(pc);
 		}
 	}
 	
-	public void elasticoPoligono(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoPoligono(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaPoligono;
 		
 		if (novoPoligono != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), p, opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), pontoEv, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 			
 		}
 	}
 	
-	public void elasticoLinhaPoligonal(PontoGr p, Color opcaoCor, int opcaoBorda) {
+	public void elasticoLinhaPoligonal(Ponto pontoEv, Color opcaoCor, int opcaoBorda) {
 		LinhaGr linhaPoligono;
 		
 		if (novaLinhaPoligonal != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), p, opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), pontoEv, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 		}
 	}
 
+	public void elasticoCorte(Ponto pontoElastico) {
+		RetanguloGr corteElastico;
+		
+		if(retanguloCorte != null) {
+			pc.getChildren().clear();
+			pc.getChildren().addAll(formasPane);
+			corteElastico = new RetanguloGr(retanguloCorte.getP1(), pontoElastico, Color.GRAY, 1);
+			corteElastico.desenhar(pc);
+			
+		}
+	}
 	
 	
 	public void setNovoPonto(PontoGr novoPonto) {
@@ -176,5 +189,9 @@ public class Elastico {
 	public void restaurar() {
 		pc.getChildren().clear();
 		pc.getChildren().addAll(formasPane);
+	}
+	
+	public Pane getPaneCanvas() {
+		return pc;
 	}
 }

@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import figuras.Sierpinski;
 import formas.Formas;
 import formas.Ponto;
-import grafico.PontoGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -17,7 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Slider;
@@ -27,13 +25,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import xml.Xml;
 import javafx.stage.Stage;
+import xml.Xml;
 
 
 public class Quadro implements Initializable{
 
-	@FXML MenuBar menuOpcoes;
 	@FXML Pane paneCanvas;
 	
 	@FXML RadioMenuItem rmiPonto;
@@ -51,6 +48,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miDeletar;
 	@FXML MenuItem miSalvar;
 	@FXML MenuItem miAbrir;
+	@FXML MenuItem miClipping;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -59,6 +57,7 @@ public class Quadro implements Initializable{
 	
 	
 	Desenho desenhador; //Objeto responsável pelo desenho das formas conforme evento recebido	
+	Clipping ferramentaCorte; 
 	ToggleGroup tgFormas = new ToggleGroup();
 	ColorPicker corDesenho = new ColorPicker(Color.BLACK);
 	Sierpinski sierpDesenho;
@@ -67,12 +66,13 @@ public class Quadro implements Initializable{
 	Xml arqXml;	
 	ArrayList<Formas> listaFormas = new ArrayList<>();
 	
-	boolean selecionar = false;
+	boolean selecionar = false, recortar = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		desenhador = new Desenho(paneCanvas);
+		ferramentaCorte = new Clipping (paneCanvas);
 				
 		//Define grupo de formas a serem escolhidas
 		rmiPonto.setToggleGroup(tgFormas);
@@ -107,6 +107,20 @@ public class Quadro implements Initializable{
 				paneCanvas.getChildren().clear();
 				paneCanvas.getChildren().add(cv_quadro);
 				sierpDesenho = null;
+			}
+		);
+		
+		miClipping.setOnAction(
+			(ev)->{
+				if (recortar) {
+					recortar = false;
+					miClipping.setText("Recortar");
+				}
+				
+				else {
+					recortar = true;
+					miClipping.setText("✓ Recortar");
+				}
 			}
 		);
 		
@@ -149,7 +163,9 @@ public class Quadro implements Initializable{
 				
 				try {
 					arqXml = new Xml(fc.showSaveDialog(new Stage()));	
-					arqXml.escreverXml(listaFormas);
+					if (arqXml.getArqXml() != null) {
+						arqXml.escreverXml(listaFormas);
+					}
 				}catch (IOException e) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("ERRO AO SALVAR !");
@@ -171,8 +187,13 @@ public class Quadro implements Initializable{
 					
 					//Carrega desenho a partir de XML escolhido
 					FileChooser fc = new FileChooser();
+					fc.setTitle("Abrir imagem...");
+					fc.getExtensionFilters().add(new ExtensionFilter("XML File (.xml)", "*.xml"));
+					
 					arqXml = new Xml(fc.showOpenDialog(new Stage()));
-					listaFormas = arqXml.lerXml(paneCanvas);
+					if (arqXml.getArqXml() != null) {
+						listaFormas = arqXml.lerXml(paneCanvas);
+					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -184,13 +205,18 @@ public class Quadro implements Initializable{
 		cv_quadro.setOnMouseMoved(
 			(ev)->{
 				
-				String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
-				Color opcaoCor = corDesenho.getValue();
-				int opcaoBorda = new Double(slBorda.getValue()).intValue();
+				Ponto pontoEv = new Ponto((int)ev.getX(), (int)ev.getY());
 				
-				PontoGr pontoEv = new PontoGr((int)ev.getX(), (int)ev.getY(), opcaoCor, opcaoBorda);
+				if (recortar) {
+					ferramentaCorte.elasticoCorte(pontoEv);
+					cv_quadro.toFront();
+				}
 				
-				if (!selecionar) {
+				else if (!selecionar) {
+					
+					String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
+					Color opcaoCor = corDesenho.getValue();
+					int opcaoBorda = new Double(slBorda.getValue()).intValue();
 
 					switch (opcaoForma) {
 						case "Linha":{	
@@ -230,21 +256,35 @@ public class Quadro implements Initializable{
 			}
 		);
 		
+		//Inicio de desenho de formas
 		cv_quadro.setOnMouseClicked(
 			(ev)->{
-				if (!selecionar) {
+				
+				Ponto novoPonto = new Ponto((int)ev.getX(), (int)ev.getY());	
+				
+				if (recortar) {
+					if (ferramentaCorte.getPInicial() == null) {
+						ferramentaCorte.iniciarCorte(novoPonto);
+					}
+					
+					else {
+						ferramentaCorte.encerrarCorte(novoPonto);
+					}
+					
+					cv_quadro.toFront();
+				}
+				
+				
+				else if (!selecionar) {
 					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
 					Color cor = corDesenho.getValue();
 					int borda = new Double(slBorda.getValue()).intValue();
-					
-					PontoGr novoPonto = new PontoGr((int)ev.getX(), (int)ev.getY(), cor, borda);	
-					desenhador.setNovoPonto(novoPonto);
 				
 					switch (rmiOpcaoForma.getText()) {
 						case "Ponto":{
-							desenhador.desenharPonto();
-							listaFormas.add((Ponto) novoPonto);
+							desenhador.desenharPonto(novoPonto, cor, borda);
+							listaFormas.add(novoPonto);
 							break;
 						}
 					

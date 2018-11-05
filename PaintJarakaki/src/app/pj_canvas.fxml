@@ -14,7 +14,8 @@
               <items>
                   <MenuItem fx:id="miSalvar" mnemonicParsing="false" text="Salvar" />
                   <MenuItem fx:id="miAbrir" mnemonicParsing="false" text="Abrir" />
-                  <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar" />
+                  <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar Seleção" />
+                  <MenuItem fx:id="miClipping" mnemonicParsing="false" text="Recortar" />
                 <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar Tela" />
                   <MenuItem fx:id="miSelecionar" mnemonicParsing="false" text="Selecionar" />
               </items>
@@ -47,7 +48,7 @@
    <center>
       <Pane fx:id="paneCanvas" maxHeight="770.0" maxWidth="1280.0" minHeight="770.0" minWidth="1280.0" prefHeight="770.0" prefWidth="1280.0">
          <children>
-            <Canvas fx:id="cv_quadro" height="770.0" width="1280.0" BorderPane.alignment="CENTER" />
+            <Canvas fx:id="cv_quadro" height="770.0" layoutX="-1.0" width="1280.0" BorderPane.alignment="CENTER" />
          </children>
       </Pane>
    </center>

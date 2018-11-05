@@ -38,7 +38,7 @@ public class PontoGr extends Ponto implements FormaGr {
 	 * @param cor cor do ponto a ser construido
 	 * @param diametro diametro do ponto
 	 */
-	public PontoGr(PontoGr pg, Color cor, int diametro){
+	public PontoGr(Ponto pg, Color cor, int diametro){
 		super(pg.getX(), pg.getY());	 
 		setCor(cor);
 		setDiametro(diametro);
@@ -94,7 +94,7 @@ public class PontoGr extends Ponto implements FormaGr {
 		e.setOpacity(0.1);
 	}
 	
-	public Ellipse obterElipse() {
+	public Ellipse getEllipse() {
 		return this.e;
 	}
 

@@ -47,7 +47,7 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		pontosTriangulo.addAll(lgrReta3.getPontos());
 		
 		for (PontoGr ponto : pontosTriangulo) {
-			Ellipse e = ponto.obterElipse();
+			Ellipse e = ponto.getEllipse();
 			e.setOnMouseClicked(  
 				(ev)-> {
 					this.selecionar();
@@ -60,7 +60,7 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 	
 	public void selecionar() {
 		for (PontoGr p : pontosTriangulo) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}

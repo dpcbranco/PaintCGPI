@@ -33,7 +33,7 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 		pontosLPoligonal.addAll(novaLinha.getPontos());
 		
 		for (PontoGr ponto : pontosLPoligonal) {
-			ponto.obterElipse().setOnMouseClicked( 
+			ponto.getEllipse().setOnMouseClicked( 
 				(ev)->{
 					selecionar();
 				}
@@ -50,7 +50,7 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 			novaLinha.desenhar(pane);
 			
 			for (PontoGr ponto : novaLinha.getPontos()) {
-				ponto.obterElipse().setOnMouseClicked( 
+				ponto.getEllipse().setOnMouseClicked( 
 					(ev)->{
 						selecionar();
 					}
@@ -63,7 +63,7 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 
 	public void selecionar() {
 		for (PontoGr p : pontosLPoligonal) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}

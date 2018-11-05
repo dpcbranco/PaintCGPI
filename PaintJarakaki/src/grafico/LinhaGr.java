@@ -47,7 +47,7 @@ public class LinhaGr extends Linha implements FormaGr{
 		for (int[] iCoordenadas : alCoordenadas) {
 			PontoGr novoPonto = new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda);
 			novoPonto.desenhar(pane);
-			novoPonto.obterElipse().setOnMouseClicked(
+			novoPonto.getEllipse().setOnMouseClicked(
 				(ev) ->{
 					selecionar();
 				}
@@ -58,7 +58,7 @@ public class LinhaGr extends Linha implements FormaGr{
 
 	public void selecionar() {
 		for (PontoGr p : pontosLinha) {
-			Ellipse e = p.obterElipse();
+			Ellipse e = p.getEllipse();
 			e.setOpacity(0.1);
 		}
 	}

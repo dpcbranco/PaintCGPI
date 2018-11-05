@@ -29,15 +29,16 @@ public class Desenho extends Elastico{
 	}
 	
 	//Desenha ponto conforme clique no quadro
-	public void desenharPonto() {
+	public void desenharPonto(Ponto p, Color cor, int borda) {
+		novoPonto = new PontoGr(p, cor, borda);
 		novoPonto.desenhar(pc);
 	}
 	
-	public void desenharLinha(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
+	public void desenharLinha(Ponto novoPonto, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		if (novaLinha == null) {
 			novaLinha = new LinhaGr(cor, borda);			
-			novaLinha.setP1(p);
+			novaLinha.setP1(novoPonto);
 			formasPane.addAll(pc.getChildren());
 		}
 		
@@ -45,9 +46,9 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			p = new PontoGr((int)p.getX(), (int)p.getY(), cor, borda);
+			novoPonto = new PontoGr((int)novoPonto.getX(), (int)novoPonto.getY(), cor, borda);
 			
-			novaLinha.setP2(p);
+			novaLinha.setP2(novoPonto);
 			novaLinha.desenhar(pc);
 			
 			listaXML.add((Linha) novaLinha);
@@ -59,12 +60,12 @@ public class Desenho extends Elastico{
 	}
 	
 	//Desenha triângulo à partir de pontos já desenhados e do clique no quadro
-	public void desenharTriangulo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
+	public void desenharTriangulo(Ponto novoPonto, ArrayList<Formas> listaXML, Color cor, int borda) {
 		if (novoTriangulo == null) {
 			formasPane.addAll(pc.getChildren());
-			novoTriangulo = new TrianguloGr(p, null, null, cor, borda);
+			novoTriangulo = new TrianguloGr(novoPonto, null, null, cor, borda);
 			novaLinha = new LinhaGr(cor, borda);
-			novaLinha.setP1(p);
+			novaLinha.setP1(novoPonto);
 	
 		}
 		
@@ -72,10 +73,10 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 				
-			novoTriangulo.setP2(p);
+			novoTriangulo.setP2(novoPonto);
 			
 			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do triângulo
-			novaLinha.setP2(p);
+			novaLinha.setP2(novoPonto);
 			novaLinha.desenhar(pc);
 			novaLinha = null;
 			
@@ -87,7 +88,7 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novoTriangulo.setP3(p);
+			novoTriangulo.setP3(novoPonto);
 			novoTriangulo.desenhar(pc);
 			
 			listaXML.add((Triangulo) novoTriangulo);
@@ -100,12 +101,12 @@ public class Desenho extends Elastico{
 	
 	
 	//Desenha circulo de acordo com o clique no quadro
-	public void desenharCirculo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
+	public void desenharCirculo(Ponto novoPonto, ArrayList<Formas> listaXML, Color cor, int borda) {
 		
 		//Se centro do círculo ainda não foi fixado, é criado ponto no local do clique
 		if (novoCirculo == null) {
 			formasPane.addAll(pc.getChildren());
-			novoCirculo = new CirculoGr((Ponto)p, cor, borda);
+			novoCirculo = new CirculoGr((Ponto)novoPonto, cor, borda);
 		}
 		
 		//Desenha circulo de acordo com o ponto clicado em evento anterior e ponto atual
@@ -113,7 +114,7 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novoCirculo.setPerimetro(p);
+			novoCirculo.setPerimetro(novoPonto);
 			novoCirculo.desenhar(pc);
 			
 			listaXML.add((Circulo) novoCirculo);
@@ -125,9 +126,9 @@ public class Desenho extends Elastico{
 		
 	}
 	
-	public void desenharRetangulo(PontoGr p, ArrayList<Formas> listaXML, Color cor, int borda) {
+	public void desenharRetangulo(Ponto novoPonto, ArrayList<Formas> listaXML, Color cor, int borda) {
 		if (novoRetangulo == null) {
-			novoRetangulo = new RetanguloGr(p, null, cor, borda);			
+			novoRetangulo = new RetanguloGr(novoPonto, null, cor, borda);			
 			formasPane.addAll(pc.getChildren());	
 		}
 		
@@ -135,7 +136,7 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novoRetangulo.setP2(p);
+			novoRetangulo.setP2(novoPonto);
 			novoRetangulo.desenhar(pc);
 			
 			listaXML.add((Retangulo) novoRetangulo);
@@ -214,4 +215,24 @@ public class Desenho extends Elastico{
 		}
 		
 	}
+	
+	public void desenharCorte(Ponto p) {
+		if (retanguloCorte == null) {
+			retanguloCorte = new RetanguloGr(p, null, Color.GRAY, 2);
+			formasPane.addAll(pc.getChildren());
+		}
+		
+		else {
+			restaurar();
+			retanguloCorte.setP2(p);
+			retanguloCorte.desenhar(pc);
+			
+			for (PontoGr pgr : retanguloCorte.getPontosRetangulo()) {
+				pc.getChildren().remove(pgr.getEllipse());
+			}
+			retanguloCorte = null;
+			formasPane.clear();
+		}
+	}
+
 }
