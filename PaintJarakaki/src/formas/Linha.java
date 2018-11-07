@@ -15,8 +15,8 @@ public class Linha implements Formas{
 	
 	protected Ponto p1, p2, pAux;
 	
-	protected ArrayList<int[]> calcularLinha(){
-		ArrayList<int[]> alCoordenadas = new ArrayList<>();
+	protected ArrayList<Ponto> calcularLinha(){
+		ArrayList<Ponto> alCoordenadas = new ArrayList<>();
 		int iDifx = new Double(Math.abs(p2.getX() - p1.getX())).intValue();
 		int iDify = new Double(Math.abs(p2.getY() - p1.getY())).intValue();
 		
@@ -52,38 +52,38 @@ public class Linha implements Formas{
 	}
 	
 	//Calcular linha pela coordenada X
-	private ArrayList<int[]> calcularCoordX(){
+	private ArrayList<Ponto> calcularCoordX(){
 		double dTg = (p2.getY() - p1.getY())/(p2.getX() - p1.getX());
 		double dAltura = p1.getY() - dTg * p1.getX();
-		ArrayList<int[]> aAux = new ArrayList<>();
+		ArrayList<Ponto> aAux = new ArrayList<>();
 		int dY;
 		
 		for (int dX = (int)p1.getX(); dX < (int)p2.getX(); dX++) {
 			dY = new Double((dTg*dX) + dAltura).intValue();
-			aAux.add(new int[] {dX, dY});
+			aAux.add(new Ponto(dX, dY));
 		}
 		
 		return aAux;
 	}
 	
 	//Calcular linha pela coordenada Y
-	private ArrayList<int[]> calcularCoordY(){
+	private ArrayList<Ponto> calcularCoordY(){
 		double dTg = (p2.getY() - p1.getY())/(p2.getX() - p1.getX());
 		double dAltura = p1.getY() - dTg * p1.getX();
-		ArrayList<int[]> aAux = new ArrayList<>();
+		ArrayList<Ponto> aAux = new ArrayList<>();
 		int dX;
 		
 		for (int dY = (int)p1.getY(); dY < (int)p2.getY(); dY++) {
 			dX = new Double((dY - dAltura)/dTg).intValue();
-			aAux.add(new int[] {dX, dY});
+			aAux.add(new Ponto (dX, dY));
 		}
 		
 		return aAux;
 	}
 	
-	private ArrayList<int[]> calcularLinhaVertical(){
+	private ArrayList<Ponto> calcularLinhaVertical(){
 		
-		ArrayList<int[]> aAux = new ArrayList<>();
+		ArrayList<Ponto> aAux = new ArrayList<>();
 		
 		if (p1.getY() > p2.getY()) {
 			pAux = p1;
@@ -92,16 +92,16 @@ public class Linha implements Formas{
 		}
 		
 		for (int i = (int) p1.getY(); i < (int) p2.getY(); i++) {
-			aAux.add(new int[]{(int) p1.getX(), i});
+			aAux.add(new Ponto((int) p1.getX(), i));
 		}
 		
 		return aAux;
 	
 	}
 	
-	private ArrayList<int[]> calcularLinhaHorizontal(){
+	private ArrayList<Ponto> calcularLinhaHorizontal(){
 		
-		ArrayList<int[]> aAux = new ArrayList<>();
+		ArrayList<Ponto> aAux = new ArrayList<>();
 		
 		if (p1.getX() > p2.getX()) {
 			pAux = p1;
@@ -110,7 +110,7 @@ public class Linha implements Formas{
 		}
 		
 		for (int i = (int) p1.getX(); i < (int) p2.getX(); i++) {
-			aAux.add(new int[]{i, (int) p1.getY()});
+			aAux.add(new Ponto(i, (int) p1.getY()));
 		}
 		
 		return aAux;

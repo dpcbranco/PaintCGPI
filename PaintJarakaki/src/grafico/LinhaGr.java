@@ -13,7 +13,6 @@ public class LinhaGr extends Linha implements FormaGr{
 	Color cor;
 	int borda;
 	
-	ArrayList<int[]> alCoordenadas;
 	ArrayList<PontoGr> pontosLinha = new ArrayList<>();
 	
 	public LinhaGr(Color cor, int borda) {
@@ -42,10 +41,11 @@ public class LinhaGr extends Linha implements FormaGr{
 	}
 
 	public void desenhar(Pane pane) {
-		alCoordenadas = this.calcularLinha();
+		ArrayList<Ponto> pontosCalculo;
+		pontosCalculo = this.calcularLinha();
 		
-		for (int[] iCoordenadas : alCoordenadas) {
-			PontoGr novoPonto = new PontoGr(iCoordenadas[0], iCoordenadas[1], cor, borda);
+		for (Ponto p : pontosCalculo) {
+			PontoGr novoPonto = new PontoGr(p, cor, borda);
 			novoPonto.desenhar(pane);
 			novoPonto.getEllipse().setOnMouseClicked(
 				(ev) ->{
