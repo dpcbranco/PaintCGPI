@@ -58,7 +58,7 @@ public class Linha implements Formas{
 		ArrayList<Ponto> aAux = new ArrayList<>();
 		int dY;
 		
-		for (int dX = (int)p1.getX(); dX < (int)p2.getX(); dX++) {
+		for (int dX = (int)p1.getX(); dX <= (int)p2.getX(); dX++) {
 			dY = new Double((dTg*dX) + dAltura).intValue();
 			aAux.add(new Ponto(dX, dY));
 		}
@@ -73,7 +73,7 @@ public class Linha implements Formas{
 		ArrayList<Ponto> aAux = new ArrayList<>();
 		int dX;
 		
-		for (int dY = (int)p1.getY(); dY < (int)p2.getY(); dY++) {
+		for (int dY = (int)p1.getY(); dY <= (int)p2.getY(); dY++) {
 			dX = new Double((dY - dAltura)/dTg).intValue();
 			aAux.add(new Ponto (dX, dY));
 		}
@@ -91,7 +91,7 @@ public class Linha implements Formas{
 			p2 = pAux;
 		}
 		
-		for (int i = (int) p1.getY(); i < (int) p2.getY(); i++) {
+		for (int i = (int) p1.getY(); i <= (int) p2.getY(); i++) {
 			aAux.add(new Ponto((int) p1.getX(), i));
 		}
 		
@@ -109,7 +109,7 @@ public class Linha implements Formas{
 			p2 = pAux;
 		}
 		
-		for (int i = (int) p1.getX(); i < (int) p2.getX(); i++) {
+		for (int i = (int) p1.getX(); i <= (int) p2.getX(); i++) {
 			aAux.add(new Ponto(i, (int) p1.getY()));
 		}
 		

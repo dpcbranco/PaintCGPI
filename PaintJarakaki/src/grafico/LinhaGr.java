@@ -21,7 +21,7 @@ public class LinhaGr extends Linha implements FormaGr{
 	}
 	
 	public LinhaGr (PontoGr p1, PontoGr p2, Color cor, int borda) {
-		super(p1, p2);
+		super((Ponto)p1, (Ponto)p2);
 		this.cor = cor;
 		this.borda = borda;
 	}
@@ -52,14 +52,30 @@ public class LinhaGr extends Linha implements FormaGr{
 					selecionar();
 				}
 			);
+			
+			if (p.equals(p1) || p.equals(p2)) {
+				novoPonto.getEllipse().setOnMouseDragged(
+					(ev)->{
+						rotacao();
+					}
+				);
+			}
 			pontosLinha.add(novoPonto);
 		}
 	}
 
+	private void rotacao() {
+		
+	}
+
 	public void selecionar() {
-		for (PontoGr p : pontosLinha) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		for (PontoGr pgr : pontosLinha) {
+			Ponto p = (Ponto) pgr;
+			Ellipse e = pgr.getEllipse();
+			
+			if (!p.equals(p1) && !p.equals(p2)) {
+				e.setOpacity(0.1);
+			}
 		}
 	}
 
