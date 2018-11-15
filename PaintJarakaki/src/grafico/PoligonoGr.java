@@ -51,7 +51,15 @@ public class PoligonoGr extends Poligono implements FormaGr{
 					selecionar();
 				}
 			);
+			
+			ponto.getEllipse().setOnMouseDragged(
+				(ev)->{
+					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+				}
+			);
 		}
+		
+		pontosPoligono.addAll(novaLinha.getPontos());
 		
 	}
 	
@@ -69,6 +77,12 @@ public class PoligonoGr extends Poligono implements FormaGr{
 						selecionar();
 					}
 				);
+				
+				ponto.getEllipse().setOnMouseDragged(
+						(ev)->{
+							mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+						}
+				);
 			}
 			
 			pontosPoligono.addAll(novaLinha.getPontos());
@@ -85,8 +99,10 @@ public class PoligonoGr extends Poligono implements FormaGr{
 
 	@Override
 	public void mover(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		for (PontoGr p : pontosPoligono) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 	}
 
 	@Override

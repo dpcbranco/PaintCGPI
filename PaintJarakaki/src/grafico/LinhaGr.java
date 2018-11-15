@@ -99,7 +99,16 @@ public class LinhaGr extends Linha implements FormaGr{
 
 	@Override
 	public void mover(double x, double y) {
+		for (PontoGr p : pontosLinha) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 		
+		p1.setX(p1.getX() + x);
+		p1.setY(p1.getY() + y);
+		
+		p2.setX(p2.getX() + x);
+		p2.setY(p2.getY() + y);
 	}
 
 }

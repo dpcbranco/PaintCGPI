@@ -114,4 +114,17 @@ public class PontoGr extends Ponto implements FormaGr {
 	public void rotacao(double x, double y) {
 		
 	}
+	
+	@Override
+	public void setX(double x) {
+		this.x = x;
+		e.setCenterX(x);
+	}
+	
+	@Override
+	public void setY(double y) {
+		this.y = y;
+		e.setCenterY(y);
+	}
+	
 }

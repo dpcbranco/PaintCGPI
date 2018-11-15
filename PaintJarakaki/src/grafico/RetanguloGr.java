@@ -33,9 +33,16 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		
 		for (PontoGr ponto : pontosRetangulo) {
 			Ellipse e = ponto.getEllipse();
+			
 			e.setOnMouseClicked(  
 				(ev)-> {
 					this.selecionar();
+				}
+			);
+			
+			e.setOnMouseDragged(
+				(ev)->{
+					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
 				}
 			);
 		}
@@ -59,8 +66,10 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 
 	@Override
 	public void mover(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		for (PontoGr p : pontosRetangulo) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 	}
 
 	@Override

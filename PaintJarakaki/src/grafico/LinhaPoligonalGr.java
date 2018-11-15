@@ -38,6 +38,12 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 					selecionar();
 				}
 			);
+			
+			ponto.getEllipse().setOnMouseDragged(
+				(ev)->{
+					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+				}
+			);
 		}
 	}
 	
@@ -74,8 +80,10 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 
 	@Override
 	public void mover(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		for (PontoGr p : pontosLPoligonal) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 	}
 
 	@Override

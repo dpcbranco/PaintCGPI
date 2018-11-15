@@ -39,6 +39,12 @@ public class CirculoGr extends Circulo implements FormaGr {
 					selecionar();
 				}
 			);
+			
+			p.getEllipse().setOnMouseDragged(
+				(ev)->{
+					mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+				}
+			);
 		}
 	}
 
@@ -55,8 +61,10 @@ public class CirculoGr extends Circulo implements FormaGr {
 
 	@Override
 	public void mover(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		for (PontoGr p : pontosCirculo) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 	}
 
 	@Override

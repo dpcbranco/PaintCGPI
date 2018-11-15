@@ -48,9 +48,16 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		
 		for (PontoGr ponto : pontosTriangulo) {
 			Ellipse e = ponto.getEllipse();
+			
 			e.setOnMouseClicked(  
 				(ev)-> {
 					this.selecionar();
+				}
+			);
+			
+			e.setOnMouseDragged(
+				(ev)->{
+					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
 				}
 			);
 		}
@@ -86,8 +93,10 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 
 	@Override
 	public void mover(double x, double y) {
-		// TODO Auto-generated method stub
-		
+		for (PontoGr p : pontosTriangulo) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
 	}
 
 	@Override
