@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Linha;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
@@ -49,7 +50,9 @@ public class LinhaGr extends Linha implements FormaGr{
 			novoPonto.desenhar(pane);
 			novoPonto.getEllipse().setOnMouseClicked(
 				(ev) ->{
-					selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
 				}
 			);
 			
@@ -64,7 +67,9 @@ public class LinhaGr extends Linha implements FormaGr{
 			else {
 				novoPonto.getEllipse().setOnMouseDragged(
 					(ev)->{
-						mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+						if (Quadro.getMover()) {
+							mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+						}
 					}
 				);
 			}

@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Circulo;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
@@ -36,13 +37,17 @@ public class CirculoGr extends Circulo implements FormaGr {
 			
 			p.getEllipse().setOnMouseClicked( 
 				(ev)->{
-					selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
 				}
 			);
 			
 			p.getEllipse().setOnMouseDragged(
 				(ev)->{
-					mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+					if (Quadro.getMover()) {
+						mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+					}
 				}
 			);
 		}

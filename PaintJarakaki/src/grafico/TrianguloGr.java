@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Linha;
 import formas.Ponto;
 import formas.Triangulo;
@@ -51,13 +52,17 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 			
 			e.setOnMouseClicked(  
 				(ev)-> {
-					this.selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
 				}
 			);
 			
 			e.setOnMouseDragged(
 				(ev)->{
-					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					if (Quadro.getMover()) {
+						mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					}
 				}
 			);
 		}

@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Linha;
 import formas.Poligono;
 import formas.Ponto;
@@ -48,13 +49,17 @@ public class PoligonoGr extends Poligono implements FormaGr{
 		for (PontoGr ponto : novaLinha.getPontos()) {
 			ponto.getEllipse().setOnMouseClicked( 
 				(ev)->{
-					selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
 				}
 			);
 			
 			ponto.getEllipse().setOnMouseDragged(
 				(ev)->{
-					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					if (Quadro.getMover()) {
+						mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					}
 				}
 			);
 		}

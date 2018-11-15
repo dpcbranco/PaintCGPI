@@ -1,5 +1,6 @@
 package grafico;
 
+import app.Quadro;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -80,13 +81,17 @@ public class PontoGr extends Ponto implements FormaGr {
 		
 		e.setOnMouseClicked(
 			(ev)->{
-				this.selecionar();
+				if (Quadro.getSelecionar()) {
+					this.selecionar();
+				}
 			}
 		);
 		
 		e.setOnMouseDragged(
 			(ev)->{
-				this.mover(ev.getX(), ev.getY());
+				if (Quadro.getMover()) {
+					this.mover(ev.getX(), ev.getY());
+				}
 			}
 		);
 		

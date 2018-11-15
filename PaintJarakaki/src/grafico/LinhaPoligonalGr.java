@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Linha;
 import formas.LinhaPoligonal;
 import formas.Ponto;
@@ -35,13 +36,17 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 		for (PontoGr ponto : pontosLPoligonal) {
 			ponto.getEllipse().setOnMouseClicked( 
 				(ev)->{
-					selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
 				}
 			);
 			
 			ponto.getEllipse().setOnMouseDragged(
 				(ev)->{
-					mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					if (Quadro.getMover()) {
+						mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+					}
 				}
 			);
 		}
