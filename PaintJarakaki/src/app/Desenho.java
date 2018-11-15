@@ -78,7 +78,6 @@ public class Desenho extends Elastico{
 			//desenha a linha, limpa objeto novaLinha utilizado para elastico de linhas e tira novo snapshot para desenho do triângulo
 			novaLinha.setP2(novoPonto);
 			novaLinha.desenhar(pc);
-			novaLinha = null;
 			
 			formasPane.clear();
 			formasPane.addAll(pc.getChildren());
@@ -87,6 +86,7 @@ public class Desenho extends Elastico{
 		else {
 			//remove resquicios do elastico
 			restaurar();
+			deletar(novaLinha.getPontos());
 			
 			novoTriangulo.setP3(novoPonto);
 			novoTriangulo.desenhar(pc);
@@ -95,6 +95,7 @@ public class Desenho extends Elastico{
 			
 			formasPane.clear();
 			novoTriangulo = null;
+			novaLinha = null;
 		}
 		
 	}
@@ -232,6 +233,12 @@ public class Desenho extends Elastico{
 			}
 			retanguloCorte = null;
 			formasPane.clear();
+		}
+	}
+	
+	private void deletar(ArrayList<PontoGr> pontos) {
+		for (PontoGr p : pontos) {
+			pc.getChildren().remove(p.getEllipse());
 		}
 	}
 
