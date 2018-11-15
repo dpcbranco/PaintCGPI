@@ -56,15 +56,25 @@ public class LinhaGr extends Linha implements FormaGr{
 			if (p.equals(p1) || p.equals(p2)) {
 				novoPonto.getEllipse().setOnMouseDragged(
 					(ev)->{
-						rotacao();
+						rotacao(ev.getX(), ev.getY());
 					}
 				);
 			}
+			
+			else {
+				novoPonto.getEllipse().setOnMouseDragged(
+					(ev)->{
+						mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+					}
+				);
+			}
+			
 			pontosLinha.add(novoPonto);
 		}
 	}
 
-	private void rotacao() {
+	@Override
+	public void rotacao(double x, double y) {
 		
 	}
 
@@ -85,6 +95,11 @@ public class LinhaGr extends Linha implements FormaGr{
 
 	public Color getCor() {
 		return this.cor;
+	}
+
+	@Override
+	public void mover(double x, double y) {
+		
 	}
 
 }

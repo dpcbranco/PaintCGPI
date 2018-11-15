@@ -71,5 +71,17 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 	public Color getCor() {
 		return this.cor;
 	}
+
+	@Override
+	public void mover(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

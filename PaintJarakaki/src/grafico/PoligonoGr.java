@@ -82,4 +82,16 @@ public class PoligonoGr extends Poligono implements FormaGr{
 	public void setPontosPoligono(ArrayList<PontoGr> pontosPoligono) {
 		this.pontosPoligono = pontosPoligono;
 	}
+
+	@Override
+	public void mover(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
 }

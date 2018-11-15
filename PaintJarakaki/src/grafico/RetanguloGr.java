@@ -57,4 +57,16 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		return pontosRetangulo;
 	}
 
+	@Override
+	public void mover(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

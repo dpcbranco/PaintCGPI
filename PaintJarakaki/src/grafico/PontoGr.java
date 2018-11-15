@@ -84,12 +84,18 @@ public class PontoGr extends Ponto implements FormaGr {
 			}
 		);
 		
+		e.setOnMouseDragged(
+			(ev)->{
+				this.mover(ev.getX(), ev.getY());
+			}
+		);
+		
 		pane.getChildren().add(e);
 		/*g.setFill(getCor());
 		sc.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());*/
 	}
 
-	//@Override
+	@Override
 	public void selecionar() {
 		e.setOpacity(0.1);
 	}
@@ -98,4 +104,14 @@ public class PontoGr extends Ponto implements FormaGr {
 		return this.e;
 	}
 
+	@Override
+	public void mover(double x, double y) {
+		e.setCenterX(x);
+		e.setCenterY(y);
+	}
+	
+	@Override
+	public void rotacao(double x, double y) {
+		
+	}
 }

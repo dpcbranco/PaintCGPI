@@ -84,4 +84,16 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		return this.cCor;
 	}
 
+	@Override
+	public void mover(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

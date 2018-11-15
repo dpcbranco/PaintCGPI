@@ -53,5 +53,17 @@ public class CirculoGr extends Circulo implements FormaGr {
 		return this.cor;
 	}
 
+	@Override
+	public void mover(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
