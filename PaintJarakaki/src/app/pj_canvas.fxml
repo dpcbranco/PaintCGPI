@@ -14,10 +14,11 @@
               <items>
                   <MenuItem fx:id="miSalvar" mnemonicParsing="false" text="Salvar" />
                   <MenuItem fx:id="miAbrir" mnemonicParsing="false" text="Abrir" />
-                  <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar Seleção" />
-                  <MenuItem fx:id="miClipping" mnemonicParsing="false" text="Recortar" />
-                <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar Tela" />
                   <MenuItem fx:id="miSelecionar" mnemonicParsing="false" text="Selecionar" />
+                  <MenuItem fx:id="miClipping" mnemonicParsing="false" text="Recortar" />
+                  <MenuItem fx:id="miMover" mnemonicParsing="false" text="Mover" />
+                  <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar Seleção" />
+                <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar Tela" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Formas">

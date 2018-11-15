@@ -49,6 +49,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miSalvar;
 	@FXML MenuItem miAbrir;
 	@FXML MenuItem miClipping;
+	@FXML MenuItem miMover;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -66,7 +67,7 @@ public class Quadro implements Initializable{
 	Xml arqXml;	
 	ArrayList<Formas> listaFormas = new ArrayList<>();
 	
-	boolean selecionar = false, recortar = false;
+	private static boolean selecionar = false, recortar = false, mover = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -200,6 +201,21 @@ public class Quadro implements Initializable{
 			}
 		);
 		
+		miMover.setOnAction(
+			(ev)->{
+				if (mover) {
+					cv_quadro.toFront();
+					mover = false;
+					miMover.setText("Mover");
+				}
+				
+				else {
+					cv_quadro.toBack();					
+					mover = true;
+					miMover.setText("✓ Mover");
+				}
+			}
+		);
 		
 		//Trata movimento do mouse durante desenho das formas
 		cv_quadro.setOnMouseMoved(
@@ -212,7 +228,7 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 				}
 				
-				else if (!selecionar) {
+				else if (!selecionar && !mover) {
 					
 					String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
 					Color opcaoCor = corDesenho.getValue();
@@ -275,7 +291,7 @@ public class Quadro implements Initializable{
 				}
 				
 				
-				else if (!selecionar) {
+				else if (!selecionar && !mover) {
 					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
 					Color cor = corDesenho.getValue();
@@ -337,6 +353,18 @@ public class Quadro implements Initializable{
 				}
 			}
 		);		
+	}
+	
+	public static boolean getSelecionar() {
+		return selecionar;
+	}
+	
+	public static boolean getRecortar() {
+		return recortar;
+	}
+	
+	public static boolean getMover() {
+		return mover;
 	}
 	
 }
