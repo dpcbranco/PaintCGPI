@@ -15,6 +15,7 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 	Color cor;
 	int borda;
 	ArrayList<PontoGr> pontosRetangulo = new ArrayList<>();
+	boolean selecionado = false;
 	
 	public RetanguloGr(Ponto p1, Ponto p2, Color cor, int borda) {
 		super(p1, p2);
@@ -54,9 +55,22 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 	}
 
 	public void selecionar() {
-		for (PontoGr p : pontosRetangulo) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr p : pontosRetangulo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosRetangulo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -81,6 +95,11 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 	public void rotacao(double x, double y) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
 	}
 
 }

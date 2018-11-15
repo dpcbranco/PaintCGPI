@@ -11,9 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
 public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
+	
 	Color cor;
 	int borda;
 	ArrayList<PontoGr> pontosLPoligonal = new ArrayList<>();
+	boolean selecionado = false;
 	
 	public LinhaPoligonalGr(Ponto p1, Color cor, int borda) {
 		super(p1);
@@ -73,9 +75,23 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 	}
 
 	public void selecionar() {
-		for (PontoGr p : pontosLPoligonal) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		
+		if (selecionado) {
+			for (PontoGr p : pontosLPoligonal) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosLPoligonal) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -95,6 +111,11 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 	public void rotacao(double x, double y) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
 	}
 	
 }

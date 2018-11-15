@@ -14,9 +14,11 @@ import javafx.scene.shape.Ellipse;
  * 
  */
 public class PontoGr extends Ponto implements FormaGr {
+	
 	Color cor; // cor do ponto 
 	int diametro; // diametro do ponto, default = 5
 	Ellipse e;
+	boolean selecionado = false;
 	
 	/**
 	 * Constroi um ponto na posicao x, y e com os atributos
@@ -102,7 +104,15 @@ public class PontoGr extends Ponto implements FormaGr {
 
 	@Override
 	public void selecionar() {
-		e.setOpacity(0.1);
+		if (selecionado) {
+			e.setOpacity(1);
+			selecionado = false;
+		}
+		
+		else {
+			e.setOpacity(0.1);
+			selecionado = true;
+		}
 	}
 	
 	public Ellipse getEllipse() {
@@ -130,6 +140,11 @@ public class PontoGr extends Ponto implements FormaGr {
 	public void setY(double y) {
 		this.y = y;
 		e.setCenterY(y);
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
 	}
 	
 }

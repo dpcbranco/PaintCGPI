@@ -14,6 +14,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 	Color cor;
 	int borda;
 	ArrayList<PontoGr> pontosCirculo = new ArrayList<>();
+	boolean selecionado = false;
 
 	public CirculoGr(Ponto centro, Color cor, int borda) {
 		super(centro);
@@ -54,9 +55,22 @@ public class CirculoGr extends Circulo implements FormaGr {
 	}
 
 	public void selecionar() {
-		for (PontoGr p : pontosCirculo) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr p : pontosCirculo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosCirculo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -74,8 +88,12 @@ public class CirculoGr extends Circulo implements FormaGr {
 
 	@Override
 	public void rotacao(double x, double y) {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
 	}
 
 	

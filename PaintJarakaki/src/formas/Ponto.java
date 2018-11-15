@@ -2,7 +2,7 @@ package formas;
 
 import javafx.geometry.Point2D;
 
-public class Ponto implements Formas{
+public class Ponto implements Forma{
 	
 	protected double x;
 	protected double y;

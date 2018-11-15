@@ -15,6 +15,7 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 	Color cCor;
 	int iBorda;
 	ArrayList<PontoGr> pontosTriangulo = new ArrayList<>();
+	boolean selecionado = false;
 
 
 	public TrianguloGr(Ponto p1, Ponto p2, Ponto p3, Color cor, int borda) {
@@ -71,9 +72,22 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 	
 	
 	public void selecionar() {
-		for (PontoGr p : pontosTriangulo) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr p : pontosTriangulo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosTriangulo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -109,5 +123,11 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
+	}
+	
 
 }

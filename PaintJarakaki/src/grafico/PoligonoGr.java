@@ -15,6 +15,7 @@ public class PoligonoGr extends Poligono implements FormaGr{
 	Color cor;
 	int borda;
 	ArrayList<PontoGr> pontosPoligono = new ArrayList<>();
+	boolean selecionado = false;
 	
 	public PoligonoGr(Ponto p1, Color cor, int borda) {
 		super(p1);
@@ -36,9 +37,22 @@ public class PoligonoGr extends Poligono implements FormaGr{
 	}
 
 	public void selecionar() {
-		for (PontoGr p : pontosPoligono) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr p : pontosPoligono) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosPoligono) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -114,5 +128,10 @@ public class PoligonoGr extends Poligono implements FormaGr{
 	public void rotacao(double x, double y) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
 	}
 }

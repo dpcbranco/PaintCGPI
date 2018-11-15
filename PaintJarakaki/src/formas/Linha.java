@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Linha implements Formas{
+public class Linha implements Forma{
 	
 	public Linha() {
 		
@@ -47,6 +47,9 @@ public class Linha implements Formas{
 			
 			alCoordenadas = calcularCoordY();
 		}
+		
+		alCoordenadas.add(p1);
+		alCoordenadas.add(p2);
 		
 		return alCoordenadas;
 	}

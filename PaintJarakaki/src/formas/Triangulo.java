@@ -1,6 +1,6 @@
 package formas;
 
-public class Triangulo implements Formas{
+public class Triangulo implements Forma{
 	
 	protected Ponto p1, p2, p3;
 	

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
-import formas.Formas;
+import formas.Forma;
 import formas.Ponto;
+import grafico.FormaGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -65,7 +66,7 @@ public class Quadro implements Initializable{
 	
 	String txtXml;
 	Xml arqXml;	
-	ArrayList<Formas> listaFormas = new ArrayList<>();
+	ArrayList<FormaGr> listaFormas = new ArrayList<>();
 	
 	private static boolean selecionar = false, recortar = false, mover = false;
 	
@@ -138,6 +139,12 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 					selecionar = false;
 					miSelecionar.setText("Selecionar");
+					
+					for (FormaGr f : listaFormas) {
+						if (f.selecionado()) {
+							f.selecionar();
+						}
+					}
 				}
 					
 			}
@@ -301,8 +308,7 @@ public class Quadro implements Initializable{
 				
 					switch (rmiOpcaoForma.getText()) {
 						case "Ponto":{
-							desenhador.desenharPonto(novoPonto, cor, borda);
-							listaFormas.add(novoPonto);
+							listaFormas.add(desenhador.desenharPonto(novoPonto, cor, borda));
 							break;
 						}
 					
@@ -367,6 +373,10 @@ public class Quadro implements Initializable{
 	
 	public static boolean getMover() {
 		return mover;
+	}
+
+	public static boolean getRotacionar() {
+		return true;
 	}
 	
 }

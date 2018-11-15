@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Retangulo implements Formas{
+public class Retangulo implements Forma{
 
 	Ponto p1, p2, p3, p4;
 	

@@ -13,6 +13,7 @@ public class LinhaGr extends Linha implements FormaGr{
 
 	Color cor;
 	int borda;
+	boolean selecionado = false;
 	
 	ArrayList<PontoGr> pontosLinha = new ArrayList<>();
 	
@@ -57,9 +58,15 @@ public class LinhaGr extends Linha implements FormaGr{
 			);
 			
 			if (p.equals(p1) || p.equals(p2)) {
-				novoPonto.getEllipse().setOnMouseDragged(
+				novoPonto.getEllipse().setOnMouseDragged(   
 					(ev)->{
-						rotacao(ev.getX(), ev.getY());
+						if (Quadro.getRotacionar()) {
+							rotacao(ev.getX(), ev.getY());
+						}
+						
+						else if (Quadro.getMover()) {
+							mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+						}
 					}
 				);
 			}
@@ -84,13 +91,34 @@ public class LinhaGr extends Linha implements FormaGr{
 	}
 
 	public void selecionar() {
-		for (PontoGr pgr : pontosLinha) {
-			Ponto p = (Ponto) pgr;
-			Ellipse e = pgr.getEllipse();
-			
-			if (!p.equals(p1) && !p.equals(p2)) {
-				e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr pgr : pontosLinha) {
+				Ellipse e = pgr.getEllipse();
+				
+				if (!(pgr.getX() == p1.getX() && pgr.getY() == p1.getY()) && 
+					!(pgr.getX() == p2.getX() && pgr.getY() == p2.getY())) {
+					
+					e.setOpacity(1);
+					
+				}
 			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr pgr : pontosLinha) {
+				Ellipse e = pgr.getEllipse();
+			
+				if (!(pgr.getX() == p1.getX() && pgr.getY() == p1.getY()) && 
+						!(pgr.getX() == p2.getX() && pgr.getY() == p2.getY())) {
+				
+					e.setOpacity(0.1);
+				
+				}
+			}
+			
+			selecionado = true;
 		}
 	}
 
@@ -116,4 +144,8 @@ public class LinhaGr extends Linha implements FormaGr{
 		p2.setY(p2.getY() + y);
 	}
 
+	@Override
+	public boolean selecionado() {
+		return selecionado;
+	}
 }
