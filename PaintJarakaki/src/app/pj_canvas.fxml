@@ -17,6 +17,7 @@
                   <MenuItem fx:id="miSelecionar" mnemonicParsing="false" text="Selecionar" />
                   <MenuItem fx:id="miClipping" mnemonicParsing="false" text="Recortar" />
                   <MenuItem fx:id="miMover" mnemonicParsing="false" text="Mover" />
+                  <MenuItem fx:id="miRotacao" mnemonicParsing="false" text="Rotação" />
                   <MenuItem fx:id="miDeletar" mnemonicParsing="false" text="Deletar Seleção" />
                 <MenuItem fx:id="miLimpar" mnemonicParsing="false" text="Limpar Tela" />
               </items>

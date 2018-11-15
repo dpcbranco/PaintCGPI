@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
-import formas.Forma;
 import formas.Ponto;
 import grafico.FormaGr;
 import javafx.fxml.FXML;
@@ -51,6 +50,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miAbrir;
 	@FXML MenuItem miClipping;
 	@FXML MenuItem miMover;
+	@FXML MenuItem miRotacao;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -68,7 +68,7 @@ public class Quadro implements Initializable{
 	Xml arqXml;	
 	ArrayList<FormaGr> listaFormas = new ArrayList<>();
 	
-	private static boolean selecionar = false, recortar = false, mover = false;
+	private static boolean selecionar = false, recortar = false, mover = false, rotacionar = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -219,9 +219,34 @@ public class Quadro implements Initializable{
 				}
 				
 				else {
+					//Desativa rotacao caso esteja ativa
+					if (rotacionar) {
+						miRotacao.fire();
+					}
+					
 					cv_quadro.toBack();					
 					mover = true;
 					miMover.setText("✓ Mover");
+				}
+			}
+		);
+		
+		miRotacao.setOnAction(
+			(ev)->{
+				if (rotacionar) {
+					cv_quadro.toFront();
+					rotacionar = false;
+					miRotacao.setText("Rotação");
+				}
+				
+				else {
+					if (mover) {
+						miMover.fire();
+					}
+					
+					cv_quadro.toBack();
+					rotacionar = true;
+					miRotacao.setText("✓ Rotação");
 				}
 			}
 		);
@@ -376,7 +401,7 @@ public class Quadro implements Initializable{
 	}
 
 	public static boolean getRotacionar() {
-		return true;
+		return rotacionar;
 	}
 	
 }
