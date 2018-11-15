@@ -2,24 +2,49 @@ package formas;
 
 import javafx.geometry.Point2D;
 
-public class Ponto extends Point2D implements Formas{
+public class Ponto implements Formas{
+	
+	private double x, y;
+	
 	public Ponto () {
-		super(0, 0);
+		this.x = this.y = 0;
 	}
 
 	public Ponto (double x, double y) {
-		super(x, y);
+		this.x = x;
+		this.y = y;
 	}
 
 	public Ponto (Ponto p) {
-		super(p.getX(), p.getY());
+		this.x = p.getX();
+		this.y = p.getY();
 	}
 
-    public double calcularDistancia(Ponto p) {
-		return distance(p);
+    public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double calcularDistancia(Ponto p) {
+		Point2D p1 = new Point2D(getX(), getY());
+		Point2D p2 = new Point2D(p.getX(), p.getY());
+		return p1.distance(p2);
 	}
     
     public double calcularDistancia(double x, double y) {
-		return distance(x, y);
+    	Point2D p1 = new Point2D(getX(), getY());
+		Point2D p2 = new Point2D(x, y);
+		return p1.distance(p2);
 	}
 }
