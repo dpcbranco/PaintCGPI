@@ -4,7 +4,8 @@ import javafx.geometry.Point2D;
 
 public class Ponto implements Formas{
 	
-	private double x, y;
+	protected double x;
+	protected double y;
 	
 	public Ponto () {
 		this.x = this.y = 0;
