@@ -148,9 +148,11 @@ public class Quadro implements Initializable{
 				ArrayList<Node> formas = new ArrayList<>();
 				formas.addAll(paneCanvas.getChildren());
 				for (int i = 1; i < formas.size(); i++) {
-					Ellipse e = (Ellipse) formas.get(i);
-					if (e.getOpacity() == 0.1) {
-						paneCanvas.getChildren().remove(e);
+					if (formas.get(i).getClass().getSimpleName().equals("Ellipse")) {
+						Ellipse e = (Ellipse) formas.get(i);
+						if (e.getOpacity() == 0.1) {
+							paneCanvas.getChildren().remove(e);
+						}
 					}
 				}
 			}
