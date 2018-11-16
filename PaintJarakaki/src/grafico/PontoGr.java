@@ -1,5 +1,6 @@
 package grafico;
 
+import app.Quadro;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,9 +14,11 @@ import javafx.scene.shape.Ellipse;
  * 
  */
 public class PontoGr extends Ponto implements FormaGr {
+	
 	Color cor; // cor do ponto 
 	int diametro; // diametro do ponto, default = 5
 	Ellipse e;
+	boolean selecionado = false;
 	
 	/**
 	 * Constroi um ponto na posicao x, y e com os atributos
@@ -56,10 +59,17 @@ public class PontoGr extends Ponto implements FormaGr {
 
 	private void setDiametro(int diametro) {
 		this.diametro = diametro;
+		if (e != null) {
+			e.setRadiusX(getDiametro());
+			e.setRadiusY(getDiametro());
+		}
 	}
 
-	private void setCor(Color cor){
+	public void setCor(Color cor){
 		this.cor = cor;
+		if (e != null) {
+			e.setFill(cor);
+		}
 	}
 
 	/**
@@ -80,7 +90,17 @@ public class PontoGr extends Ponto implements FormaGr {
 		
 		e.setOnMouseClicked(
 			(ev)->{
-				this.selecionar();
+				if (Quadro.getSelecionar()) {
+					this.selecionar();
+				}
+			}
+		);
+		
+		e.setOnMouseDragged(
+			(ev)->{
+				if (Quadro.getMover()) {
+					this.mover(ev.getX(), ev.getY());
+				}
 			}
 		);
 		
@@ -89,13 +109,57 @@ public class PontoGr extends Ponto implements FormaGr {
 		sc.fillOval((int)getX() -(getDiametro()/2), (int)getY() - (getDiametro()/2), getDiametro(), getDiametro());*/
 	}
 
-	//@Override
+	@Override
 	public void selecionar() {
-		e.setOpacity(0.1);
+		if (selecionado) {
+			e.setOpacity(1);
+			selecionado = false;
+		}
+		
+		else {
+			e.setOpacity(0.1);
+			selecionado = true;
+		}
 	}
 	
 	public Ellipse getEllipse() {
 		return this.e;
 	}
 
+	@Override
+	public void mover(double x, double y) {
+		e.setCenterX(x);
+		e.setCenterY(y);
+	}
+	
+	
+	@Override
+	public void setX(double x) {
+		this.x = x;
+		e.setCenterX(x);
+	}
+	
+	@Override
+	public void setY(double y) {
+		this.y = y;
+		e.setCenterY(y);
+	}
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

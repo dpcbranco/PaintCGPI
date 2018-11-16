@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class LinhaPoligonal implements Formas{
+public class LinhaPoligonal implements Forma{
 	
 	ArrayList<Ponto> pontos = new ArrayList<>();
 	

@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Circulo implements Formas{
+public class Circulo implements Forma{
 	
 	protected Ponto centro, perimetro;
 	double raio = 0;

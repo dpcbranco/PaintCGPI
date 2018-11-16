@@ -99,7 +99,7 @@ public class Elastico {
 		if (novoPoligono != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			linhaPoligono = new LinhaGr((PontoGr) novoPoligono.getPN(), pontoEv, opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr(novoPoligono.getPN(), pontoEv, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 			
 		}
@@ -111,7 +111,7 @@ public class Elastico {
 		if (novaLinhaPoligonal != null) {
 			pc.getChildren().clear();
 			pc.getChildren().addAll(formasPane);
-			linhaPoligono = new LinhaGr((PontoGr) novaLinhaPoligonal.getPN(), pontoEv, opcaoCor, opcaoBorda);
+			linhaPoligono = new LinhaGr(novaLinhaPoligonal.getPN(), pontoEv, opcaoCor, opcaoBorda);
 			linhaPoligono.desenhar(pc);
 		}
 	}

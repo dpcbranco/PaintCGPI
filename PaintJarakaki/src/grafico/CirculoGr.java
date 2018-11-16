@@ -2,6 +2,7 @@ package grafico;
 
 import java.util.ArrayList;
 
+import app.Quadro;
 import formas.Circulo;
 import formas.Ponto;
 import javafx.scene.layout.Pane;
@@ -13,6 +14,7 @@ public class CirculoGr extends Circulo implements FormaGr {
 	Color cor;
 	int borda;
 	ArrayList<PontoGr> pontosCirculo = new ArrayList<>();
+	boolean selecionado = false;
 
 	public CirculoGr(Ponto centro, Color cor, int borda) {
 		super(centro);
@@ -36,21 +38,69 @@ public class CirculoGr extends Circulo implements FormaGr {
 			
 			p.getEllipse().setOnMouseClicked( 
 				(ev)->{
-					selecionar();
+					if (Quadro.getSelecionar()) {
+						selecionar();
+					}
+				}
+			);
+			
+			p.getEllipse().setOnMouseDragged(
+				(ev)->{
+					if (Quadro.getMover()) {
+						mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+					}
 				}
 			);
 		}
 	}
 
 	public void selecionar() {
-		for (PontoGr p : pontosCirculo) {
-			Ellipse e = p.getEllipse();
-			e.setOpacity(0.1);
+		if (selecionado) {
+			for (PontoGr p : pontosCirculo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(1);
+			}
+			
+			selecionado = false;
+		}
+		
+		else {
+			for (PontoGr p : pontosCirculo) {
+				Ellipse e = p.getEllipse();
+				e.setOpacity(0.1);
+			}
+			
+			selecionado = true;
 		}
 	}
 
 	public Color getCor() {
 		return this.cor;
+	}
+
+	@Override
+	public void mover(double x, double y) {
+		for (PontoGr p : pontosCirculo) {
+			p.setX(p.getX() + x);
+			p.setY(p.getY() + y);
+		}
+	}
+
+
+	@Override
+	public boolean selecionado() {
+		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

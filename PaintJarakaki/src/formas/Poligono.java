@@ -2,7 +2,7 @@ package formas;
 
 import java.util.ArrayList;
 
-public class Poligono implements Formas{
+public class Poligono implements Forma{
 	
 	protected ArrayList<Ponto> pontos = new ArrayList<>();
 	

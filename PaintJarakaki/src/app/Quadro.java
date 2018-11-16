@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import figuras.Sierpinski;
-import formas.Formas;
 import formas.Ponto;
+import grafico.FormaGr;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -49,6 +49,8 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miSalvar;
 	@FXML MenuItem miAbrir;
 	@FXML MenuItem miClipping;
+	@FXML MenuItem miMover;
+	@FXML MenuItem miRotacao;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -64,9 +66,9 @@ public class Quadro implements Initializable{
 	
 	String txtXml;
 	Xml arqXml;	
-	ArrayList<Formas> listaFormas = new ArrayList<>();
+	ArrayList<FormaGr> listaFormas = new ArrayList<>();
 	
-	boolean selecionar = false, recortar = false;
+	private static boolean selecionar = false, recortar = false, mover = false, rotacionar = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -137,6 +139,12 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 					selecionar = false;
 					miSelecionar.setText("Selecionar");
+					
+					for (FormaGr f : listaFormas) {
+						if (f.selecionado()) {
+							f.selecionar();
+						}
+					}
 				}
 					
 			}
@@ -147,9 +155,11 @@ public class Quadro implements Initializable{
 				ArrayList<Node> formas = new ArrayList<>();
 				formas.addAll(paneCanvas.getChildren());
 				for (int i = 1; i < formas.size(); i++) {
-					Ellipse e = (Ellipse) formas.get(i);
-					if (e.getOpacity() == 0.1) {
-						paneCanvas.getChildren().remove(e);
+					if (formas.get(i).getClass().getSimpleName().equals("Ellipse")) {
+						Ellipse e = (Ellipse) formas.get(i);
+						if (e.getOpacity() == 0.1) {
+							paneCanvas.getChildren().remove(e);
+						}
 					}
 				}
 			}
@@ -200,6 +210,52 @@ public class Quadro implements Initializable{
 			}
 		);
 		
+		miMover.setOnAction(
+			(ev)->{
+				if (mover) {
+					cv_quadro.toFront();
+					mover = false;
+					miMover.setText("Mover");
+				}
+				
+				else {
+					//Desativa rotacao caso esteja ativa
+					if (rotacionar) {
+						miRotacao.fire();
+					}
+					
+					cv_quadro.toBack();					
+					mover = true;
+					miMover.setText("✓ Mover");
+
+				}
+			}
+		);
+		
+		miRotacao.setOnAction(
+			(ev)->{
+				if (rotacionar) {
+					cv_quadro.toFront();
+					rotacionar = false;
+					miRotacao.setText("Rotação");
+				}
+				
+				else {
+					if (mover) {
+						miMover.fire();
+					}
+									
+					cv_quadro.toBack();
+					rotacionar = true;
+					miRotacao.setText("✓ Rotação");
+					
+					
+					for (FormaGr f: listaFormas) {
+						f.marcarRotacao();
+					}
+				}
+			}
+		);
 		
 		//Trata movimento do mouse durante desenho das formas
 		cv_quadro.setOnMouseMoved(
@@ -212,7 +268,7 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 				}
 				
-				else if (!selecionar) {
+				else if (!selecionar && !mover && !rotacionar) {
 					
 					String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
 					Color opcaoCor = corDesenho.getValue();
@@ -275,7 +331,7 @@ public class Quadro implements Initializable{
 				}
 				
 				
-				else if (!selecionar) {
+				else if (!selecionar && !mover && !rotacionar) {
 					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
 					Color cor = corDesenho.getValue();
@@ -283,8 +339,7 @@ public class Quadro implements Initializable{
 				
 					switch (rmiOpcaoForma.getText()) {
 						case "Ponto":{
-							desenhador.desenharPonto(novoPonto, cor, borda);
-							listaFormas.add(novoPonto);
+							listaFormas.add(desenhador.desenharPonto(novoPonto, cor, borda));
 							break;
 						}
 					
@@ -337,6 +392,22 @@ public class Quadro implements Initializable{
 				}
 			}
 		);		
+	}
+	
+	public static boolean getSelecionar() {
+		return selecionar;
+	}
+	
+	public static boolean getRecortar() {
+		return recortar;
+	}
+	
+	public static boolean getMover() {
+		return mover;
+	}
+
+	public static boolean getRotacionar() {
+		return rotacionar;
 	}
 	
 }

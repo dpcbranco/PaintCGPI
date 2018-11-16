@@ -16,8 +16,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import formas.Formas;
+import formas.Forma;
 import grafico.CirculoGr;
+import grafico.FormaGr;
 import grafico.LinhaGr;
 import grafico.LinhaPoligonalGr;
 import grafico.PoligonoGr;
@@ -35,11 +36,11 @@ public class Xml {
 		this.arqXml = f;
 	}
 	
-	public void escreverXml(ArrayList<Formas> formas) throws IOException {
+	public void escreverXml(ArrayList<FormaGr> formas) throws IOException {
 		String xmlContent = "<Figura>";
 		escritor = new BufferedWriter(new FileWriter(arqXml));
 		
-		for (Formas f : formas) {
+		for (FormaGr f : formas) {
 			switch(f.getClass().getName()) {
 			
 				case "grafico.PontoGr":{
@@ -89,11 +90,11 @@ public class Xml {
 		escritor.close();		
 	}
 	
-	public ArrayList<Formas> lerXml(Pane pane) throws ParserConfigurationException, SAXException, IOException{
+	public ArrayList<FormaGr> lerXml(Pane pane) throws ParserConfigurationException, SAXException, IOException{
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = builder.parse(arqXml);
 		NodeList xml, formasXML;
-		ArrayList<Formas> formasGr = new ArrayList<>();
+		ArrayList<FormaGr> formasGr = new ArrayList<>();
 		
 		doc.getDocumentElement().normalize();
 		xml = doc.getElementsByTagName("Figura");
