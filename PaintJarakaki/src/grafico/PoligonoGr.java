@@ -124,14 +124,64 @@ public class PoligonoGr extends Poligono implements FormaGr{
 		}
 	}
 
-	@Override
-	public void rotacao(double x, double y) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public boolean selecionado() {
 		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		for (PontoGr pgr : pontosPoligono) {
+			for (Ponto p : this.getPontos()) {
+				if (pgr.getX() == p.getX() && pgr.getY() == p.getY()) {
+					
+					Ponto pBase = this.getPontos().get((this.getPontos().indexOf(p) + 1) % this.getPontos().size());
+					
+					if (cor.equals(Color.RED)) {
+						pgr.setCor(Color.BLACK);
+					}
+					
+					else {
+						pgr.setCor(Color.RED);
+					}
+					
+					pgr.getEllipse().setOnMouseDragged(
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(pBase.getY() - p.getY(), pBase.getX() - p.getX());
+								double novoAngulo = Math.atan2(pBase.getY() - ev.getY(), pBase.getX() - ev.getX());
+								rotacao(pBase, novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - pgr.getX(), ev.getY() - pgr.getY());
+							}
+						}
+					);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		for (PontoGr pgr : pontosPoligono) {
+			double x = pBase.getX() + (pgr.getX() - pBase.getX()) * Math.cos(angulo) - (pgr.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (pgr.getX() - pBase.getX()) * Math.sin(angulo) + (pgr.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			pgr.setX(x);
+			pgr.setY(y);
+		}
+		
+		for (Ponto p : this.getPontos()) {
+			if (!(p.getX() == pBase.getX() && p.getY() == pBase.getY())) {
+				double x = pBase.getX() + (p.getX() - pBase.getX()) * Math.cos(angulo) - (p.getY() - pBase.getY()) * Math.sin(angulo);
+				double y = pBase.getY() + (p.getX() - pBase.getX()) * Math.sin(angulo) + (p.getY() - pBase.getY()) * Math.cos(angulo);
+				
+				p.setX(x);
+				p.setY(y);
+			}
+		}
 	}
 }

@@ -86,14 +86,21 @@ public class CirculoGr extends Circulo implements FormaGr {
 		}
 	}
 
-	@Override
-	public void rotacao(double x, double y) {
-		
-	}
 
 	@Override
 	public boolean selecionado() {
 		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

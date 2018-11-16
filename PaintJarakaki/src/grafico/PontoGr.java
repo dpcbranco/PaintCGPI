@@ -59,10 +59,17 @@ public class PontoGr extends Ponto implements FormaGr {
 
 	private void setDiametro(int diametro) {
 		this.diametro = diametro;
+		if (e != null) {
+			e.setRadiusX(getDiametro());
+			e.setRadiusY(getDiametro());
+		}
 	}
 
-	private void setCor(Color cor){
+	public void setCor(Color cor){
 		this.cor = cor;
+		if (e != null) {
+			e.setFill(cor);
+		}
 	}
 
 	/**
@@ -125,10 +132,6 @@ public class PontoGr extends Ponto implements FormaGr {
 		e.setCenterY(y);
 	}
 	
-	@Override
-	public void rotacao(double x, double y) {
-		
-	}
 	
 	@Override
 	public void setX(double x) {
@@ -145,6 +148,18 @@ public class PontoGr extends Ponto implements FormaGr {
 	@Override
 	public boolean selecionado() {
 		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -30,7 +30,7 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 	}
 
 	public void desenharPonto(Ponto p, Pane pane) {
-		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(p), cor, borda);
+		LinhaGr novaLinha = new LinhaGr(this.calcularNovaLinha(new Ponto(p)), cor, borda);
 		novaLinha.desenhar(pane);
 		
 		pontosLPoligonal.addAll(novaLinha.getPontos());
@@ -108,14 +108,90 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 	}
 
 	@Override
-	public void rotacao(double x, double y) {
-		// TODO Auto-generated method stub
-		
+	public boolean selecionado() {
+		return selecionado;
 	}
 
 	@Override
-	public boolean selecionado() {
-		return selecionado;
+	public void marcarRotacao() {
+		for (PontoGr p : pontosLPoligonal) {
+			if (p.getX() == this.getP1().getX() && p.getY() == this.getP1().getY()) {
+				
+				p.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(this.getPN().getY() - this.getP1().getY(), this.getPN().getX() - this.getP1().getX());
+								double novoAngulo = Math.atan2(this.getPN().getY() - ev.getY(), this.getPN().getX() - ev.getX());
+								rotacao(this.getPN(), novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+							}
+						}
+					);
+				
+				if (cor.equals(Color.RED)) {
+					p.setCor(Color.BLACK);
+				}
+				
+				else {
+					p.setCor(Color.RED);
+				}
+			}
+			
+			else if (p.getX() == this.getPN().getX() && p.getY() == this.getPN().getY()) {
+				
+				p.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(this.getPN().getY() - this.getP1().getY(), this.getPN().getX() - this.getP1().getX());
+								double novoAngulo = Math.atan2(ev.getY() - this.getP1().getY(), ev.getX() - this.getP1().getX());
+								rotacao(this.getP1(), novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - p.getX(), ev.getY() - p.getY());
+							}
+						}
+					);
+				
+				if (cor.equals(Color.RED)) {
+					p.setCor(Color.BLACK);
+				}
+				
+				else {
+					p.setCor(Color.RED);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		for (PontoGr p : pontosLPoligonal) {
+			double x = pBase.getX() + (p.getX() - pBase.getX()) * Math.cos(angulo) - (p.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p.getX() - pBase.getX()) * Math.sin(angulo) + (p.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p.setX(x);
+			p.setY(y);
+		}
+		
+		if (pBase.getX() == this.getP1().getX() && pBase.getY() == this.getP1().getY()) {
+			double x = pBase.getX() + (this.getPN().getX() - pBase.getX()) * Math.cos(angulo) - (this.getPN().getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (this.getPN().getX() - pBase.getX()) * Math.sin(angulo) + (this.getPN().getY() - pBase.getY()) * Math.cos(angulo);
+			
+			this.getPN().setX(x);
+			this.getPN().setY(y);
+		}
+		
+		else {
+			double x = pBase.getX() + (this.getP1().getX() - pBase.getX()) * Math.cos(angulo) - (this.getP1().getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (this.getP1().getX() - pBase.getX()) * Math.sin(angulo) + (this.getP1().getY() - pBase.getY()) * Math.cos(angulo);
+			
+			this.getP1().setX(x);
+			this.getP1().setY(y);
+		}
 	}
 	
 }

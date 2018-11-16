@@ -34,9 +34,82 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 		}
 		
 		for (PontoGr ponto : pontosRetangulo) {
-			Ellipse e = ponto.getEllipse();
+						
+			if (p1.getX() == ponto.getX() && p1.getY() == ponto.getY()) {
+				ponto.getEllipse().setOnMouseDragged(   
+					(ev)->{
+						if (Quadro.getRotacionar()) {
+							double anguloAtual = Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+							double novoAngulo = Math.atan2(ev.getY() - p2.getY(), ev.getX() - p2.getX());
+							rotacao(p2, novoAngulo - anguloAtual);
+						}
+						
+						else if (Quadro.getMover()) {
+							mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+						}
+					}
+				);
+			}
 			
-			e.setOnMouseClicked(  
+			else if (p2.getX() == ponto.getX() && p2.getY() == ponto.getY()) {
+				ponto.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+								double novoAngulo = Math.atan2(p1.getY() - ev.getY(), p1.getX() - ev.getX());
+								rotacao(p1, novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+							}
+						}
+					);
+			}
+			
+			else if (p3.getX() == ponto.getX() && p3.getY() == ponto.getY()) {
+				ponto.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(p3.getY() - p4.getY(), p3.getX() - p4.getX());
+								double novoAngulo = Math.atan2(ev.getY() - p4.getY(), ev.getX() - p4.getX());
+								rotacao(p4, novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+							}
+						}
+					);
+			}
+			
+			else if (p4.getX() == ponto.getX() && p4.getY() == ponto.getY()) {
+				ponto.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(p3.getY() - p4.getY(), p3.getX() - p4.getX());
+								double novoAngulo = Math.atan2(p3.getY() - ev.getY(), p3.getX() - ev.getX());
+								rotacao(p3, novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+							}
+						}
+					);
+			}
+			
+			else {
+				ponto.getEllipse().setOnMouseDragged(
+					(ev)->{
+						if (Quadro.getMover()) {
+							mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
+						}
+					}
+				);
+			}
+			
+			ponto.getEllipse().setOnMouseClicked(  
 				(ev)-> {
 					if (Quadro.getSelecionar()) {
 						selecionar();
@@ -44,13 +117,6 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 				}
 			);
 			
-			e.setOnMouseDragged(
-				(ev)->{
-					if (Quadro.getMover()) {
-						mover(ev.getX() - ponto.getX(), ev.getY() - ponto.getY());
-					}
-				}
-			);
 		}
 	}
 
@@ -92,14 +158,69 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 	}
 
 	@Override
-	public void rotacao(double x, double y) {
-		// TODO Auto-generated method stub
-		
+	public boolean selecionado() {
+		return selecionado;
 	}
 
 	@Override
-	public boolean selecionado() {
-		return selecionado;
+	public void marcarRotacao() {
+		for (PontoGr p : pontosRetangulo) {
+			if ((p1.getX() == p.getX() && p1.getY() == p.getY()) || (p2.getX() == p.getX() && p2.getY() == p.getY()) || 
+				(p3.getX() == p.getX() && p3.getY() == p.getY()) || (p4.getX() == p.getX() && p4.getY() == p.getY())) {
+				
+				if (cor.equals(Color.RED)) {
+					p.setCor(Color.BLACK);
+				}
+				
+				else {
+					p.setCor(Color.RED);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void rotacao(Ponto pBase, double angulo) {
+		for (PontoGr p : pontosRetangulo) {
+			double x = pBase.getX() + (p.getX() - pBase.getX()) * Math.cos(angulo) - (p.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p.getX() - pBase.getX()) * Math.sin(angulo) + (p.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p.setX(x);
+			p.setY(y);
+		}
+		
+		if (!(pBase.getX() == p1.getX() && pBase.getY() == p1.getY())) {
+			double x = pBase.getX() + (p1.getX() - pBase.getX()) * Math.cos(angulo) - (p1.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p1.getX() - pBase.getX()) * Math.sin(angulo) + (p1.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p1.setX(x);
+			p1.setY(y);
+		}
+		
+		if (!(pBase.getX() == p2.getX() && pBase.getY() == p2.getY())) {
+			double x = pBase.getX() + (p2.getX() - pBase.getX()) * Math.cos(angulo) - (p2.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p2.getX() - pBase.getX()) * Math.sin(angulo) + (p2.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p2.setX(x);
+			p2.setY(y);
+		}
+		
+		if (!(pBase.getX() == p3.getX() && pBase.getY() == p3.getY())) {
+			double x = pBase.getX() + (p3.getX() - pBase.getX()) * Math.cos(angulo) - (p3.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p3.getX() - pBase.getX()) * Math.sin(angulo) + (p3.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p3.setX(x);
+			p3.setY(y);
+		}
+		
+		if (!(pBase.getX() == p4.getX() && pBase.getY() == p4.getY())) {
+			double x = pBase.getX() + (p4.getX() - pBase.getX()) * Math.cos(angulo) - (p4.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p4.getX() - pBase.getX()) * Math.sin(angulo) + (p4.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p4.setX(x);
+			p4.setY(y);
+		}
+
 	}
 
 }

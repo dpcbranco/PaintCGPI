@@ -23,7 +23,7 @@ public class LinhaGr extends Linha implements FormaGr{
 	}
 	
 	public LinhaGr (PontoGr p1, PontoGr p2, Color cor, int borda) {
-		super((Ponto)p1, (Ponto)p2);
+		super(new Ponto(p1), new Ponto(p2));
 		this.cor = cor;
 		this.borda = borda;
 	}
@@ -57,11 +57,13 @@ public class LinhaGr extends Linha implements FormaGr{
 				}
 			);
 			
-			if (p.equals(p1) || p.equals(p2)) {
+			if (p.equals(p1)) {
 				novoPonto.getEllipse().setOnMouseDragged(   
 					(ev)->{
 						if (Quadro.getRotacionar()) {
-							rotacao(ev.getX(), ev.getY());
+							double anguloAtual = Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+							double novoAngulo = Math.atan2(ev.getY() - p2.getY(), ev.getX() - p2.getX());
+							rotacao(p2, novoAngulo - anguloAtual);
 						}
 						
 						else if (Quadro.getMover()) {
@@ -69,6 +71,22 @@ public class LinhaGr extends Linha implements FormaGr{
 						}
 					}
 				);
+			}
+			
+			else if (p.equals(p2)) {
+				novoPonto.getEllipse().setOnMouseDragged(   
+						(ev)->{
+							if (Quadro.getRotacionar()) {
+								double anguloAtual = Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+								double novoAngulo = Math.atan2(p1.getY() - ev.getY(), p1.getX() - ev.getX());
+								rotacao(p1, novoAngulo - anguloAtual);
+							}
+							
+							else if (Quadro.getMover()) {
+								mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+							}
+						}
+					);
 			}
 			
 			else {
@@ -86,8 +104,30 @@ public class LinhaGr extends Linha implements FormaGr{
 	}
 
 	@Override
-	public void rotacao(double x, double y) {
+	public void rotacao(Ponto pBase, double angulo) {
+		for (PontoGr p : pontosLinha) {
+			double x = pBase.getX() + (p.getX() - pBase.getX()) * Math.cos(angulo) - (p.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p.getX() - pBase.getX()) * Math.sin(angulo) + (p.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p.setX(x);
+			p.setY(y);
+		}
 		
+		if (pBase.getX() == p1.getX() && pBase.getY() == p1.getY()) {
+			double x = pBase.getX() + (p2.getX() - pBase.getX()) * Math.cos(angulo) - (p2.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p2.getX() - pBase.getX()) * Math.sin(angulo) + (p2.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p2.setX(x);
+			p2.setY(y);
+		}
+		
+		else {
+			double x = pBase.getX() + (p1.getX() - pBase.getX()) * Math.cos(angulo) - (p1.getY() - pBase.getY()) * Math.sin(angulo);
+			double y = pBase.getY() + (p1.getX() - pBase.getX()) * Math.sin(angulo) + (p1.getY() - pBase.getY()) * Math.cos(angulo);
+			
+			p1.setX(x);
+			p1.setY(y);
+		}
 	}
 
 	public void selecionar() {
@@ -95,12 +135,8 @@ public class LinhaGr extends Linha implements FormaGr{
 			for (PontoGr pgr : pontosLinha) {
 				Ellipse e = pgr.getEllipse();
 				
-				if (!(pgr.getX() == p1.getX() && pgr.getY() == p1.getY()) && 
-					!(pgr.getX() == p2.getX() && pgr.getY() == p2.getY())) {
+				e.setOpacity(1);
 					
-					e.setOpacity(1);
-					
-				}
 			}
 			
 			selecionado = false;
@@ -109,13 +145,9 @@ public class LinhaGr extends Linha implements FormaGr{
 		else {
 			for (PontoGr pgr : pontosLinha) {
 				Ellipse e = pgr.getEllipse();
-			
-				if (!(pgr.getX() == p1.getX() && pgr.getY() == p1.getY()) && 
-						!(pgr.getX() == p2.getX() && pgr.getY() == p2.getY())) {
 				
-					e.setOpacity(0.1);
+				e.setOpacity(0.1);				
 				
-				}
 			}
 			
 			selecionado = true;
@@ -147,5 +179,20 @@ public class LinhaGr extends Linha implements FormaGr{
 	@Override
 	public boolean selecionado() {
 		return selecionado;
+	}
+
+	@Override
+	public void marcarRotacao() {
+		for (PontoGr p : pontosLinha) {
+			if ((p1.getX() == p.getX() && p1.getY() == p.getY()) || (p2.getX() == p.getX() && p2.getY() == p.getY()) ) {
+				if (cor.equals(Color.RED)) {
+					p.setCor(Color.BLACK);
+				}
+				
+				else {
+					p.setCor(Color.RED);
+				}
+			}
+		}
 	}
 }
