@@ -227,6 +227,7 @@ public class Quadro implements Initializable{
 					cv_quadro.toBack();					
 					mover = true;
 					miMover.setText("✓ Mover");
+
 				}
 			}
 		);
@@ -247,6 +248,11 @@ public class Quadro implements Initializable{
 					cv_quadro.toBack();
 					rotacionar = true;
 					miRotacao.setText("✓ Rotação");
+					
+					
+					for (FormaGr f: listaFormas) {
+						f.marcarRotacao();
+					}
 				}
 			}
 		);
