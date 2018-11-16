@@ -244,7 +244,7 @@ public class Quadro implements Initializable{
 					if (mover) {
 						miMover.fire();
 					}
-					
+									
 					cv_quadro.toBack();
 					rotacionar = true;
 					miRotacao.setText("✓ Rotação");
@@ -268,7 +268,7 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 				}
 				
-				else if (!selecionar && !mover) {
+				else if (!selecionar && !mover && !rotacionar) {
 					
 					String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
 					Color opcaoCor = corDesenho.getValue();
@@ -331,7 +331,7 @@ public class Quadro implements Initializable{
 				}
 				
 				
-				else if (!selecionar && !mover) {
+				else if (!selecionar && !mover && !rotacionar) {
 					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
 					Color cor = corDesenho.getValue();
