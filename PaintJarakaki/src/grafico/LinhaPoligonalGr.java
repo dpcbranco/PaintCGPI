@@ -101,7 +101,12 @@ public class LinhaPoligonalGr extends LinhaPoligonal implements FormaGr{
 
 	@Override
 	public void mover(double x, double y) {
-		for (PontoGr p : pontosLPoligonal) {
+		for (PontoGr pgr : pontosLPoligonal) {
+			pgr.setX(pgr.getX() + x);
+			pgr.setY(pgr.getY() + y);
+		}
+		
+		for (Ponto p : this.getPontos()) {
 			p.setX(p.getX() + x);
 			p.setY(p.getY() + y);
 		}

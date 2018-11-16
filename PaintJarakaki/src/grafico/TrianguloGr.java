@@ -166,6 +166,14 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 			p.setX(p.getX() + x);
 			p.setY(p.getY() + y);
 		}
+		
+		p1.setX(p1.getX() + x);
+		p2.setX(p2.getX() + x);
+		p3.setX(p3.getX() + x);
+		
+		p1.setY(p1.getY() + y);
+		p2.setY(p2.getY() + y);
+		p3.setY(p3.getY() + y);
 	}
 
 	@Override

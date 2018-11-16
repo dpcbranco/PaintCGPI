@@ -155,6 +155,17 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 			p.setX(p.getX() + x);
 			p.setY(p.getY() + y);
 		}
+		
+		p1.setX(p1.getX() + x);
+		p2.setX(p2.getX() + x);
+		p3.setX(p3.getX() + x);
+		p4.setX(p4.getX() + x);
+		
+		p1.setY(p1.getY() + y);
+		p2.setY(p2.getY() + y);
+		p3.setY(p3.getY() + y);
+		p4.setY(p4.getY() + y);
+		
 	}
 
 	@Override
