@@ -51,6 +51,7 @@ public class Quadro implements Initializable{
 	@FXML MenuItem miClipping;
 	@FXML MenuItem miMover;
 	@FXML MenuItem miRotacao;
+	@FXML MenuItem miEscala;
 	
 	@FXML Slider slBorda;
 	@FXML MenuItem miBorda;
@@ -68,7 +69,7 @@ public class Quadro implements Initializable{
 	Xml arqXml;	
 	ArrayList<FormaGr> listaFormas = new ArrayList<>();
 	
-	private static boolean selecionar = false, recortar = false, mover = false, rotacionar = false;
+	private static boolean selecionar = false, recortar = false, mover = false, rotacionar = false, escalar = false;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -408,6 +409,10 @@ public class Quadro implements Initializable{
 
 	public static boolean getRotacionar() {
 		return rotacionar;
+	}
+	
+	public static boolean getEscalar() {
+		return escalar;
 	}
 	
 }
