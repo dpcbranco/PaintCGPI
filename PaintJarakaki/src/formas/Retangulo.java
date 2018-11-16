@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class Retangulo implements Forma{
 
-	Ponto p1, p2, p3, p4;
+	protected Ponto p1;
+	protected Ponto p2;
+	protected Ponto p3;
+	protected Ponto p4;
 	
 	//Pontos da diagonal do retângulo
 	public Retangulo(Ponto p1, Ponto p2) {
