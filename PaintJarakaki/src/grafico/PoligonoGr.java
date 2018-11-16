@@ -189,4 +189,10 @@ public class PoligonoGr extends Poligono implements FormaGr{
 			}
 		}
 	}
+
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		// TODO Auto-generated method stub
+		
+	}
 }

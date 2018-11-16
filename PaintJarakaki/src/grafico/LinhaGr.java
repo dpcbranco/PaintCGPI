@@ -1,10 +1,14 @@
 package grafico;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import app.Quadro;
 import formas.Linha;
 import formas.Ponto;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -69,6 +73,10 @@ public class LinhaGr extends Linha implements FormaGr{
 						else if (Quadro.getMover()) {
 							mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
 						}
+						
+						else if (Quadro.getEscalar()) {
+							escala(pane, novoPonto);
+						}
 					}
 				);
 			}
@@ -85,6 +93,10 @@ public class LinhaGr extends Linha implements FormaGr{
 							else if (Quadro.getMover()) {
 								mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
 							}
+							
+							else if (Quadro.getEscalar()) {
+								escala(pane, novoPonto);
+							}
 						}
 					);
 			}
@@ -94,6 +106,10 @@ public class LinhaGr extends Linha implements FormaGr{
 					(ev)->{
 						if (Quadro.getMover()) {
 							mover(ev.getX() - novoPonto.getX(), ev.getY() - novoPonto.getY());
+						}
+						
+						else if (Quadro.getEscalar()) {
+							escala(pane, novoPonto);
 						}
 					}
 				);
@@ -194,5 +210,52 @@ public class LinhaGr extends Linha implements FormaGr{
 				}
 			}
 		}
+	}
+
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		TextInputDialog inputEscala = new TextInputDialog("2");
+		double escala;
+		
+		
+		inputEscala.setTitle("Escala");
+		inputEscala.setContentText("Entre com uma escala entre 0.1 e 10:");
+		
+		Optional<String> entrada = inputEscala.showAndWait();
+		
+		if(entrada.isPresent()) {
+			try {
+				escala = Double.parseDouble(entrada.get());
+				
+				if (escala < 0.1 || escala > 10) {
+					throw new NumberFormatException();
+				}
+				
+				p1.setX(p1.getX() * escala + pBase.getX() * (1 - escala));
+				p2.setX(p2.getX() * escala + pBase.getX() * (1 - escala));
+				
+				p1.setY(p1.getY() * escala + pBase.getY() * (1 - escala));
+				p2.setY(p2.getY() * escala + pBase.getY() * (1 - escala));
+				
+				this.deletar(pane);
+				this.desenhar(pane);
+				
+			}catch (NumberFormatException e){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("ERRO!");
+				alert.setContentText("Entrada inválida");
+
+				alert.showAndWait();
+			}
+		}
+		
+	}
+
+	private void deletar(Pane pane) {
+		for (PontoGr p :  pontosLinha) {
+			pane.getChildren().remove(p.getEllipse());
+		}
+		
+		pontosLinha.clear();
 	}
 }

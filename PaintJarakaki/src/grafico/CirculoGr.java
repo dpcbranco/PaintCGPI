@@ -103,5 +103,11 @@ public class CirculoGr extends Circulo implements FormaGr {
 		
 	}
 
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

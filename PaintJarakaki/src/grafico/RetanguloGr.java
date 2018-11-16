@@ -234,4 +234,10 @@ public class RetanguloGr extends Retangulo implements FormaGr {
 
 	}
 
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

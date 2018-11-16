@@ -232,6 +232,12 @@ public class TrianguloGr extends Triangulo implements FormaGr {
 			p3.setY(y);
 		}
 
+	}
+
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		// TODO Auto-generated method stub
+		
 	}	
 
 }

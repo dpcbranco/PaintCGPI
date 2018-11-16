@@ -10,4 +10,5 @@ public interface FormaGr {
 	public void rotacao(Ponto pBase, double angulo);	//Rotaciona de acordo com os vértices da forma	
 	public boolean selecionado();				//Retorna se forma está selecionada
 	public void marcarRotacao();				//Marca pontos disponíveis para rotacao
+	public void escala(Pane pane, Ponto pBase);
 }

@@ -225,6 +225,10 @@ public class Quadro implements Initializable{
 						miRotacao.fire();
 					}
 					
+					if (escalar) {
+						miEscala.fire();
+					}
+					
 					cv_quadro.toBack();					
 					mover = true;
 					miMover.setText("✓ Mover");
@@ -245,6 +249,10 @@ public class Quadro implements Initializable{
 					if (mover) {
 						miMover.fire();
 					}
+					
+					if (escalar) {
+						miEscala.fire();
+					}
 									
 					cv_quadro.toBack();
 					rotacionar = true;
@@ -254,6 +262,32 @@ public class Quadro implements Initializable{
 					for (FormaGr f: listaFormas) {
 						f.marcarRotacao();
 					}
+				}
+			}
+		);
+		
+		miEscala.setOnAction(  
+			(ev)->{
+				if (escalar) {
+					cv_quadro.toFront();
+					escalar = false;
+					miEscala.setText("Escala");
+				}
+				
+				else {
+					//Desativa rotacao caso esteja ativa
+					if (rotacionar) {
+						miRotacao.fire();
+					}
+					
+					if (mover) {
+						miMover.fire();
+					}
+					
+					cv_quadro.toBack();					
+					escalar = true;
+					miEscala.setText("✓ Escala");
+
 				}
 			}
 		);
@@ -269,7 +303,7 @@ public class Quadro implements Initializable{
 					cv_quadro.toFront();
 				}
 				
-				else if (!selecionar && !mover && !rotacionar) {
+				else if (!selecionar && !mover && !rotacionar && !escalar) {
 					
 					String opcaoForma = ((RadioMenuItem)tgFormas.getSelectedToggle()).getText();
 					Color opcaoCor = corDesenho.getValue();
@@ -332,7 +366,7 @@ public class Quadro implements Initializable{
 				}
 				
 				
-				else if (!selecionar && !mover && !rotacionar) {
+				else if (!selecionar && !mover && !rotacionar && !escalar) {
 					//Obtém opções selecionadas de forma, cor e borda
 					RadioMenuItem rmiOpcaoForma = (RadioMenuItem) tgFormas.getSelectedToggle();				
 					Color cor = corDesenho.getValue();

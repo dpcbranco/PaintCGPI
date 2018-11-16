@@ -161,5 +161,11 @@ public class PontoGr extends Ponto implements FormaGr {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void escala(Pane pane, Ponto pBase) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
