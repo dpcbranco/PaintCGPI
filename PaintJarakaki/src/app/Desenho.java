@@ -2,14 +2,7 @@ package app;
 
 import java.util.ArrayList;
 
-import formas.Circulo;
-import formas.Forma;
-import formas.Linha;
-import formas.LinhaPoligonal;
-import formas.Poligono;
 import formas.Ponto;
-import formas.Retangulo;
-import formas.Triangulo;
 import grafico.CirculoGr;
 import grafico.FormaGr;
 import grafico.LinhaGr;
@@ -48,7 +41,7 @@ public class Desenho extends Elastico{
 			//remove resquicios do elastico
 			restaurar();
 			
-			novoPonto = new PontoGr((int)novoPonto.getX(), (int)novoPonto.getY(), cor, borda);
+			novoPonto = new Ponto((int)novoPonto.getX(), (int)novoPonto.getY());
 			
 			novaLinha.setP2(novoPonto);
 			novaLinha.desenhar(pc);
@@ -157,7 +150,7 @@ public class Desenho extends Elastico{
 		if (ev.getButton() == MouseButton.PRIMARY) {
 			
 			if (novaLinhaPoligonal == null) {
-				novaLinhaPoligonal = new LinhaPoligonalGr(p, cor, borda);
+				novaLinhaPoligonal = new LinhaPoligonalGr(new Ponto(p), cor, borda);
 				formasPane.addAll(pc.getChildren());
 			}
 		
@@ -191,7 +184,7 @@ public class Desenho extends Elastico{
 			this.setNovoPonto(new PontoGr((int) ev.getX(), (int) ev.getY(), cor, borda));
 			
 			if (novoPoligono == null) {
-				novoPoligono = new PoligonoGr(this.getNovoPonto(), cor, borda);
+				novoPoligono = new PoligonoGr(new Ponto(this.getNovoPonto()), cor, borda);
 				formasPane.addAll(pc.getChildren());
 			}
 		
@@ -199,7 +192,7 @@ public class Desenho extends Elastico{
 				//remove resquicios do elastico
 				restaurar();
 				
-				novoPoligono.desenharPonto(this.getNovoPonto(), pc);
+				novoPoligono.desenharPonto(new Ponto(this.getNovoPonto()), pc);
 				
 				formasPane.clear();
 				formasPane.addAll(pc.getChildren());
